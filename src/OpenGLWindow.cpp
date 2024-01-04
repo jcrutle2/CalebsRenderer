@@ -81,14 +81,19 @@ void OpenGLWindow::initSystems() {
     // initialize EBO
     glGenBuffers(1, &_EBO);
 
-    // initialiaze container texture;
+    // initialize container texture;
     _texture = Texture("images/container.jpg");
 
     // enable depth testing
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+    glDepthFunc(GL_LESS);
 
     // trap mouse
     SDL_SetRelativeMouseMode(SDL_TRUE);
+
+    // uncomment to test in wireframe mode
+    // glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 }
 
 void OpenGLWindow::stopSystems() {
@@ -105,56 +110,61 @@ void OpenGLWindow::setTriangle() {
     float vertices[] = {
 // positions // colors // texture coords
             -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+            0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
             0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
             0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-            0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
             -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+
             -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
             0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
             0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
             0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
             -0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
             -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+
             -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
             -0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
             -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
             -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
             -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
             -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+
             0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+            0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
             0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
             0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-            0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-            0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
             0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+            0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+
             -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
             0.5f, -0.5f, -0.5f, 1.0f, 1.0f,
             0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
             0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
             -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
             -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+
             -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+            0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
             0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
             0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-            0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
             -0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
-            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f
     };
-    unsigned int indices[] = { // note that we start from 0!
+   /* unsigned int indices[] = { // note that we start from 0!
             0, 1, 3, // first triangle
             1, 2, 3 // second triangle
-    };
+    };*/
 
     glBindVertexArray(_VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, _VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
+/*
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices,
                  GL_STATIC_DRAW);
-
+*/
     // position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float),
                           (void*)0);
