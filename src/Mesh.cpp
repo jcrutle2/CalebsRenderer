@@ -4,6 +4,8 @@
 
 #include <utility>
 #include "Headers/Mesh.h"
+#include <assert.h>
+#define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
 

@@ -58,6 +58,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // Public ASSIMP data structures
 #include <assimp/types.h>
+#include "stb_image.h"
 
 #include <exception>
 

@@ -8,7 +8,7 @@
 #include "SDL.h"
 #include "glew.h"
 #include "Shader.h"
-#include "Texture.h"
+#include "Model.h"
 #include <iostream>
 #include <glm.hpp>
 #include <matrix_transform.hpp>
@@ -34,6 +34,7 @@ private:
 
         Shader _shader;
         Texture _texture;
+        std::vector<Model> _models;
 
 
         unsigned int _VAO;

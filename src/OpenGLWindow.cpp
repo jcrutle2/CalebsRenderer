@@ -24,6 +24,8 @@ OpenGLWindow::OpenGLWindow() {
     _deltaTime = 0;
     _elapsedMS = 0;
     _frameInt = 0;
+
+    initSystems();
 }
 
 OpenGLWindow::OpenGLWindow( int screenWidth, int screenHeight) {
@@ -31,6 +33,7 @@ OpenGLWindow::OpenGLWindow( int screenWidth, int screenHeight) {
     _context = nullptr;
     _screenWidth = screenWidth;
     _screenHeight = screenHeight;
+
     initSystems();
 }
 
@@ -82,7 +85,7 @@ void OpenGLWindow::initSystems() {
     glGenBuffers(1, &_EBO);
 
     // initialize container texture;
-    _texture = Texture("images/container.jpg");
+    newTexture(_texture, "images/container.jpg", "");
 
     // enable depth testing
     glEnable(GL_DEPTH_TEST);
@@ -92,8 +95,13 @@ void OpenGLWindow::initSystems() {
     // trap mouse
     SDL_SetRelativeMouseMode(SDL_TRUE);
 
+    // load backpack model
+    _models.push_back(Model());
+
     // uncomment to test in wireframe mode
     // glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+
+
 }
 
 void OpenGLWindow::stopSystems() {
@@ -197,38 +205,29 @@ void OpenGLWindow::drawBuffered(glm::mat4 viewMat, glm::mat4 projectionMat) {
     };
 
     // select shaders
-    _texture.use();
+    useTexture(_texture);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _texture.ID);
+    glBindTexture(GL_TEXTURE_2D, _texture.id);
     glBindVertexArray(_VAO);
 
-    for (unsigned int i = 0; i < 10; i++) {
-        // set model matrix
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, cubePositions[i]);
-        float angle = 20.0f * i;
-        float speed = 0.1 * i;
-        model = glm::rotate(model, glm::radians(angle),
-                            glm::vec3(1.0f, 0.3f, 0.5f));
-        model = glm::rotate(model, (float) (SDL_GetTicks64() / 200.0) * glm::radians(55.0f), glm::vec3(speed,0.3f,0.0f));
-
-        // apply perspective matrices
-        GLint modelLoc = glGetUniformLocation(_shader.ID, "model");
-        GLint viewLoc = glGetUniformLocation(_shader.ID, "view");
-        GLint projectionLoc = glGetUniformLocation(_shader.ID, "projection");
-        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMat));
-        glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMat));
+    // set model matrix
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(0,3,-4));
+    // apply perspective matrices
+    GLint modelLoc = glGetUniformLocation(_shader.ID, "model");
+    GLint viewLoc = glGetUniformLocation(_shader.ID, "view");
+    GLint projectionLoc = glGetUniformLocation(_shader.ID, "projection");
+    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMat));
+    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMat));
 
 
-        _shader.use(); // don’t forget to activate the shader first!
-        glUniform1i(glGetUniformLocation(_shader.ID, "texture1"), 0); // manually
-
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-    }
+    _shader.use(); // don’t forget to activate the shader first!
+    glUniform1i(glGetUniformLocation(_shader.ID, "texture1"), 0); // manually
 
     // draw OpenGL
+    _models[0].Draw(_shader);
 
     update();
     logFrames();

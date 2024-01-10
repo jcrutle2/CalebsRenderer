@@ -14,7 +14,6 @@ void fatalError(std::string errorString) {
 
 MainGame::MainGame() {
     _window = OpenGLWindow();
-    _window.initSystems();
 
     _gameState = GameState::PLAY;
     _camera = Camera();

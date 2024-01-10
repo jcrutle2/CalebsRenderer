@@ -23,13 +23,13 @@ add_executable(opengl_tests
                 src/main.cpp
         src/MainGame.cpp
         src/Shader.cpp
-        src/Texture.cpp
         src/Camera.cpp
         src/OpenGLWindow.cpp
+        src/Mesh.cpp
         src/Model.cpp
 )
 
-target_link_libraries(opengl_tests "-framework OpenGL" sdl2 GL SMFL-graphics SMFL-system SMFL-window)
+target_link_libraries(opengl_tests "-framework OpenGL" sdl2 GL SMFL-graphics SMFL-system SMFL-window assimp)
 
 
 
