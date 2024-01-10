@@ -10,7 +10,7 @@
 #include <matrix_transform.hpp>
 #include <type_ptr.hpp>
 #include "Camera.h"
-#include "OpenGlWindow.h"
+#include "OpenGLWindow.h"
 
 
 enum class GameState {

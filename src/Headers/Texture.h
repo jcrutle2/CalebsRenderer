@@ -4,7 +4,6 @@
 
 #ifndef OPENGL_TESTS_TEXTURE_H
 #define OPENGL_TESTS_TEXTURE_H
-#include "stb_image.h"
 #include "glew.h"
 #include <iostream>
 
