@@ -210,6 +210,29 @@ void OpenGLWindow::drawBuffered(glm::mat4 viewMat, glm::mat4 projectionMat) {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture.id);
     glBindVertexArray(_VAO);
+/*
+    for (unsigned int i = 0; i < 10; i++) {
+        // set model matrix
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, cubePositions[i]);
+
+        // apply perspective matrices
+        GLint modelLoc = glGetUniformLocation(_shader.ID, "model");
+        GLint viewLoc = glGetUniformLocation(_shader.ID, "view");
+        GLint projectionLoc = glGetUniformLocation(_shader.ID, "projection");
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMat));
+        glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMat));
+
+
+        _shader.use(); // don’t forget to activate the shader first!
+        glUniform1i(glGetUniformLocation(_shader.ID, "texture1"), 0); // manually
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+    }
+    */
+
+
+    //DRAWING CUSTOM MODEL
 
     // set model matrix
     glm::mat4 model = glm::mat4(1.0f);
@@ -222,12 +245,12 @@ void OpenGLWindow::drawBuffered(glm::mat4 viewMat, glm::mat4 projectionMat) {
     glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMat));
     glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMat));
 
-
     _shader.use(); // don’t forget to activate the shader first!
     glUniform1i(glGetUniformLocation(_shader.ID, "texture1"), 0); // manually
 
     // draw OpenGL
     _models[0].Draw(_shader);
+
 
     update();
     logFrames();

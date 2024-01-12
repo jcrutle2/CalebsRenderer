@@ -90,28 +90,28 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
 {
     std::vector<Texture> textures;
-    for (GLuint i = 0; i < mat->GetTextureCount(type); i++)
+    for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)
     {
         aiString str;
         mat->GetTexture(type, i, &str);
-        GLboolean skip = false;
-        for (GLuint j = 0; j < textures_loaded.size(); j++)
+        bool skip = false;
+        for(unsigned int j = 0; j < textures_loaded.size(); j++)
         {
-            if (strcmp(textures_loaded[j].path.C_Str(), str.C_Str()) == 0)
+            if(std::strcmp(textures_loaded[j].path.data, str.C_Str()) == 0)
             {
                 textures.push_back(textures_loaded[j]);
                 skip = true;
                 break;
             }
         }
-        if (!skip)
-        {
+        if(!skip)
+        {   // if texture hasn't been loaded already, load it
             Texture texture;
             texture.id = TextureFromFile(str.C_Str(), directory);
             texture.type = typeName;
-            texture.path = str;
+            texture.path = str.C_Str();
             textures.push_back(texture);
-            textures_loaded.push_back(texture);
+            textures_loaded.push_back(texture); // add to loaded textures
         }
     }
     return textures;
