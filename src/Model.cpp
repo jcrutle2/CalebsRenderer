@@ -37,6 +37,14 @@ void Model::loadModel(std::string path)
         return;
     }
     directory = path.substr(0, path.find_last_of('/'));
+
+    Texture tex;
+    newTexture(tex, "images/error_texture.png", "png");
+    Texture tex2;
+    newTexture(tex2, "images/white.png", "png");
+    textures_loaded.push_back(tex);
+    textures_loaded.push_back(tex2);
+
     processNode(scene->mRootNode, scene);
 }
 
@@ -84,6 +92,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
         std::vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_specular");
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
     }
+    if (textures.size() == 0) textures.push_back(textures_loaded[0]);
     return Mesh(vertices, indices, textures);
 }
 

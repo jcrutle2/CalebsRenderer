@@ -27,7 +27,15 @@ add_executable(opengl_tests
         src/OpenGLWindow.cpp
         src/Mesh.cpp
         src/Model.cpp
+        src/Light.cpp
 )
+
+add_executable(model_tester
+        model_tester/assimp_sandbox.cpp
+        model_tester/assimp_sandbox.cpp
+)
+
+target_link_libraries(model_tester assimp)
 
 target_link_libraries(opengl_tests "-framework OpenGL" sdl2 GL SMFL-graphics SMFL-system SMFL-window assimp)
 

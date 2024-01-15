@@ -27,11 +27,10 @@ class Camera {
     glm::mat4 getPerspective();
 
 
-
+    glm::vec3 _cameraPos;
 private:
     glm::mat4 _view;
     float _zoom;
-    glm::vec3 _cameraPos;
     glm::vec3 _cameraFront;
     glm::vec3 _cameraUp;
     float _yaw;

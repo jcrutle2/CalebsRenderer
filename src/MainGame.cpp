@@ -31,7 +31,7 @@ void MainGame::run() {
 void MainGame::gameLoop() {
     while (_gameState != GameState::EXIT) {
         processInput();
-        _window.drawBuffered(_camera.getView(), _camera.getPerspective());
+        _window.drawBuffered();
     }
 }
 
@@ -47,32 +47,35 @@ void MainGame::processInput() {
             case SDL_KEYDOWN:
                 switch( e.key.keysym.sym ) {
                     case SDLK_w:
-                        _camera.moveForward(speed);
+                        _window.camera.moveForward(speed);
                         break;
                     case SDLK_s:
-                        _camera.moveBackward(speed);
+                        _window.camera.moveBackward(speed);
                         break;
                     case SDLK_a:
-                        _camera.moveLeft(speed);
+                        _window.camera.moveLeft(speed);
                         break;
                     case SDLK_d:
-                        _camera.moveRight(speed);
+                        _window.camera.moveRight(speed);
                         break;
                     case SDLK_SPACE:
-                        _camera.moveUp(speed);
+                        _window.camera.moveUp(speed);
                         break;
                     case SDLK_LSHIFT:
-                        _camera.moveDown(speed);
+                        _window.camera.moveDown(speed);
+                        break;
+                    case SDLK_v:
+                        _window.toggleRenderMode();
                         break;
                     default:
                         break;
                 }
                 break;
             case SDL_MOUSEMOTION:
-                _camera.updateDirection(e.motion.xrel, e.motion.yrel);
+                _window.camera.updateDirection(e.motion.xrel, e.motion.yrel);
                 break;
             case SDL_MOUSEWHEEL:
-                _camera.updateZoom(e.wheel.y);
+                _window.camera.updateZoom(e.wheel.y);
                 break;
             default:
                 break;

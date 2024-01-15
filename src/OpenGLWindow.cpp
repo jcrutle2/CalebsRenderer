@@ -25,6 +25,8 @@ OpenGLWindow::OpenGLWindow() {
     _elapsedMS = 0;
     _frameInt = 0;
 
+    camera = Camera();
+
     initSystems();
 }
 
@@ -33,6 +35,7 @@ OpenGLWindow::OpenGLWindow( int screenWidth, int screenHeight) {
     _context = nullptr;
     _screenWidth = screenWidth;
     _screenHeight = screenHeight;
+    camera = Camera();
 
     initSystems();
 }
@@ -96,12 +99,21 @@ void OpenGLWindow::initSystems() {
     SDL_SetRelativeMouseMode(SDL_TRUE);
 
     // load backpack model
-    _models.push_back(Model());
+    _models.push_back(Model("models/cursed.obj"));
+
+    // load lights
+    _dirLights.push_back(DirectionLight(glm::vec3(0.2f, -0.2f, -0.1f)));
+    _pointLights.push_back(PointLight(glm::vec3(0.0f, 0.0f, -3.0f)));
 
     // uncomment to test in wireframe mode
-    // glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+    _renderMode = GL_FILL;
+    glPolygonMode( GL_FRONT_AND_BACK, _renderMode );
 
+}
 
+void OpenGLWindow::toggleRenderMode() {
+    _renderMode = (_renderMode == GL_FILL) ? GL_LINE : GL_FILL;
+    glPolygonMode( GL_FRONT_AND_BACK, _renderMode );
 }
 
 void OpenGLWindow::stopSystems() {
@@ -183,26 +195,10 @@ void OpenGLWindow::setTriangle() {
     glEnableVertexAttribArray(1);
 }
 
-void OpenGLWindow::drawBuffered(glm::mat4 viewMat, glm::mat4 projectionMat) {
-
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+void OpenGLWindow::drawBuffered() {
 
     // clear depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    // positions of 10 cubes
-    glm::vec3 cubePositions[] = {
-            glm::vec3( 0.0f, 0.0f, 0.0f),
-            glm::vec3( 2.0f, 5.0f, -15.0f),
-            glm::vec3(-1.5f, -2.2f, -2.5f),
-            glm::vec3(-3.8f, -2.0f, -12.3f),
-            glm::vec3( 2.4f, -0.4f, -3.5f),
-            glm::vec3(-1.7f, 3.0f, -7.5f),
-            glm::vec3( 1.3f, -2.0f, -2.5f),
-            glm::vec3( 1.5f, 2.0f, -2.5f),
-            glm::vec3( 1.5f, 0.2f, -1.5f),
-            glm::vec3(-1.3f, 1.0f, -1.5f)
-    };
 
     // select shaders
     useTexture(_texture);
@@ -210,47 +206,28 @@ void OpenGLWindow::drawBuffered(glm::mat4 viewMat, glm::mat4 projectionMat) {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture.id);
     glBindVertexArray(_VAO);
-/*
-    for (unsigned int i = 0; i < 10; i++) {
-        // set model matrix
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, cubePositions[i]);
-
-        // apply perspective matrices
-        GLint modelLoc = glGetUniformLocation(_shader.ID, "model");
-        GLint viewLoc = glGetUniformLocation(_shader.ID, "view");
-        GLint projectionLoc = glGetUniformLocation(_shader.ID, "projection");
-        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMat));
-        glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMat));
-
-
-        _shader.use(); // don’t forget to activate the shader first!
-        glUniform1i(glGetUniformLocation(_shader.ID, "texture1"), 0); // manually
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-    }
-    */
-
 
     //DRAWING CUSTOM MODEL
 
-    // set model matrix
+    // use shader
+    _shader.use();
+
+    // set matrices
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(0,3,-4));
-    // apply perspective matrices
-    GLint modelLoc = glGetUniformLocation(_shader.ID, "model");
-    GLint viewLoc = glGetUniformLocation(_shader.ID, "view");
-    GLint projectionLoc = glGetUniformLocation(_shader.ID, "projection");
-    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMat));
-    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMat));
+    _shader.setMats(model, camera.getView(), camera.getPerspective());
 
-    _shader.use(); // don’t forget to activate the shader first!
-    glUniform1i(glGetUniformLocation(_shader.ID, "texture1"), 0); // manually
+    // set directional light
+    _shader.setDirectionLight(_dirLights[0]);
+
+    // set point lights
+    _shader.setPointLights(_pointLights);
+
+    // send camera position
+    _shader.setCamera(camera);
 
     // draw OpenGL
     _models[0].Draw(_shader);
-
 
     update();
     logFrames();

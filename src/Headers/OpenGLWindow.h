@@ -13,6 +13,8 @@
 #include <glm.hpp>
 #include <matrix_transform.hpp>
 #include <type_ptr.hpp>
+#include "Light.h"
+#include "Camera.h"
 
 class OpenGLWindow {
     public:
@@ -23,9 +25,12 @@ class OpenGLWindow {
         void stopSystems();
         void update();
         void setTriangle();
-        void drawBuffered(glm::mat4 viewMat, glm::mat4 projectionMat);
+        void drawBuffered();
+        void toggleRenderMode();
 
         float getElapsedMS();
+
+        Camera camera;
 
 private:
         void logFrames();
@@ -36,6 +41,8 @@ private:
         Texture _texture;
         std::vector<Model> _models;
 
+        std::vector<DirectionLight> _dirLights;
+        std::vector<PointLight> _pointLights;
 
         unsigned int _VAO;
         unsigned int _VBO;
@@ -43,6 +50,8 @@ private:
 
         int _screenWidth;
         int _screenHeight;
+
+        Uint64 _renderMode;
 
         Uint64 _currentFrame;
         Uint64 _lastFrame;
