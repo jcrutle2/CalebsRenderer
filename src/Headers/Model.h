@@ -8,6 +8,15 @@
 #include "Mesh.h"
 #include "Importer.hpp"
 #include "postprocess.h"
+#include <map>
+
+struct BoneInfo
+{
+    /*id is index in finalBoneMatrices*/
+    int id;
+    /*offset matrix transforms vertex from model space to bone space*/
+    glm::mat4 offset;
+};
 
 unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma = false);
 unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma);
@@ -15,22 +24,31 @@ unsigned int TextureFromFile(const char *path, const std::string &directory, boo
 class Model {
 public:
     Model(std::string path);
-
     Model();
+    Model(std::string path, glm::vec3 pos);
+    Model(std::string path, glm::vec3 pos, glm::vec3 scl);
+
 
     void Draw(Shader shader);
 
+    // model location
+    glm::vec3 position;
+    glm::vec3 rotationAxis;
+    float rotation;
+    glm::vec3 scale;
+
 private:
+    // mesh info
     std::string directory;
     std::vector<Mesh> meshes;
     std::vector<Texture> textures_loaded;
 
+    // private loading functions
     void loadModel(std::string path);
-
     void processNode(aiNode *const node, const aiScene *scene);
-
     Mesh processMesh(aiMesh *mesh, const aiScene *scene);
 
+    // Texture Info
     std::vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
 };
 

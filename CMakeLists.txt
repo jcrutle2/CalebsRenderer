@@ -1,43 +1,34 @@
 cmake_minimum_required(VERSION 3.26)
 project(opengl_tests)
 
+enable_language(OBJCXX)
+enable_language(OBJC)
+
 set(CMAKE_CXX_STANDARD 17)
 
-include_directories(include/sdl2 include/GL include/SFML include/glm include/glm/gtc include/stb-master include/assimp include)
+include_directories(include/sdl2 include/GL include/glm include/glm/gtc include/stb-master include/assimp include/imgui include)
 
-add_library(sdl2 SHARED IMPORTED)
-add_library(GL SHARED IMPORTED)
-add_library(SMFL-graphics SHARED IMPORTED)
-add_library(SMFL-system SHARED IMPORTED)
-add_library(SMFL-window SHARED IMPORTED)
-add_library(assimp SHARED IMPORTED)
+find_library(sdl SDL2 libSDL2.dylib)
+find_library(gl GLEW libGLEW.dylib)
+find_library(as assimp libassimp.dylib)
 
-SET_PROPERTY(TARGET sdl2 PROPERTY IMPORTED_LOCATION /Users/calebrutledge/CLionProjects/opengl_tests/lib/sdl2/libSDL2.dylib)
-SET_PROPERTY(TARGET GL PROPERTY IMPORTED_LOCATION /Users/calebrutledge/CLionProjects/opengl_tests/lib/glew/lib/libGLEW.2.2.0.dylib)
-SET_PROPERTY(TARGET SMFL-graphics PROPERTY IMPORTED_LOCATION /Users/calebrutledge/CLionProjects/opengl_tests/lib/smfl/libsfml-graphics.2.6.1.dylib)
-SET_PROPERTY(TARGET SMFL-system PROPERTY IMPORTED_LOCATION /Users/calebrutledge/CLionProjects/opengl_tests/lib/smfl/libsfml-system.2.6.1.dylib)
-SET_PROPERTY(TARGET SMFL-window PROPERTY IMPORTED_LOCATION /Users/calebrutledge/CLionProjects/opengl_tests/lib/smfl/libsfml-window.2.6.1.dylib)
-SET_PROPERTY(TARGET assimp PROPERTY IMPORTED_LOCATION /Users/calebrutledge/CLionProjects/opengl_tests/lib/assimp/libassimp.5.3.0.dylib)
+file(GLOB IMGUI_FILES include/imgui/*.cpp include/imgui/imgui_impl_osx.mm)
+add_library(imgui ${IMGUI_FILES})
 
-add_executable(opengl_tests
-                src/main.cpp
+add_executable(
+        opengl_tests
+        src/main.cpp
         src/MainGame.cpp
-        src/Shader.cpp
-        src/Camera.cpp
+        src/Rendering/Shader.cpp
+        src/Rendering/Camera.cpp
         src/OpenGLWindow.cpp
-        src/Mesh.cpp
-        src/Model.cpp
-        src/Light.cpp
+        src/Rendering/Mesh.cpp
+        src/Rendering/Model.cpp
+        src/Rendering/Light.cpp
+        src/UI/UI.cpp
 )
 
-add_executable(model_tester
-        model_tester/assimp_sandbox.cpp
-        model_tester/assimp_sandbox.cpp
-)
-
-target_link_libraries(model_tester assimp)
-
-target_link_libraries(opengl_tests "-framework OpenGL" sdl2 GL SMFL-graphics SMFL-system SMFL-window assimp)
+target_link_libraries(opengl_tests "-framework QuartzCore -framework GameController -framework Cocoa -framework OpenGL" ${sdl} ${gl} ${as} imgui)
 
 
 

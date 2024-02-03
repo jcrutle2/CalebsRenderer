@@ -35,6 +35,7 @@ class Shader
         void setPointLights(std::vector<PointLight> &vec) const;
     // camera functions
         void setMats(glm::mat4 model, glm::mat4 view, glm::mat4 projection) const;
+        void setModel(glm::mat4 model) const;
         void setCamera(Camera cam) const;
 };
 

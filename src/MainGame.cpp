@@ -23,7 +23,6 @@ MainGame::MainGame() {
 MainGame::~MainGame() = default;
 
 void MainGame::run() {
-    _window.setTriangle();
     gameLoop();
     _window.stopSystems();
 }

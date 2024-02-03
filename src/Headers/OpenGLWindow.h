@@ -15,38 +15,38 @@
 #include <type_ptr.hpp>
 #include "Light.h"
 #include "Camera.h"
+#include "../UI/UI.h"
+
 
 class OpenGLWindow {
     public:
-        OpenGLWindow();
-        OpenGLWindow(int screenWidth, int screenHeight);
+        explicit OpenGLWindow(int screenWidth = 1024, int screenHeight = 768);
         ~OpenGLWindow();
         void initSystems();
         void stopSystems();
         void update();
-        void setTriangle();
         void drawBuffered();
         void toggleRenderMode();
 
-        float getElapsedMS();
+        [[nodiscard]] float getElapsedMS() const;
 
         Camera camera;
+        Shader shader;
+        std::vector<Model> models;
 
 private:
         void logFrames();
         SDL_Window* _window;
         SDL_GLContext _context;
 
-        Shader _shader;
         Texture _texture;
-        std::vector<Model> _models;
 
         std::vector<DirectionLight> _dirLights;
         std::vector<PointLight> _pointLights;
 
-        unsigned int _VAO;
-        unsigned int _VBO;
-        unsigned int _EBO;
+        unsigned int VAO;
+        unsigned int VBO;
+        unsigned int EBO;
 
         int _screenWidth;
         int _screenHeight;

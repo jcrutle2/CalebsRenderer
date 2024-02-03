@@ -59,7 +59,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, vec3 diffuseVec, ve
     vec3 ambient  = light.ambient  * diffuseVec;
     vec3 diffuse  = light.diffuse  * diff * diffuseVec;
     vec3 specular = light.specular * spec * specVec;
-    return (diffuse + ambient);
+    return (diffuse + ambient + specular);
 }
 
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 diffuseVec, vec3 specVec)
@@ -84,18 +84,19 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, v
     ambient  *= attenuation;
     diffuse  *= attenuation;
     specular *= attenuation;
-    return (ambient + diffuse);
+    return (ambient + diffuse + specular);
 }
 
 void main()
 {
+    vec2 texs = vec2(TexCoords.x, -TexCoords.y);
     // get vectors
     vec3 norm = normalize(Normal);
     vec3 viewDir = normalize(camPos - FragPos);
 
     // get textures
-    vec3 diffuseVec = vec3(texture(material.texture_diffuse1, TexCoords)) + vec3(texture(material.texture_diffuse2, TexCoords)) + vec3(texture(material.texture_diffuse3, TexCoords));
-    vec3 specVec = vec3(texture(material.texture_specular1, TexCoords)) + vec3(texture(material.texture_specular2, TexCoords));
+    vec3 diffuseVec = vec3(texture(material.texture_diffuse1, texs));
+    vec3 specVec = vec3(texture(material.texture_specular1, texs));
 
     // calculate lights
     vec3 directionLight = CalcDirLight(dirLight, FragPos, viewDir, diffuseVec, specVec);
