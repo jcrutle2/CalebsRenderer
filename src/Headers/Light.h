@@ -5,13 +5,21 @@
 #ifndef OPENGL_TESTS_LIGHT_H
 #define OPENGL_TESTS_LIGHT_H
 
+#define DIRECTION_DEFAULT glm::vec3(0,0,0)
+#define POSITION_DEFAULT glm::vec3(0,0,0)
+#define AMBIENT_DEFAULT glm::vec3(0.1f, 0.1f, 0.1f)
+#define SPECULAR_DEFAULT glm::vec3(0.2f, 0.2f, 0.2f)
+#define DIFFUSE_DEFAULT glm::vec3(0.4f, 0.4f, 0.4f)
+#define CONSTANT_DEFAULT 1.0f
+#define LINEAR_DEFAULT 0.18f
+#define QUADRATIC_DEFAULT 0.09f
+
 #include <glm.hpp>
 
 
 class Light {
     public:
-        Light(glm::vec3 amb, glm::vec3 spec, glm::vec3 dif);
-        Light();
+        explicit Light(glm::vec3 amb = AMBIENT_DEFAULT, glm::vec3 spec = SPECULAR_DEFAULT, glm::vec3 dif = DIFFUSE_DEFAULT);
         glm::vec3 ambient{};
         glm::vec3 specular{};
         glm::vec3 diffuse{};
@@ -20,9 +28,7 @@ class Light {
 
 class LimitedLight : public Light {
     public:
-        LimitedLight(glm::vec3 amb, glm::vec3 spec, glm::vec3 dif, float con, float lin, float quad);
-        LimitedLight(glm::vec3 amb, glm::vec3 spec, glm::vec3 dif);
-        LimitedLight();
+        explicit LimitedLight(glm::vec3 amb = AMBIENT_DEFAULT, glm::vec3 spec = SPECULAR_DEFAULT, glm::vec3 dif = DIFFUSE_DEFAULT, float con = CONSTANT_DEFAULT, float lin = LINEAR_DEFAULT, float quad = QUADRATIC_DEFAULT);
         float constant;
         float linear;
         float quadratic;
@@ -31,19 +37,14 @@ class LimitedLight : public Light {
 
 class PointLight : public LimitedLight {
     public:
-        PointLight(glm::vec3 pos, glm::vec3 amb, glm::vec3 spec, glm::vec3 dif, float con, float lin, float quad);
-        PointLight(glm::vec3 pos, glm::vec3 amb, glm::vec3 spec, glm::vec3 dif);
-        PointLight(glm::vec3 pos);
-        PointLight();
+        explicit PointLight(glm::vec3 pos = POSITION_DEFAULT, glm::vec3 amb = AMBIENT_DEFAULT, glm::vec3 spec = SPECULAR_DEFAULT, glm::vec3 dif = DIFFUSE_DEFAULT, float con = CONSTANT_DEFAULT, float lin = LINEAR_DEFAULT, float quad = QUADRATIC_DEFAULT);
         glm::vec3 position{};
         void setPosition(glm::vec3 pos);
 };
 
 class DirectionLight : public Light {
     public:
-        DirectionLight(glm::vec3 dir, glm::vec3 amb, glm::vec3 spec, glm::vec3 dif);
-        DirectionLight(glm::vec3 dir);
-        DirectionLight();
+        explicit DirectionLight(glm::vec3 dir = DIRECTION_DEFAULT, glm::vec3 amb = AMBIENT_DEFAULT, glm::vec3 spec = SPECULAR_DEFAULT, glm::vec3 dif = DIFFUSE_DEFAULT);
         glm::vec3 direction{};
 };
 

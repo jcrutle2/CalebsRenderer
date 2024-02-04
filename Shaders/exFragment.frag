@@ -59,7 +59,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, vec3 diffuseVec, ve
     vec3 ambient  = light.ambient  * diffuseVec;
     vec3 diffuse  = light.diffuse  * diff * diffuseVec;
     vec3 specular = light.specular * spec * specVec;
-    return (diffuse + ambient + specular);
+    return (diffuse + ambient);
 }
 
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 diffuseVec, vec3 specVec)
@@ -84,7 +84,7 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, v
     ambient  *= attenuation;
     diffuse  *= attenuation;
     specular *= attenuation;
-    return (ambient + diffuse + specular);
+    return (ambient + diffuse);
 }
 
 void main()

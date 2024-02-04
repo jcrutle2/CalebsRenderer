@@ -166,5 +166,5 @@ void Shader::setPointLights(std::vector<PointLight> &vec) const {
 }
 
 void Shader::setCamera(Camera cam) const {
-    setVec3("camPos", cam._cameraPos);
+    setVec3("camPos", cam.cameraPos);
 }

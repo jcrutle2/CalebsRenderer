@@ -44,20 +44,20 @@ private:
         std::vector<DirectionLight> _dirLights;
         std::vector<PointLight> _pointLights;
 
-        unsigned int VAO;
-        unsigned int VBO;
-        unsigned int EBO;
+        unsigned int VAO{};
+        unsigned int VBO{};
+        unsigned int EBO{};
 
         int _screenWidth;
         int _screenHeight;
 
-        Uint64 _renderMode;
+        Uint64 _renderMode{};
 
-        Uint64 _currentFrame;
-        Uint64 _lastFrame;
-        float _deltaTime;
-        float _elapsedMS;
-        Uint16 _frameInt;
+        Uint64 _currentFrame{};
+        Uint64 _lastFrame{};
+        float _deltaTime{};
+        float _elapsedMS{};
+        Uint16 _frameInt{};
 };
 
 

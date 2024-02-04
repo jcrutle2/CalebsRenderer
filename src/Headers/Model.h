@@ -23,11 +23,8 @@ unsigned int TextureFromFile(const char *path, const std::string &directory, boo
 
 class Model {
 public:
-    Model(std::string path);
-    Model();
-    Model(std::string path, glm::vec3 pos);
-    Model(std::string path, glm::vec3 pos, glm::vec3 scl);
-
+    Model(std::string n, std::string path, glm::vec3 pos= glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 scl = glm::vec3(1.0f, 1.0f, 1.0f));
+    char name[32];
 
     void Draw(Shader shader);
 

@@ -70,9 +70,6 @@ void OpenGLWindow::initSystems() {
     // initialize EBO
     glGenBuffers(1, &EBO);
 
-    // initialize container texture;
-    newTexture(_texture, "images/container.jpg", "");
-
     // enable depth testing
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
@@ -81,12 +78,8 @@ void OpenGLWindow::initSystems() {
     // trap mouse
     SDL_SetRelativeMouseMode(SDL_TRUE);
 
-    // load backpack model
-    models.push_back(Model("models/Mutant/Mutant.dae"));
-
     // load lights
     _dirLights.push_back(DirectionLight(glm::vec3(0.2f, -0.2f, -0.1f)));
-    _pointLights.push_back(PointLight(glm::vec3(0.0f, 0.0f, -3.0f)));
 
     // uncomment to test in wireframe mode
     _renderMode = GL_FILL;
@@ -94,7 +87,6 @@ void OpenGLWindow::initSystems() {
 
     // open IMGUI
     UI::Initalize(_window, _context);
-
 }
 
 void OpenGLWindow::toggleRenderMode() {
@@ -119,9 +111,11 @@ void OpenGLWindow::update() {
 void OpenGLWindow::drawBuffered() {
     // trigger IMGUI
     UI::FrameStart();
+    UI::renderWindows(models, _dirLights[0], _pointLights);
 
     // clear depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
     // select shaders
     useTexture(_texture);

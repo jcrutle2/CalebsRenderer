@@ -5,57 +5,47 @@
 #include "../Headers/Camera.h"
 #include <iostream>
 
-Camera::Camera() {
-    _view = glm::lookAt(_cameraPos, _cameraPos + _cameraFront, _cameraUp);
+Camera::Camera(glm::vec3 camP, glm::vec3 camF, glm::vec3 camU) {
+    _view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
     _zoom = 45.0f;
 
-    _cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-    _cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-    _cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+    cameraPos = camP;
+    cameraFront = camF;
+    cameraUp = camU;
     _pitch = 0.0f;
     _yaw = -90.0f;
     _sensitivity = 0.1f;
     _zoomSensitivity = 1.0f;
-}
 
-Camera::Camera(glm::vec3 camP, glm::vec3 camF, glm::vec3 camU) {
-    _view = glm::lookAt(_cameraPos, _cameraPos + _cameraFront, _cameraUp);
-
-    _cameraPos = camP;
-    _cameraFront = camF;
-    _cameraUp = camU;
-    _pitch = 0.0f;
-    _yaw = -90.0f;
-    _sensitivity = 0.1f;
-    _zoomSensitivity = 1.0f;
+    state = CAMERA_STATE_UNPAUSED;
 }
 
 Camera::~Camera() = default;
 
 void Camera::moveForward(const float speed) {
-    _cameraPos += speed * _cameraFront;
+    cameraPos += speed * cameraFront;
 }
 
 void Camera::moveBackward(const float speed) {
-    _cameraPos -= speed * _cameraFront;
+    cameraPos -= speed * cameraFront;
 }
 
 void Camera::moveRight(const float speed) {
-    _cameraPos += glm::normalize(glm::cross(_cameraFront, _cameraUp)) *
-                  speed;
+    cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) *
+                 speed;
 }
 
 void Camera::moveLeft(const float speed) {
-    _cameraPos -= glm::normalize(glm::cross(_cameraFront, _cameraUp)) *
-                  speed;
+    cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) *
+                 speed;
 }
 
 void Camera::moveUp(const float speed) {
-    _cameraPos += speed * _cameraUp;
+    cameraPos += speed * cameraUp;
 }
 
 void Camera::moveDown(const float speed) {
-    _cameraPos -= speed * _cameraUp;
+    cameraPos -= speed * cameraUp;
 }
 
 void Camera::updateDirection(int32_t xMovement, int32_t yMovement) {
@@ -72,7 +62,7 @@ void Camera::updateDirection(int32_t xMovement, int32_t yMovement) {
     direction.x = cos(glm::radians(_yaw)) * cos(glm::radians(_pitch));
     direction.y = sin(glm::radians(_pitch));
     direction.z = sin(glm::radians(_yaw)) * cos(glm::radians(_pitch));
-    _cameraFront = glm::normalize(direction);
+    cameraFront = glm::normalize(direction);
 }
 
 void Camera::updateZoom(int32_t zoom) {
@@ -85,7 +75,7 @@ void Camera::updateZoom(int32_t zoom) {
 }
 
 void Camera::updateView() {
-    _view = glm::lookAt(_cameraPos, _cameraPos + _cameraFront, _cameraUp);
+    _view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 }
 
 glm::mat4 Camera::getView() {
@@ -96,4 +86,15 @@ glm::mat4 Camera::getView() {
 glm::mat4 Camera::getPerspective() {
     return glm::perspective(glm::radians(_zoom), 800.0f / 600.0f, 0.1f,
                             100.0f);
+}
+
+void Camera::toggleCameraState() {
+    if (state == CAMERA_STATE_UNPAUSED) {
+        state = CAMERA_STATE_PAUSED;
+        SDL_SetRelativeMouseMode(SDL_FALSE);
+    }
+    else {
+        state = CAMERA_STATE_UNPAUSED;
+        SDL_SetRelativeMouseMode(SDL_TRUE);
+    }
 }

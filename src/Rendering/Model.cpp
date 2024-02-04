@@ -13,37 +13,10 @@
 #include <string>
 #include "../Headers/AssimpGLMHelpers.h"
 
-Model::Model()
-{
-    loadModel("models/Backpack/backpack.obj");
-
-    position = glm::vec3(0.0f, 0.0f, 0.0f);
-    rotationAxis = glm::vec3(0.0f, 1.0f, 0.0f);
-    rotation = 0.0f;
-    scale = glm::vec3(0.01f, 0.01f, 0.01f);
-}
-
-Model::Model(std::string path)
-{
+Model::Model(std::string n, std::string path, glm::vec3 pos, glm::vec3 scl) {
     loadModel(path);
 
-    position = glm::vec3(0.0f, -1.0f, 0.0f);
-    rotationAxis = glm::vec3(0.0f, 1.0f, 0.0f);
-    rotation = 0.0f;
-    scale = glm::vec3(0.01f, 0.01f, 0.01f);
-}
-
-Model::Model(std::string path, glm::vec3 pos) {
-    loadModel(path);
-
-    position = pos;
-    rotationAxis = glm::vec3(0.0f, 1.0f, 0.0f);
-    rotation = 0.0f;
-    scale = glm::vec3(0.01f, 0.01f, 0.01f);
-}
-
-Model::Model(std::string path, glm::vec3 pos, glm::vec3 scl) {
-    loadModel(path);
+    strcpy(name, n.c_str());
 
     position = pos;
     rotationAxis = glm::vec3(0.0f, 1.0f, 0.0f);

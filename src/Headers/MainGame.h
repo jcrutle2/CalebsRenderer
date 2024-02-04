@@ -30,11 +30,12 @@ public:
 private:
     void gameLoop();
     void processInput();
+    void processInputUnpaused(SDL_Event * e);
+    void processInputPaused(SDL_Event * e);
 
     OpenGLWindow _window;
 
     GameState _gameState;
-    Camera _camera;
 };
 
 
