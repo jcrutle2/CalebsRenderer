@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.26)
-project(opengl_tests)
+project(CalebsRenderer)
 
 enable_language(OBJCXX)
 enable_language(OBJC)
@@ -16,7 +16,7 @@ file(GLOB IMGUI_FILES include/imgui/*.cpp include/imgui/imgui_impl_osx.mm)
 add_library(imgui ${IMGUI_FILES})
 
 add_executable(
-        opengl_tests
+        CalebsRenderer
         src/main.cpp
         src/MainGame.cpp
         src/Rendering/Shader.cpp
@@ -28,7 +28,7 @@ add_executable(
         src/UI/UI.cpp
 )
 
-target_link_libraries(opengl_tests "-framework QuartzCore -framework GameController -framework Cocoa -framework OpenGL" ${sdl} ${gl} ${as} imgui)
+target_link_libraries(CalebsRenderer "-framework QuartzCore -framework GameController -framework Cocoa -framework OpenGL" ${sdl} ${gl} ${as} imgui)
 
 
 
