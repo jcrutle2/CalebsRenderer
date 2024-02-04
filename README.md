@@ -1,5 +1,5 @@
 <h2 align = center>Caleb's Renderer<h2>
-![ExampleImage](examples/screenshots/ex1.png) </h2>
+![ExampleImage](https://github.com/jcrutle2/CalebsRenderer/blob/master/examples/screenshots/ex1.png) </h2>
 
 **Caleb's Renderer** is a rendering engine built in C++ using SDL2 and OpenGL.
 It allows for model importing via Assimp. All model and lighting information is
