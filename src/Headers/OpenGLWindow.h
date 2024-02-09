@@ -58,6 +58,7 @@ private:
         float _deltaTime{};
         float _elapsedMS{};
         Uint16 _frameInt{};
+        std::string _frameRate;
 };
 
 

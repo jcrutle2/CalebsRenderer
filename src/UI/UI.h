@@ -18,13 +18,13 @@ namespace fs = std::filesystem;
 namespace UI {
     void Initalize(SDL_Window * window, void * sdl_gl_context);
 
-    void mainWindow(std::vector<Model> &models, DirectionLight dirLight, std::vector<PointLight> &pointLights);
+    void mainWindow(std::vector<Model> &models, DirectionLight dirLight, std::vector<PointLight> &pointLights, std::string frameRate);
     void modelWindow(Model &model, int num);
     void directionLightWindow(DirectionLight &l);
     void lightWindow(std::vector<PointLight> &lights, int num);
     void newModelWindow(std::vector<Model> &m);
 
-    void renderWindows(std::vector<Model> &models, DirectionLight &dirLight, std::vector<PointLight> &pointLights);
+    void renderWindows(std::vector<Model> &models, DirectionLight &dirLight, std::vector<PointLight> &pointLights, std::string frameRate);
 
     void FrameStart();
     void FrameEnd();

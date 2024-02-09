@@ -15,6 +15,21 @@ namespace UI {
     std::string filePath = fs::current_path();
     std::string path = filePath;
     char nameBuf[32] = "";
+    void back(std::string &s) {
+        for (int i = s.length() - 1; i > 0; i--) {
+            if (s[i] == '/') {
+                s = s.substr(0, i);
+                return;
+            }
+        }
+    }
+    std::string shorten(const std::string &s) {
+        for (int i = s.length() - 1; i > 0; i--) {
+            if (s[i] == '/') {
+                return s.substr(i, s.length() - i);
+            }
+        }
+    }
 }
 
 void UI::Initalize(SDL_Window * window, void * sdl_gl_context) {
@@ -31,7 +46,9 @@ void UI::Initalize(SDL_Window * window, void * sdl_gl_context) {
     }
 }
 
-void UI::mainWindow(std::vector<Model> &models, DirectionLight dirLight, std::vector<PointLight> &pointLights) {
+void UI::mainWindow(std::vector<Model> &models, DirectionLight dirLight, std::vector<PointLight> &pointLights, std::string frameRate) {
+    ImGui::Text(("Frame Rate: " + frameRate).c_str());
+
     ImGui::Text("Model List: ");
     int modelCount = 0;
     for (auto const &m : models) {
@@ -118,19 +135,27 @@ void UI::lightWindow(std::vector<PointLight> &lights, int num) {
 void UI::newModelWindow(std::vector<Model> &m) {
     ImGui::Begin("Add Model", &my_tool_active, ImGuiWindowFlags_MenuBar);
 
-    std::string header = "Select Model from Path";
+    ImGui::Text(path.c_str());
 
     for (const auto& entry : fs::directory_iterator(path)) {
-        if (ImGui::Button(entry.path().c_str())) {
-            if (fs::is_directory(entry))
-                path = entry.path();
-            else {
-                m.emplace_back(Model("New Model", static_cast<std::string>(entry.path())));
-                addModelWindow = false;
+        std::string entryPath = entry.path();
+        std::string shortPath = UI::shorten(entryPath);
+
+        if (shortPath[1] != '.') {
+            if (ImGui::Button(shortPath.c_str())) {
+                if (fs::is_directory(entry))
+                    path = entry.path();
+                else {
+                    m.emplace_back(Model("New Model", static_cast<std::string>(entry.path())));
+                    addModelWindow = false;
+                }
             }
         }
     }
 
+    if(ImGui::MenuItem("Back")) {
+        UI::back(path);
+    }
 
     if(ImGui::MenuItem("Close")) {
         addModelWindow = false;
@@ -139,8 +164,9 @@ void UI::newModelWindow(std::vector<Model> &m) {
     ImGui::End();
 }
 
-void UI::renderWindows(std::vector<Model> &models, DirectionLight &dirLight, std::vector<PointLight> &pointLights) {
-    mainWindow(models, dirLight, pointLights);
+void UI::renderWindows(std::vector<Model> &models, DirectionLight &dirLight, std::vector<PointLight> &pointLights, std::string frameRate) {
+    mainWindow(models, dirLight, pointLights, frameRate);
+
     int modelCount = 0;
     for (auto &model : models) {
         if (openModels[modelCount]) modelWindow(model, modelCount);

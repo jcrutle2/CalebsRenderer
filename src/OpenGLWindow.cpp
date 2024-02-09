@@ -111,7 +111,7 @@ void OpenGLWindow::update() {
 void OpenGLWindow::drawBuffered() {
     // trigger IMGUI
     UI::FrameStart();
-    UI::renderWindows(models, _dirLights[0], _pointLights);
+    UI::renderWindows(models, _dirLights[0], _pointLights, _frameRate);
 
     // clear depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -153,7 +153,7 @@ void OpenGLWindow::logFrames() {
     SDL_Delay(floor(16.666f - _elapsedMS));
     _elapsedMS = std::max(_elapsedMS, 16.666f);
     if (_frameInt >= 60) {
-        std::cout << "Current FPS: " <<  std::to_string(1.0f / (_elapsedMS / 1000.0f)) << std::endl;
+        _frameRate = std::to_string(1.0f / (_elapsedMS / 1000.0f));
         _frameInt = 0;
     }
     else _frameInt++;
