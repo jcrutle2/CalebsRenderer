@@ -4,7 +4,6 @@
 
 #include "OpenGLWindow.h"
 
-
 void sdlFatalError(std::string errorString) {
     std::cout << errorString << std::endl;
     std::cout << "Press any key to quit...";
@@ -140,6 +139,10 @@ void OpenGLWindow::drawBuffered() {
     for (auto m : scene.models) {
         m.Draw(shader);
     }
+
+    // draw skybox
+    if (scene.skybox.active)
+        scene.skybox.draw(camera.getView(), camera.getPerspective());
 
     UI::FrameEnd();
     update();

@@ -13,8 +13,9 @@
 #include <matrix_transform.hpp>
 #include <type_ptr.hpp>
 #include "../Rendering/Camera.h"
-#include "../Scene/Scene.h"
+#include "../Rendering/Scene/Scene.h"
 #include "../UI/UI.h"
+#include "../Rendering/Skybox/Skybox.h"
 
 
 class OpenGLWindow {

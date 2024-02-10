@@ -35,6 +35,12 @@ void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
         s.pointLights.emplace_back();
     }
 
+    ImGui::Text("\nSkybox");
+    if (ImGui::Button("Change Skybox")) {
+        openChangeSkybox = true;
+    }
+
+
     ImGui::Text("\nScene Info");
     ImGui::InputText("Name", sceneBuf, 64);
     if (ImGui::Button("Save Scene")) {
@@ -150,6 +156,31 @@ void UI::loadSceneWindow(Scene &s) {
                 getScenePath += shortPath;
                 s = SceneLoader::getSceneFromDisk(getScenePath);
                 openLoadModel = false;
+            }
+        }
+    }
+
+    if(ImGui::MenuItem("Close")) {
+        addModelWindow = false;
+    }
+
+    ImGui::End();
+}
+
+void UI::changeSkyboxWindow(Skybox &s) {
+    ImGui::Begin("Change Skybox", &my_tool_active, ImGuiWindowFlags_MenuBar);
+
+    ImGui::Text("%s", scenesPath.c_str());
+
+    for (const auto& entry : fs::directory_iterator(skyboxPath)) {
+        std::string entryPath = entry.path();
+        std::string shortPath = UI::shorten(entryPath);
+
+        if (shortPath[1] != '.') {
+            if (ImGui::Button(shortPath.substr(1, shortPath.length() - 1).c_str())) {
+                std::string skyboxDirectory = "Textures" + shortPath;
+                s.loadSkybox(skyboxDirectory);
+                openChangeSkybox = false;
             }
         }
     }

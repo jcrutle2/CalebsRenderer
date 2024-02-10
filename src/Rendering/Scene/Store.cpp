@@ -25,6 +25,12 @@ void SceneLoader::storeDirectionLight(const DirectionLight &d, std::ofstream &st
     archive(d);
 }
 
+void SceneLoader::storeSkybox(const Skybox &s, std::ofstream &stream) {
+    stream.put(SKYBOX_LOAD_CODE);
+    cereal::BinaryOutputArchive archive(stream);
+    archive(s);
+}
+
 void SceneLoader::storeScene(const Scene &s, const std::string &path) {
     std::ofstream stream;
     stream.open(path, std::ios::binary);
@@ -35,4 +41,5 @@ void SceneLoader::storeScene(const Scene &s, const std::string &path) {
     for (const PointLight &p : s.pointLights) {
         storePointLight(p, stream);
     }
+    storeSkybox(s.skybox, stream);
 }

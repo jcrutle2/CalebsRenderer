@@ -56,3 +56,9 @@ void DirectionLight::serialize(Archive &ar) {
     ar(diffuse.g);
     ar(diffuse.b);
 }
+
+template<class Archive>
+void Skybox::serialize(Archive &ar) {
+    ar(directory);
+    ar(active);
+}

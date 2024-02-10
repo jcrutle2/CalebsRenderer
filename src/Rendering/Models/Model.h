@@ -9,7 +9,7 @@
 #include "Importer.hpp"
 #include "postprocess.h"
 #include <map>
-#include "../../Scene/ModelInfo.h"
+#include "../Scene/ModelInfo.h"
 
 struct BoneInfo
 {

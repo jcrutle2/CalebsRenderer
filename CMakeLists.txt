@@ -28,10 +28,11 @@ add_executable(
         src/Rendering/Models/Model.cpp
         src/Rendering/Light/Light.cpp
         src/UI/UI.cpp
-        src/Scene/Scene.cpp
+        src/Rendering/Scene/Scene.cpp
         src/UI/UIGlobals.cpp
         src/UI/UIWindows.cpp
         src/UI/UIUtil.cpp
+        src/Rendering/Skybox/Skybox.cpp
 )
 
 target_link_libraries(CalebsRenderer "-framework QuartzCore -framework GameController -framework Cocoa -framework OpenGL" ${sdl} ${gl} ${as} imgui)

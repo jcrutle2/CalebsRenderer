@@ -12,7 +12,7 @@
 #include "Model.h"
 #include <string>
 #include "AssimpGLMHelpers.h"
-#include "../../Scene/SceneLoader.h"
+#include "../Scene/SceneLoader.h"
 
 Model::Model(std::string n, std::string path, glm::vec3 pos, glm::vec3 scl) {
     strcpy(src, path.c_str());

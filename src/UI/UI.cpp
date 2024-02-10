@@ -39,4 +39,6 @@ void UI::renderWindows(Scene &s, Camera &c, const std::string &frameRate) {
     else path = filePath;
 
     if (openLoadModel) loadSceneWindow(s);
+
+    if (openChangeSkybox) changeSkyboxWindow(s.skybox);
 }

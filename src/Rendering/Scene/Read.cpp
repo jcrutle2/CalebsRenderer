@@ -14,6 +14,15 @@ Model SceneLoader::getModelFromDisk(std::ifstream &stream) {
     return m;
 }
 
+Skybox SceneLoader::getSkyboxFromDisk(std::ifstream &stream) {
+    Skybox s;
+    cereal::BinaryInputArchive archive(stream);
+    archive(s);
+    if (s.active)
+        s.loadSkybox(s.directory);
+    return s;
+}
+
 DirectionLight SceneLoader::getDirectionLightFromDisk(std::ifstream &stream) {
     DirectionLight light;
     cereal::BinaryInputArchive archive(stream);
@@ -45,6 +54,9 @@ Scene SceneLoader::getSceneFromDisk(const std::string &path) {
                 break;
             case POINTLIGHT_LOAD_CODE:
                 s.pointLights.emplace_back(getPointLightFromDisk(stream));
+                break;
+            case SKYBOX_LOAD_CODE:
+                s.skybox = getSkyboxFromDisk(stream);
                 break;
             default:
                 exit(492);

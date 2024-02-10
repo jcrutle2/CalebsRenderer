@@ -7,13 +7,14 @@
 #define CALEBSRENDERER_SCENELOADER_H
 
 #include <vector>
-#include "../Rendering/Models/Model.h"
-#include "../Rendering/Light/Light.h"
-#include <glm.hpp>
-#include <cereal/archives/binary.hpp>
-#include <cereal/access.hpp>
+#include "../Models/Model.h"
+#include "../Light/Light.h"
+#include "glm.hpp"
+#include "cereal/archives/binary.hpp"
+#include "cereal/access.hpp"
 #include "ModelInfo.h"
 #include "Scene.h"
+#include "../Skybox/Skybox.h"
 
 namespace SceneLoader {
 
@@ -23,6 +24,8 @@ namespace SceneLoader {
     void storePointLight(const PointLight &p, std::ofstream &stream);
     // Stores DirectionLight on Disk
     void storeDirectionLight(const DirectionLight &d, std::ofstream &stream);
+    // Stores Skybox on Disk
+    void storeSkybox(const Skybox &s, std::ofstream &stream);
     // Stores Scene to Disk
     void storeScene(const Scene &s, const std::string &path);
     // Gets Model from Disk
@@ -31,6 +34,8 @@ namespace SceneLoader {
     DirectionLight getDirectionLightFromDisk(std::ifstream &stream);
     // Load PointLight from Disk
     PointLight getPointLightFromDisk(std::ifstream &stream);
+    // Load Skybox from Disk
+    Skybox getSkyboxFromDisk(std::ifstream &stream);
     // Load Scene from Disk
     Scene getSceneFromDisk(const std::string &path);
 }

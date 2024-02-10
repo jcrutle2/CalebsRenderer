@@ -13,7 +13,7 @@
 #include "imgui/imgui_impl_sdl2.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include "imgui/imgui.h"
-#include "../Scene/SceneLoader.h"
+#include "../Rendering/Scene/SceneLoader.h"
 #include <filesystem>
 namespace fs = std::filesystem;
 
@@ -28,6 +28,7 @@ namespace UI {
     void lightWindow(std::vector<PointLight> &lights, int num);
     void newModelWindow(std::vector<Model> &m);
     void loadSceneWindow(Scene &s);
+    void changeSkyboxWindow(Skybox &s);
 
     void renderWindows(Scene &s, Camera &c, const std::string &frameRate);
 
@@ -39,13 +40,15 @@ namespace UI {
 
     // extern globals
     extern std::unordered_map<int, bool> openModels;
+    extern std::unordered_map<int, bool> openLights;
     extern bool addModelWindow;
     extern bool openDirLight;
-    extern std::unordered_map<int, bool> openLights;
     extern bool openLoadModel;
-    extern std::string filePath ;
+    extern bool openChangeSkybox;
+    extern std::string filePath;
     extern std::string path;
     extern std::string scenesPath;
+    extern std::string skyboxPath;
     extern char nameBuf[32];
     extern char sceneBuf[64];
 }
