@@ -111,7 +111,7 @@ void OpenGLWindow::update() {
 void OpenGLWindow::drawBuffered() {
     // trigger IMGUI
     UI::FrameStart();
-    UI::renderWindows(scene, _frameRate);
+    UI::renderWindows(scene, camera, _frameRate);
 
     // clear depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

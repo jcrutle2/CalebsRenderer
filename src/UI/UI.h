@@ -22,14 +22,14 @@ extern bool my_tool_active;
 namespace UI {
     void Initalize(SDL_Window * window, void * sdl_gl_context);
 
-    void mainWindow(Scene &s, const std::string &frameRate);
+    void mainWindow(Scene &s, Camera &c, const std::string &frameRate);
     void modelWindow(Model &model, int num);
     void directionLightWindow(DirectionLight &l);
     void lightWindow(std::vector<PointLight> &lights, int num);
     void newModelWindow(std::vector<Model> &m);
     void loadSceneWindow(Scene &s);
 
-    void renderWindows(Scene &s, const std::string &frameRate);
+    void renderWindows(Scene &s, Camera &c, const std::string &frameRate);
 
     void FrameStart();
     void FrameEnd();

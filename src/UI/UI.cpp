@@ -3,9 +3,6 @@
 //
 
 #include "UI.h"
-#include <algorithm>
-
-
 
 void UI::Initalize(SDL_Window * window, void * sdl_gl_context) {
     // Setup Dear ImGui context
@@ -21,8 +18,8 @@ void UI::Initalize(SDL_Window * window, void * sdl_gl_context) {
     }
 }
 
-void UI::renderWindows(Scene &s, const std::string &frameRate) {
-    mainWindow(s, frameRate);
+void UI::renderWindows(Scene &s, Camera &c, const std::string &frameRate) {
+    mainWindow(s, c, frameRate);
 
     int modelCount = 0;
     for (auto &model : s.models) {

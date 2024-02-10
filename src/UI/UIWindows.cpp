@@ -4,10 +4,11 @@
 
 #include "UI.h"
 
-void UI::mainWindow(Scene &s, const std::string &frameRate) {
+void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
     ImGui::Text("%s", ("Frame Rate: " + frameRate).c_str());
+    ImGui::InputFloat3("Camera", &c.cameraPos.x);
 
-    ImGui::Text("Model List: ");
+    ImGui::Text("\nModel List: ");
     int modelCount = 0;
     for (auto const &m : s.models) {
         if (ImGui::Button(m.name)) {
