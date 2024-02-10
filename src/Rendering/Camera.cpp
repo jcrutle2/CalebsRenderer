@@ -2,7 +2,7 @@
 // Created by Caleb Rutledge on 1/3/24.
 //
 
-#include "../Headers/Camera.h"
+#include "Camera.h"
 #include <iostream>
 
 Camera::Camera(glm::vec3 camP, glm::vec3 camF, glm::vec3 camU) {

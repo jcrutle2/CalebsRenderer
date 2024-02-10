@@ -2,7 +2,7 @@
 // Created by Caleb Rutledge on 1/3/24.
 //
 
-#include "../Headers/Shader.h"
+#include "Shader.h"
 #include "matrix_transform.hpp"
 #include "type_ptr.hpp"
 

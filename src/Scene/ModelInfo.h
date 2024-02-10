@@ -10,6 +10,7 @@
 #include <cereal/archives/binary.hpp>
 #include <cereal/access.hpp>
 
+// Holds Model Information In A Way That Can Be Read By The Disk
 struct ModelInfo{
 public:
     char name[64];

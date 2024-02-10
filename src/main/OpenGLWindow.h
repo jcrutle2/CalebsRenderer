@@ -7,12 +7,12 @@
 
 #include "SDL.h"
 #include "glew.h"
-#include "Shader.h"
+#include "../Rendering/Models/Shader.h"
 #include <iostream>
 #include <glm.hpp>
 #include <matrix_transform.hpp>
 #include <type_ptr.hpp>
-#include "Camera.h"
+#include "../Rendering/Camera.h"
 #include "../Scene/Scene.h"
 #include "../UI/UI.h"
 

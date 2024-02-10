@@ -7,8 +7,8 @@
 #pragma once
 
 #include <vector>
-#include "../Headers/Model.h"
-#include "../Headers/Light.h"
+#include "../Rendering/Models/Model.h"
+#include "../Rendering/Light/Light.h"
 #include <glm.hpp>
 #include <cereal/archives/binary.hpp>
 #include <cereal/access.hpp>

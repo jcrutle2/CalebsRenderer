@@ -6,16 +6,16 @@
 // Created by Caleb Rutledge on 1/6/24.
 //
 
-#include "../Headers/Mesh.h"
+#include "Mesh.h"
 #include "Importer.hpp"
 #include "postprocess.h"
-#include "../Headers/Model.h"
+#include "Model.h"
 #include <string>
-#include "../Headers/AssimpGLMHelpers.h"
-#include "../Scene/SceneLoader.h"
+#include "AssimpGLMHelpers.h"
+#include "../../Scene/SceneLoader.h"
 
 Model::Model(std::string n, std::string path, glm::vec3 pos, glm::vec3 scl) {
-    src = path;
+    strcpy(src, path.c_str());
     loadModel(path);
 
     strcpy(name, n.c_str());
@@ -27,7 +27,7 @@ Model::Model(std::string n, std::string path, glm::vec3 pos, glm::vec3 scl) {
 }
 
 Model::Model(const ModelInfo &m) {
-    src = m.path;
+    strcpy(src, m.path);
     loadModel(src);
 
     strcpy(name, m.name);
@@ -45,6 +45,10 @@ Model::Model(const ModelInfo &m) {
     scale.x = m.scale[0];
     scale.y = m.scale[1];
     scale.z = m.scale[2];
+}
+
+Model::Model() {
+
 }
 
 void Model::Draw(Shader shader)

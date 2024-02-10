@@ -2,7 +2,7 @@
 // Created by Caleb Rutledge on 12/31/23.
 //
 
-#include "Headers/MainGame.h"
+#include "MainGame.h"
 #include "imgui_impl_sdl2.h"
 #define SPEED 0.5
 

@@ -4,7 +4,7 @@
 
 
 
-#include "../Headers/Light.h"
+#include "Light.h"
 
 
 Light::Light(glm::vec3 amb, glm::vec3 spec, glm::vec3 dif) {

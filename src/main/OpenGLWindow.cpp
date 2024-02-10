@@ -2,7 +2,7 @@
 // Created by Caleb Rutledge on 1/4/24.
 //
 
-#include "Headers/OpenGLWindow.h"
+#include "OpenGLWindow.h"
 
 
 void sdlFatalError(std::string errorString) {

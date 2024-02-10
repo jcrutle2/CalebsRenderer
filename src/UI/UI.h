@@ -7,8 +7,8 @@
 #define OPENGL_TESTS_UI_H
 
 #include <vector>
-#include "../Headers/Model.h"
-#include "../Headers/Light.h"
+#include "../Rendering/Models/Model.h"
+#include "../Rendering/Light/Light.h"
 #include "imgui/imgui_impl_osx.h"
 #include "imgui/imgui_impl_sdl2.h"
 #include "imgui/imgui_impl_opengl3.h"

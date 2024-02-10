@@ -5,11 +5,12 @@
 #include "SceneLoader.h"
 #include <fstream>
 
-void SceneLoader::storeModelInfo(const Model &m , std::ofstream &stream) {
-    auto info = getModelInfo(m);
+
+
+void SceneLoader::storeModel(const Model &m , std::ofstream &stream) {
     stream.put(MODEL_LOAD_CODE);
     cereal::BinaryOutputArchive archive(stream);
-    archive(info);
+    archive(m);
 }
 
 void SceneLoader::storePointLight(const PointLight &p, std::ofstream &stream) {
@@ -28,7 +29,7 @@ void SceneLoader::storeScene(const Scene &s, const std::string &path) {
     std::ofstream stream;
     stream.open(path, std::ios::binary);
     for (const Model &m : s.models) {
-        storeModelInfo(m, stream);
+        storeModel(m, stream);
     }
     storeDirectionLight(s.dirLight, stream);
     for (const PointLight &p : s.pointLights) {

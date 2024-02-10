@@ -9,7 +9,7 @@
 #include <glm.hpp>
 #include <matrix_transform.hpp>
 #include <type_ptr.hpp>
-#include "Camera.h"
+#include "../Rendering/Camera.h"
 #include "OpenGLWindow.h"
 
 

@@ -6,13 +6,19 @@
 #include "ModelInfo.h"
 
 template<class Archive>
-void ModelInfo::serialize(Archive &ar) {
+void Model::serialize(Archive &ar) {
     ar (name);
-    ar (path);
-    ar (position);
+    ar (src);
+    ar (position.x);
+    ar (position.y);
+    ar (position.z);
     ar (rotation);
-    ar (rotationAxis);
-    ar (scale);
+    ar (rotationAxis.x);
+    ar (rotationAxis.y);
+    ar (rotationAxis.z);
+    ar (scale.x);
+    ar (scale.y);
+    ar (scale.z);
 }
 
 template<class Archive>

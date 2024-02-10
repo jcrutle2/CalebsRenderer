@@ -6,30 +6,12 @@
 #include "SceneLoader.h"
 #include <fstream>
 
-ModelInfo SceneLoader::getModelInfo(const Model &m) {
-    ModelInfo info;
-
-    std::strcpy(info.name, m.name);
-    std::strcpy(info.path, m.src.c_str());
-    info.position[0] = m.position.x;
-    info.position[1] = m.position.y;
-    info.position[2] = m.position.z;
-    info.rotation = m.rotation;
-    info.rotationAxis[0] = m.rotationAxis.x;
-    info.rotationAxis[1] = m.rotationAxis.y;
-    info.rotationAxis[2] = m.rotationAxis.z;
-    info.scale[0] = m.scale.x;
-    info.scale[1] = m.scale.y;
-    info.scale[2] = m.scale.x;
-
-    return info;
-}
-
-ModelInfo SceneLoader::getModelInfoFromDisk(std::ifstream &stream) {
-    ModelInfo info;
+Model SceneLoader::getModelFromDisk(std::ifstream &stream) {
+    Model m;
     cereal::BinaryInputArchive archive(stream);
-    archive(info);
-    return info;
+    archive(m);
+    m.loadModel(m.src);
+    return m;
 }
 
 DirectionLight SceneLoader::getDirectionLightFromDisk(std::ifstream &stream) {
@@ -56,7 +38,7 @@ Scene SceneLoader::getSceneFromDisk(const std::string &path) {
     while (stream.get(type)) {
         switch (type) {
             case MODEL_LOAD_CODE:
-                s.models.emplace_back(getModelInfoFromDisk(stream));
+                s.models.emplace_back(getModelFromDisk(stream));
                 break;
             case DIRLIGHT_LOAD_CODE:
                 s.dirLight = getDirectionLightFromDisk(stream);

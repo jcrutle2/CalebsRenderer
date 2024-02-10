@@ -9,7 +9,7 @@
 #include "Importer.hpp"
 #include "postprocess.h"
 #include <map>
-#include "../Scene/ModelInfo.h"
+#include "../../Scene/ModelInfo.h"
 
 struct BoneInfo
 {
@@ -26,6 +26,8 @@ class Model {
 public:
     Model(std::string n, std::string path, glm::vec3 pos= glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 scl = glm::vec3(1.0f, 1.0f, 1.0f));
     Model(const ModelInfo &m);
+    Model();
+
     char name[32];
 
     void Draw(Shader shader);
@@ -36,16 +38,21 @@ public:
     float rotation;
     glm::vec3 scale;
 
-    std::string src;
+    char src[256];
+
+    template<class Archive>
+    void serialize(Archive &ar);
+    void loadModel(std::string path);
 
 private:
+    // Serialization
+
     // mesh info
     std::string directory;
     std::vector<Mesh> meshes;
     std::vector<Texture> textures_loaded;
 
     // private loading functions
-    void loadModel(std::string path);
     void processNode(aiNode *const node, const aiScene *scene);
     Mesh processMesh(aiMesh *mesh, const aiScene *scene);
 

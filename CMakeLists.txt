@@ -19,14 +19,14 @@ add_library(imgui ${IMGUI_FILES})
 
 add_executable(
         CalebsRenderer
-        src/main.cpp
-        src/MainGame.cpp
-        src/Rendering/Shader.cpp
+        src/main/main.cpp
+        src/main/MainGame.cpp
+        src/Rendering/Models/Shader.cpp
         src/Rendering/Camera.cpp
-        src/OpenGLWindow.cpp
-        src/Rendering/Mesh.cpp
-        src/Rendering/Model.cpp
-        src/Rendering/Light.cpp
+        src/main/OpenGLWindow.cpp
+        src/Rendering/Models/Mesh.cpp
+        src/Rendering/Models/Model.cpp
+        src/Rendering/Light/Light.cpp
         src/UI/UI.cpp
         src/Scene/Scene.cpp
         src/UI/UIGlobals.cpp

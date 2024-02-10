@@ -7,8 +7,8 @@
 #include <sstream>
 #include <iostream>
 #include <glm.hpp>
-#include "Light.h"
-#include "Camera.h"
+#include "../Light/Light.h"
+#include "../Camera.h"
 
 class Shader
 {
