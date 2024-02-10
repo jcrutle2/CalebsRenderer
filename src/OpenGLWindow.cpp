@@ -79,7 +79,7 @@ void OpenGLWindow::initSystems() {
     SDL_SetRelativeMouseMode(SDL_TRUE);
 
     // load lights
-    _dirLights.push_back(DirectionLight(glm::vec3(0.2f, -0.2f, -0.1f)));
+    scene.dirLight = DirectionLight(glm::vec3(0.2f, -0.2f, -0.1f));
 
     // uncomment to test in wireframe mode
     _renderMode = GL_FILL;
@@ -111,7 +111,7 @@ void OpenGLWindow::update() {
 void OpenGLWindow::drawBuffered() {
     // trigger IMGUI
     UI::FrameStart();
-    UI::renderWindows(models, _dirLights[0], _pointLights, _frameRate);
+    UI::renderWindows(scene, _frameRate);
 
     // clear depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -128,16 +128,16 @@ void OpenGLWindow::drawBuffered() {
     shader.setMats(model, camera.getView(), camera.getPerspective());
 
     // set directional light
-    shader.setDirectionLight(_dirLights[0]);
+    shader.setDirectionLight(scene.dirLight);
 
     // set point lights
-    shader.setPointLights(_pointLights);
+    shader.setPointLights(scene.pointLights);
 
     // send camera position
     shader.setCamera(camera);
 
     // draw OpenGL
-    for (auto m : models) {
+    for (auto m : scene.models) {
         m.Draw(shader);
     }
 

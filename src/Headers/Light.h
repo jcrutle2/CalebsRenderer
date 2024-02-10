@@ -15,6 +15,8 @@
 #define QUADRATIC_DEFAULT 0.09f
 
 #include <glm.hpp>
+#include <cereal/archives/binary.hpp>
+#include <cereal/access.hpp>
 
 
 class Light {
@@ -40,12 +42,20 @@ class PointLight : public LimitedLight {
         explicit PointLight(glm::vec3 pos = POSITION_DEFAULT, glm::vec3 amb = AMBIENT_DEFAULT, glm::vec3 spec = SPECULAR_DEFAULT, glm::vec3 dif = DIFFUSE_DEFAULT, float con = CONSTANT_DEFAULT, float lin = LINEAR_DEFAULT, float quad = QUADRATIC_DEFAULT);
         glm::vec3 position{};
         void setPosition(glm::vec3 pos);
+        friend class cereal::access;
+        friend class cereal::BinaryInputArchive;
+        template<class Archive>
+        void serialize(Archive &ar);
 };
 
 class DirectionLight : public Light {
     public:
         explicit DirectionLight(glm::vec3 dir = DIRECTION_DEFAULT, glm::vec3 amb = AMBIENT_DEFAULT, glm::vec3 spec = SPECULAR_DEFAULT, glm::vec3 dif = DIFFUSE_DEFAULT);
         glm::vec3 direction{};
+        friend class cereal::access;
+        friend class cereal::BinaryInputArchive;
+        template<class Archive>
+        void serialize(Archive &ar);
 };
 
 

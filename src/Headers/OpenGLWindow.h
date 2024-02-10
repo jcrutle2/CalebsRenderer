@@ -8,13 +8,12 @@
 #include "SDL.h"
 #include "glew.h"
 #include "Shader.h"
-#include "Model.h"
 #include <iostream>
 #include <glm.hpp>
 #include <matrix_transform.hpp>
 #include <type_ptr.hpp>
-#include "Light.h"
 #include "Camera.h"
+#include "../Scene/Scene.h"
 #include "../UI/UI.h"
 
 
@@ -32,7 +31,8 @@ class OpenGLWindow {
 
         Camera camera;
         Shader shader;
-        std::vector<Model> models;
+
+        Scene scene;
 
 private:
         void logFrames();
@@ -40,9 +40,6 @@ private:
         SDL_GLContext _context;
 
         Texture _texture;
-
-        std::vector<DirectionLight> _dirLights;
-        std::vector<PointLight> _pointLights;
 
         unsigned int VAO{};
         unsigned int VBO{};
