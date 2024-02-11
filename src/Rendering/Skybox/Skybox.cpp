@@ -68,7 +68,7 @@ void Skybox::loadSkybox(const std::string &dir) {
     };
 
     if (!initialized) {
-        shader = Shader("Shaders/skybox.vert", "Shaders/skybox.frag");
+        shader = Shader("Assets/Shaders/skybox.vert", "Assets/Shaders/skybox.frag");
         glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
         glBindVertexArray(VAO);

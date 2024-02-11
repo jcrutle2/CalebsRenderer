@@ -17,9 +17,8 @@ void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
         modelCount++;
     }
     if (ImGui::Button("Add Model")) {
-        addModelWindow = true;
+        openLoadModel = true;
     }
-
 
     ImGui::Text("\nLight List");
     if (ImGui::Button("Direction Light")) {
@@ -40,23 +39,21 @@ void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
         openChangeSkybox = true;
     }
 
-
     ImGui::Text("\nScene Info");
     ImGui::InputText("Name", sceneBuf, 64);
     if (ImGui::Button("Save Scene")) {
-        std::string savePath = "Scenes/";
+        std::string savePath = "Assets/Scenes/";
         savePath += (strcmp(sceneBuf, "")) ? sceneBuf : "scene";
         savePath += ".bin";
         SceneLoader::storeScene(s, savePath);
     }
     if (ImGui::Button("Load Scene")) {
-        openLoadModel = true;
+        openLoadScene = true;
     }
 }
 
 void UI::modelWindow(Model &m, int num) {
     ImGui::Begin(m.name, &my_tool_active, ImGuiWindowFlags_MenuBar);
-
 
     ImGui::InputText("Name", nameBuf, 32);
     if (ImGui::Button("Save Name")) {
@@ -112,30 +109,30 @@ void UI::lightWindow(std::vector<PointLight> &lights, int num) {
 void UI::newModelWindow(std::vector<Model> &m) {
     ImGui::Begin("Add Model", &my_tool_active, ImGuiWindowFlags_MenuBar);
 
-    ImGui::Text("%s", path.c_str());
+    ImGui::Text("%s", modelPath.c_str());
 
-    for (const auto& entry : fs::directory_iterator(path)) {
+    for (const auto& entry : fs::directory_iterator(modelPath)) {
         std::string entryPath = entry.path();
         std::string shortPath = UI::shorten(entryPath);
 
         if (shortPath[1] != '.') {
             if (ImGui::Button(shortPath.c_str())) {
                 if (fs::is_directory(entry))
-                    path = entry.path();
+                    modelPath = entry.path();
                 else {
                     m.emplace_back(Model(shortPath.substr(1, shortPath.length() - 1), static_cast<std::string>(entry.path())));
-                    addModelWindow = false;
+                    openLoadModel = false;
                 }
             }
         }
     }
 
     if(ImGui::MenuItem("Back")) {
-        UI::back(path);
+        UI::back(modelPath);
     }
 
     if(ImGui::MenuItem("Close")) {
-        addModelWindow = false;
+        openLoadModel = false;
     }
 
     ImGui::End();
@@ -152,16 +149,16 @@ void UI::loadSceneWindow(Scene &s) {
 
         if (shortPath[1] != '.') {
             if (ImGui::Button(shortPath.c_str())) {
-                std::string getScenePath = "Scenes";
+                std::string getScenePath = "Assets/Scenes";
                 getScenePath += shortPath;
                 s = SceneLoader::getSceneFromDisk(getScenePath);
-                openLoadModel = false;
+                openLoadScene = false;
             }
         }
     }
 
     if(ImGui::MenuItem("Close")) {
-        addModelWindow = false;
+        openLoadScene = false;
     }
 
     ImGui::End();
@@ -178,7 +175,7 @@ void UI::changeSkyboxWindow(Skybox &s) {
 
         if (shortPath[1] != '.') {
             if (ImGui::Button(shortPath.substr(1, shortPath.length() - 1).c_str())) {
-                std::string skyboxDirectory = "Textures" + shortPath;
+                std::string skyboxDirectory = "Assets/Skyboxes" + shortPath;
                 s.loadSkybox(skyboxDirectory);
                 openChangeSkybox = false;
             }
@@ -186,7 +183,7 @@ void UI::changeSkyboxWindow(Skybox &s) {
     }
 
     if(ImGui::MenuItem("Close")) {
-        addModelWindow = false;
+        openChangeSkybox = false;
     }
 
     ImGui::End();

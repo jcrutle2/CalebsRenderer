@@ -41,12 +41,12 @@ namespace UI {
     // extern globals
     extern std::unordered_map<int, bool> openModels;
     extern std::unordered_map<int, bool> openLights;
-    extern bool addModelWindow;
-    extern bool openDirLight;
     extern bool openLoadModel;
+    extern bool openDirLight;
+    extern bool openLoadScene;
     extern bool openChangeSkybox;
     extern std::string filePath;
-    extern std::string path;
+    extern std::string modelPath;
     extern std::string scenesPath;
     extern std::string skyboxPath;
     extern char nameBuf[32];

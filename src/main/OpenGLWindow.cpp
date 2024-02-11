@@ -58,7 +58,7 @@ void OpenGLWindow::initSystems() {
     glViewport(0, 0, _screenWidth, _screenHeight);
 
     // initialize default shader
-    shader = Shader("Shaders/exVertex.vert", "Shaders/exFragment.frag");
+    shader = Shader("Assets/Shaders/exVertex.vert", "Assets/Shaders/exFragment.frag");
 
     // initialize VAO
     glGenVertexArrays(1, &VAO);

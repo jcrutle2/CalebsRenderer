@@ -35,10 +35,10 @@ void UI::renderWindows(Scene &s, Camera &c, const std::string &frameRate) {
         lightCount++;
     }
 
-    if (addModelWindow) newModelWindow(s.models);
-    else path = filePath;
+    if (openLoadModel) newModelWindow(s.models);
+    else modelPath = filePath + + "/Assets/Models";
 
-    if (openLoadModel) loadSceneWindow(s);
+    if (openLoadScene) loadSceneWindow(s);
 
     if (openChangeSkybox) changeSkyboxWindow(s.skybox);
 }
