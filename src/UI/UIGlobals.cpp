@@ -19,5 +19,5 @@ namespace UI {
     std::string skyboxPath = filePath + "/Assets/Skyboxes";
     char nameBuf[32] = "";
     char sceneBuf[64] = "";
-
+    char lightBuf[32] = "";
 }

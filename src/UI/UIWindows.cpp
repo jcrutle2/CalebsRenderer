@@ -11,7 +11,7 @@ void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
     ImGui::Text("\nModel List: ");
     int modelCount = 0;
     for (auto const &m : s.models) {
-        if (ImGui::Button(m.name)) {
+        if (ImGui::Button(m.name.c_str())) {
             openModels[modelCount] = true;
         }
         modelCount++;
@@ -25,13 +25,14 @@ void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
         openDirLight = true;
     }
     for (int i = 0; i < s.pointLights.size(); i++) {
-        std::string n = "Light " + std::to_string(i);
+        std::string n = s.pointLights[i].name;
         if (ImGui::Button(n.c_str())) {
             openLights[i] = true;
         }
     }
     if (ImGui::Button("Add Light")) {
-        s.pointLights.emplace_back();
+        std::string name = "Light" + std::to_string(s.pointLights.size() + 1);
+        s.pointLights.emplace_back(name);
     }
 
     ImGui::Text("\nSkybox");
@@ -52,21 +53,27 @@ void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
     }
 }
 
-void UI::modelWindow(Model &m, int num) {
-    ImGui::Begin(m.name, &my_tool_active, ImGuiWindowFlags_MenuBar);
+void UI::modelWindow(std::vector<Model> &m, int num) {
+    ImGui::Begin(m[num].name.c_str(), &my_tool_active, ImGuiWindowFlags_MenuBar);
 
     ImGui::InputText("Name", nameBuf, 32);
     if (ImGui::Button("Save Name")) {
-        strcpy(m.name, nameBuf);
+        m[num].name = nameBuf;
     }
 
-    ImGui::InputFloat3("Position", &m.position.x);
-    ImGui::InputFloat("Rotation", &m.rotation);
-    ImGui::InputFloat3("Axis", &m.rotationAxis.x);
-    ImGui::InputFloat3("Scale", &m.scale.x);
+    ImGui::InputFloat3("Position", &m[num].position.x);
+    ImGui::InputFloat("Rotation", &m[num].rotation);
+    ImGui::InputFloat3("Axis", &m[num].rotationAxis.x);
+    ImGui::InputFloat3("Scale", &m[num].scale.x);
 
+    if(ImGui::MenuItem("Delete")) {
+        for (auto x : openModels) {
+            x.second = false;
+        }
+        m.erase(m.begin() + num);
+    }
     if(ImGui::MenuItem("Close")) {
-        openModels[num] = false;
+            openModels[num] = false;
     }
 
     ImGui::End();
@@ -87,9 +94,15 @@ void UI::directionLightWindow(DirectionLight &l) {
 }
 
 void UI::lightWindow(std::vector<PointLight> &lights, int num) {
-    std::string name = "Light " + std::to_string(num);
+    std::string name = lights[num].name;
     PointLight &l = lights[num];
     ImGui::Begin(name.c_str(), &my_tool_active, ImGuiWindowFlags_MenuBar);
+
+    ImGui::InputText("Name", lightBuf, 32);
+    if (ImGui::Button("Save Name")) {
+        if (strcmp(lightBuf, ""))
+            lights[num].name = lightBuf;
+    }
 
     ImGui::InputFloat3("Position", &l.position.x);
     ImGui::InputFloat3("Ambient", &l.ambient.x);
@@ -99,6 +112,13 @@ void UI::lightWindow(std::vector<PointLight> &lights, int num) {
     ImGui::InputFloat("Linear Falloff", &l.linear);
     ImGui::InputFloat("Quadratic Falloff", &l.quadratic);
 
+
+    if(ImGui::MenuItem("Delete")) {
+        for (auto x : openLights) {
+            x.second = false;
+        }
+        lights.erase(lights.begin() + num);
+    }
     if(ImGui::MenuItem("Close")) {
         openLights[num] = false;
     }

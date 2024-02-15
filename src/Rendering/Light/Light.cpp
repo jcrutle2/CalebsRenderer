@@ -7,23 +7,24 @@
 #include "Light.h"
 
 
-Light::Light(glm::vec3 amb, glm::vec3 spec, glm::vec3 dif) {
+Light::Light(const std::string &n, glm::vec3 amb, glm::vec3 spec, glm::vec3 dif) {
+    name = n;
     ambient = amb;
     specular = spec;
     diffuse = dif;
 }
 
-LimitedLight::LimitedLight(glm::vec3 amb, glm::vec3 spec, glm::vec3 dif, float con, float lin, float quad): Light(amb, spec, dif) {
+LimitedLight::LimitedLight(const std::string &n, glm::vec3 amb, glm::vec3 spec, glm::vec3 dif, float con, float lin, float quad): Light(n, amb, spec, dif) {
     constant = con;
     linear = lin;
     quadratic = quad;
 }
 
-PointLight::PointLight(glm::vec3 pos, glm::vec3 amb, glm::vec3 spec, glm::vec3 dif, float con, float lin, float quad): LimitedLight(amb, spec, dif, con, lin, quad) {
+PointLight::PointLight(const std::string &n, glm::vec3 pos, glm::vec3 amb, glm::vec3 spec, glm::vec3 dif, float con, float lin, float quad): LimitedLight(n, amb, spec, dif, con, lin, quad) {
     position = pos;
 }
 
-DirectionLight::DirectionLight(glm::vec3 dir, glm::vec3 amb, glm::vec3 spec, glm::vec3 dif): Light(amb, spec, dif) {
+DirectionLight::DirectionLight(const std::string &n, glm::vec3 dir, glm::vec3 amb, glm::vec3 spec, glm::vec3 dif): Light(n, amb, spec, dif) {
     direction = dir;
 }
 

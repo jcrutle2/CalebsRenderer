@@ -11,6 +11,8 @@
 #include "../Light/Light.h"
 #include "glm.hpp"
 #include "cereal/archives/binary.hpp"
+#include "cereal/types/string.hpp"
+#include "cereal/types/vector.hpp"
 #include "cereal/access.hpp"
 #include "../Skybox/Skybox.h"
 

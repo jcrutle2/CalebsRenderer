@@ -23,6 +23,7 @@ void Model::serialize(Archive &ar) {
 
 template<class Archive>
 void PointLight::serialize(Archive &ar) {
+    ar(name);
     ar(position.x);
     ar(position.y);
     ar(position.z);
@@ -43,6 +44,7 @@ void PointLight::serialize(Archive &ar) {
 
 template<class Archive>
 void DirectionLight::serialize(Archive &ar) {
+    ar(name);
     ar(direction.x);
     ar(direction.y);
     ar(direction.z);

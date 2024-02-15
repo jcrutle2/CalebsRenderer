@@ -4,7 +4,7 @@
 
 #include "OpenGLWindow.h"
 
-void sdlFatalError(std::string errorString) {
+void sdlFatalError(const std::string &errorString) {
     std::cout << errorString << std::endl;
     std::cout << "Press any key to quit...";
     int tmp;
@@ -33,6 +33,8 @@ void OpenGLWindow::initSystems() {
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES,4);
 
     // create window
     _window = SDL_CreateWindow("OpenGL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _screenWidth, _screenHeight, SDL_WINDOW_OPENGL);
@@ -74,11 +76,14 @@ void OpenGLWindow::initSystems() {
     glEnable(GL_CULL_FACE);
     glDepthFunc(GL_LESS);
 
+    // enable anti-aliasing
+    glEnable(GL_MULTISAMPLE);
+
     // trap mouse
     SDL_SetRelativeMouseMode(SDL_TRUE);
 
     // load lights
-    scene.dirLight = DirectionLight(glm::vec3(0.2f, -0.2f, -0.1f));
+    scene.dirLight = DirectionLight("Direction Light", glm::vec3(0.2f, -0.2f, -0.1f));
 
     // uncomment to test in wireframe mode
     _renderMode = GL_FILL;

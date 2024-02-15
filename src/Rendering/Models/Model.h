@@ -28,7 +28,7 @@ public:
     Model(const ModelInfo &m);
     Model();
 
-    char name[32];
+    std::string name;
 
     void Draw(Shader shader);
 
@@ -38,7 +38,7 @@ public:
     float rotation;
     glm::vec3 scale;
 
-    char src[256];
+    std::string src;
 
     template<class Archive>
     void serialize(Archive &ar);

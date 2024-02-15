@@ -23,7 +23,7 @@ namespace UI {
     void Initalize(SDL_Window * window, void * sdl_gl_context);
 
     void mainWindow(Scene &s, Camera &c, const std::string &frameRate);
-    void modelWindow(Model &model, int num);
+    void modelWindow(std::vector<Model> &m, int num);
     void directionLightWindow(DirectionLight &l);
     void lightWindow(std::vector<PointLight> &lights, int num);
     void newModelWindow(std::vector<Model> &m);
@@ -51,6 +51,7 @@ namespace UI {
     extern std::string skyboxPath;
     extern char nameBuf[32];
     extern char sceneBuf[64];
+    extern char lightBuf[32];
 }
 
 

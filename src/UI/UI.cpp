@@ -23,16 +23,14 @@ void UI::renderWindows(Scene &s, Camera &c, const std::string &frameRate) {
 
     int modelCount = 0;
     for (auto &model : s.models) {
-        if (openModels[modelCount]) modelWindow(model, modelCount);
+        if (openModels[modelCount]) modelWindow(s.models, modelCount);
         modelCount++;
     }
 
     if (openDirLight) directionLightWindow(s.dirLight);
 
-    int lightCount = 0;
-    for (auto &light : s.pointLights) {
+    for (int lightCount = 0; lightCount < s.pointLights.size(); lightCount++) {
         if (openLights[lightCount]) lightWindow(s.pointLights, lightCount);
-        lightCount++;
     }
 
     if (openLoadModel) newModelWindow(s.models);

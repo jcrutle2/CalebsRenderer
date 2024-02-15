@@ -15,10 +15,10 @@
 #include "../Scene/SceneLoader.h"
 
 Model::Model(std::string n, std::string path, glm::vec3 pos, glm::vec3 scl) {
-    strcpy(src, path.c_str());
+    src = path;
     loadModel(path);
 
-    strcpy(name, n.c_str());
+    name = n;
 
     position = pos;
     rotationAxis = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -27,10 +27,10 @@ Model::Model(std::string n, std::string path, glm::vec3 pos, glm::vec3 scl) {
 }
 
 Model::Model(const ModelInfo &m) {
-    strcpy(src, m.path);
+    src = m.path;
     loadModel(src);
 
-    strcpy(name, m.name);
+    name = m.name;
 
     position.x = m.position[0];
     position.y = m.position[1];
@@ -76,13 +76,6 @@ void Model::loadModel(std::string path)
         return;
     }
     directory = path.substr(0, path.find_last_of('/'));
-
-    Texture tex;
-    newTexture(tex, "images/error_texture.png", "png");
-    Texture tex2;
-    newTexture(tex2, "images/white.png", "png");
-    textures_loaded.push_back(tex);
-    textures_loaded.push_back(tex2);
 
     processNode(scene->mRootNode, scene);
 }
