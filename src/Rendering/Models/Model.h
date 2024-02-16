@@ -5,11 +5,13 @@
 #ifndef OPENGL_TESTS_MODEL_H
 #define OPENGL_TESTS_MODEL_H
 
+#pragma once
+
 #include "Mesh.h"
-#include "Importer.hpp"
 #include "postprocess.h"
 #include <map>
 #include "../Scene/ModelInfo.h"
+#include "../Light/Light.h"
 
 struct BoneInfo
 {
@@ -20,7 +22,6 @@ struct BoneInfo
 };
 
 unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma = false);
-unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma);
 
 class Model {
 public:
@@ -30,7 +31,8 @@ public:
 
     std::string name;
 
-    void Draw(Shader shader);
+    template<class S>
+    void Draw(S shader);
 
     // model location
     glm::vec3 position;
@@ -38,14 +40,17 @@ public:
     float rotation;
     glm::vec3 scale;
 
-    std::string src;
+    // associated lights
+    std::vector<PointLight> lights;
 
-    template<class Archive>
-    void serialize(Archive &ar);
+    std::string src;
     void loadModel(std::string path);
 
 private:
     // Serialization
+    friend class cereal::access;
+    template<class Archive>
+    void serialize(Archive &ar);
 
     // mesh info
     std::string directory;

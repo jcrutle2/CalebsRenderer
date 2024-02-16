@@ -5,6 +5,7 @@
 #include "Shader.h"
 #include "matrix_transform.hpp"
 #include "type_ptr.hpp"
+#include "Model.h"
 
 Shader::Shader() {
     ID = 0;
@@ -95,38 +96,38 @@ void Shader::use() {
     glUseProgram(ID);
 }
 
-void Shader::setBool(const std::string &name, bool value) const
+void Shader::setBool(const std::string &name, const bool &value) const
 {
     glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
 }
 
-void Shader::setInt(const std::string &name, GLint value) const
+void Shader::setInt(const std::string &name, const GLint &value) const
 {
     glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
 }
 
-void Shader::setFloat(const std::string &name, float value) const
+void Shader::setFloat(const std::string &name, const float &value) const
 {
     glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 }
 
-void Shader::setVec3(const std::string &name, float x, float y, float z) const
+void Shader::setVec3(const std::string &name, const float &x, const float &y, const float &z) const
 {
     glUniform3f(glGetUniformLocation(ID, name.c_str()), x, y, z);
 }
 
-void Shader::setVec3(const std::string &name, glm::vec3 &vec) const
+void Shader::setVec3(const std::string &name, const glm::vec3 &vec) const
 {
     glUniform3f(glGetUniformLocation(ID, name.c_str()), vec.x, vec.y, vec.z);
 }
 
-void Shader::setMat4(const std::string &name, glm::mat4 &mat) const
+void Shader::setMat4(const std::string &name, const glm::mat4 &mat) const
 {
     GLint loc = glGetUniformLocation(ID, name.c_str());
     glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(mat));
 }
 
-void Shader::setMats(glm::mat4 model, glm::mat4 view, glm::mat4 projection) const {
+void Shader::setMats(const glm::mat4 &model, const glm::mat4 &view, const glm::mat4 &projection) const {
     glm::mat4 invModel = glm::inverse(model);
     setMat4("model", model);
     setMat4("view", view);
@@ -134,20 +135,20 @@ void Shader::setMats(glm::mat4 model, glm::mat4 view, glm::mat4 projection) cons
     setMat4("invModel", invModel);
 }
 
-void Shader::setModel(glm::mat4 model) const {
+void Shader::setModel(const glm::mat4 &model) const {
     glm::mat4 invModel = glm::inverse(model);
     setMat4("model", model);
     setMat4("invModel", invModel);
 }
 
-void Shader::setDirectionLight(DirectionLight &d) const {
+void Shader::setDirectionLight(const DirectionLight &d) const {
     setVec3("dirLight.direction", d.direction);
     setVec3("dirLight.ambient",  d.ambient);
     setVec3("dirLight.diffuse",  d.diffuse);
     setVec3("dirLight.specular", d.specular);
 }
 
-void Shader::setPointLight(PointLight &p, int num) const {
+void Shader::setPointLight(const PointLight &p, const int &num) const {
     std::string path = "pointLights[" + std::to_string(num) + "].";
     setVec3(path + "position", p.position);
     setVec3(path + "ambient",  p.ambient);
@@ -158,13 +159,27 @@ void Shader::setPointLight(PointLight &p, int num) const {
     setFloat(path + "quadratic",  p.quadratic);
 }
 
-void Shader::setPointLights(std::vector<PointLight> &vec) const {
-    for (int i = 0; i < vec.size(); i++) {
+
+void Shader::setPointLights(const std::vector<PointLight> &vec, const std::vector<Model> &m) const {
+    int size = 0;
+    int i = 0;
+
+    for (i = 0; i < vec.size(); i++) {
         setPointLight(vec[i], i);
     }
-    setInt("size", static_cast<int>(vec.size()));
+    size += static_cast<int>(vec.size());
+
+    for (const auto &model : m) {
+        for (const auto &l : model.lights) {
+            setPointLight(l, i);
+            i++;
+            size++;
+        }
+    }
+
+    setInt("size", size);
 }
 
-void Shader::setCamera(Camera cam) const {
+void Shader::setCamera(const Camera &cam) const {
     setVec3("camPos", cam.cameraPos);
 }

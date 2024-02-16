@@ -66,6 +66,18 @@ void UI::modelWindow(std::vector<Model> &m, int num) {
     ImGui::InputFloat3("Axis", &m[num].rotationAxis.x);
     ImGui::InputFloat3("Scale", &m[num].scale.x);
 
+    ImGui::Text("\nLight List");
+    for (int i = 0; i < m[num].lights.size(); i++) {
+        std::string n = m[num].lights[i].name;
+        if (ImGui::Button(n.c_str())) {
+            openLights[i] = true;
+        }
+    }
+    if (ImGui::Button("Add Light")) {
+        std::string name = "Light" + std::to_string(m[num].lights.size() + 1);
+        m[num].lights.emplace_back(name);
+    }
+
     if(ImGui::MenuItem("Delete")) {
         for (auto x : openModels) {
             x.second = false;

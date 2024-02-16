@@ -7,6 +7,7 @@
 #include <assert.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+#include "Shader.h"
 
 
 void newTexture(Texture &t, const char* path, const char* type) {
@@ -84,7 +85,8 @@ void Mesh::setupMesh() {
                           (void*)offsetof(Vertex, m_Weights));
 }
 
-void Mesh::Draw(Shader &shader)
+template<>
+void Mesh::Draw<Shader>(Shader &shader)
 {
     unsigned int diffuseNr = 1;
     unsigned int specularNr = 1;

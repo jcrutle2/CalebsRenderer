@@ -7,7 +7,6 @@
 
 #include "SDL.h"
 #include "glew.h"
-#include "../Rendering/Models/Shader.h"
 #include <iostream>
 #include <glm.hpp>
 #include <matrix_transform.hpp>
@@ -16,6 +15,7 @@
 #include "../Rendering/Scene/Scene.h"
 #include "../UI/UI.h"
 #include "../Rendering/Skybox/Skybox.h"
+#include "../Rendering/Models/Shader.h"
 
 
 class OpenGLWindow {

@@ -19,7 +19,6 @@ Model::Model(std::string n, std::string path, glm::vec3 pos, glm::vec3 scl) {
     loadModel(path);
 
     name = n;
-
     position = pos;
     rotationAxis = glm::vec3(0.0f, 1.0f, 0.0f);
     rotation = 0.0f;
@@ -51,7 +50,8 @@ Model::Model() {
 
 }
 
-void Model::Draw(Shader shader)
+template <>
+void Model::Draw<Shader>(Shader shader)
 {
     float radians = (rotation / 360.0f) * 2.0f * (float) M_PI;
 

@@ -10,7 +10,6 @@
 #define MAX_BONE_WEIGHTS 4
 
 #include "glew.h"
-#include "Shader.h"
 #include "glm.hpp"
 #include <string>
 #include <iostream>
@@ -54,7 +53,8 @@ class Mesh {
 
         Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices,
              std::vector<Texture> textures);
-        void Draw(Shader &shader);
+        template<class S>
+        void Draw(S &shader);
 
     private:
         // render data

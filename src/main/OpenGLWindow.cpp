@@ -135,7 +135,7 @@ void OpenGLWindow::drawBuffered() {
     shader.setDirectionLight(scene.dirLight);
 
     // set point lights
-    shader.setPointLights(scene.pointLights);
+    shader.setPointLights(scene.pointLights, scene.models);
 
     // send camera position
     shader.setCamera(camera);
