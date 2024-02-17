@@ -91,10 +91,11 @@ void EditorWindow::initSystems() {
     glPolygonMode( GL_FRONT_AND_BACK, _renderMode );
 
     // Test Tiles
-    scene.tiles.emplace_back(glm::vec3(10.0f, 0.0f, -10.0f),
-                             glm::vec3(-10.0f, 0.0f, -10.0f),
-                             glm::vec3(-10.0f, 0.0f, 10.0f),
-                             glm::vec3(10.0f, 0.0f, 10.0f));
+    scene.tiles.emplace_back(TILE_SQUARE);
+    scene.tiles[0].setVertexes( glm::vec3(8.0f, 0.0f, -8.0f),
+                                glm::vec3(-8.0f, 0.0f, -8.0f),
+                                glm::vec3(-8.0f, 0.0f, 8.0f),
+                                glm::vec3(8.0f, 0.0f, 8.0f));
 
     // open IMGUI
     UI::Initalize(_window, _context);

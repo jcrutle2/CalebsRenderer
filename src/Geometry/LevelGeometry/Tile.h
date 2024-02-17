@@ -17,26 +17,20 @@ namespace TileUtil {
 
 class Tile {
 public:
-    Tile(const glm::vec3 &v1, const glm::vec3 &v2, const glm::vec3 &v3, const glm::vec3 &v4);
+    Tile();
     ~Tile() = default;
 
-    void draw(const Shader &shader) const;
+    virtual void draw(const Shader &shader) const;
+    virtual void setup();
+    virtual void updateVertex();
+    virtual void setVertexes(const glm::vec3 &v1, const glm::vec3 &v2, const glm::vec3 &v3, const glm::vec3 &v4);
 
-private:
-    glm::vec3 vert1;
-    glm::vec3 vert2;
-    glm::vec3 vert3;
-    glm::vec3 vert4;
-
+protected:
     float textureScale;
 
     unsigned int VAO, VBO, EBO;
     Texture texture;
 
-    void setup();
-    void updateVertex();
-    float vertex[32];
-    unsigned int indices[6];
 };
 
 

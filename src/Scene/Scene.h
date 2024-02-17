@@ -15,7 +15,7 @@
 #include "cereal/types/vector.hpp"
 #include "cereal/access.hpp"
 #include "../Environment/Skybox/Skybox.h"
-#include "../Geometry/LevelGeometry/Tile.h"
+#include "../Geometry/LevelGeometry/TileWrapper.h"
 
 // Codes that the machine uses to identify type of data being read from device
 #define MODEL_LOAD_CODE '\xff'
@@ -30,6 +30,6 @@ public:
     DirectionLight dirLight;
     std::vector<PointLight> pointLights;
     Skybox skybox;
-    std::vector<Tile> tiles;
+    std::vector<TileWrapper> tiles;
 };
 #endif //CALEBSRENDERER_SCENE_H

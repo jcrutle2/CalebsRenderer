@@ -34,6 +34,8 @@ add_executable(
         src/UI/UIUtil.cpp
         src/Environment/Skybox/Skybox.cpp
         src/Geometry/LevelGeometry/Tile.cpp
+        src/Geometry/LevelGeometry/TileTypes/SquareTile.cpp
+        src/Geometry/LevelGeometry/TileWrapper.cpp
 )
 
 target_link_libraries(CalebsRenderer "-framework QuartzCore -framework GameController -framework Cocoa -framework OpenGL" ${sdl} ${gl} ${as} imgui)

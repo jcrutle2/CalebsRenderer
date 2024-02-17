@@ -4,7 +4,7 @@
 
 #include "EditorControls.h"
 #include "imgui_impl_sdl2.h"
-#define SPEED 0.5
+#define SPEED 1.5
 
 void fatalError(std::string errorString) {
     std::cout << errorString << std::endl;
