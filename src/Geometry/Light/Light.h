@@ -16,9 +16,9 @@
 #define POINTLIGHT_NAME_DEFAULT "Light"
 #define DIRLIGHT_NAME_DEFAULT "Direction Light"
 
-#include <glm.hpp>
-#include <cereal/archives/binary.hpp>
-#include <cereal/access.hpp>
+#include "glm.hpp"
+#include "cereal/archives/binary.hpp"
+#include "cereal/access.hpp"
 
 
 class Light {

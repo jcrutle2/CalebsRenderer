@@ -3,14 +3,14 @@
 
 #pragma once
 
-#include <glew.h> // include glad to get the required OpenGL headers
+#include "glew.h" // include glad to get the required OpenGL headers
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include <glm.hpp>
+#include "glm.hpp"
 #include "../Light/Light.h"
-#include "../Camera.h"
+#include "../../Rendering/Camera.h"
 #include "Model.h"
 
 class Shader

@@ -12,16 +12,16 @@
 #include <matrix_transform.hpp>
 #include <type_ptr.hpp>
 #include "../Rendering/Camera.h"
-#include "../Rendering/Scene/Scene.h"
+#include "../Geometry/Scene/Scene.h"
 #include "../UI/UI.h"
-#include "../Rendering/Skybox/Skybox.h"
-#include "../Rendering/Models/Shader.h"
+#include "../Geometry/Skybox/Skybox.h"
+#include "../Geometry//Models/Shader.h"
 
 
-class OpenGLWindow {
+class EditorWindow {
     public:
-        explicit OpenGLWindow(int screenWidth = 1024, int screenHeight = 768);
-        ~OpenGLWindow();
+        explicit EditorWindow(int screenWidth = 1024, int screenHeight = 768);
+        ~EditorWindow();
         void initSystems();
         void stopSystems();
         void update();

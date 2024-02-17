@@ -19,20 +19,20 @@ add_library(imgui ${IMGUI_FILES})
 
 add_executable(
         CalebsRenderer
-        src/main/main.cpp
-        src/main/MainGame.cpp
-        src/Rendering/Models/Shader.cpp
+        src/Editor/EditorMain.cpp
+        src/Editor/EditorControls.cpp
+        src/Geometry/Models/Shader.cpp
         src/Rendering/Camera.cpp
-        src/main/OpenGLWindow.cpp
-        src/Rendering/Models/Mesh.cpp
-        src/Rendering/Models/Model.cpp
-        src/Rendering/Light/Light.cpp
+        src/Editor/EditorWindow.cpp
+        src/Geometry/Models/Mesh.cpp
+        src/Geometry/Models/Model.cpp
+        src/Geometry/Light/Light.cpp
         src/UI/UI.cpp
-        src/Rendering/Scene/Scene.cpp
+        src/Geometry/Scene/Scene.cpp
         src/UI/UIGlobals.cpp
         src/UI/UIWindows.cpp
         src/UI/UIUtil.cpp
-        src/Rendering/Skybox/Skybox.cpp
+        src/Geometry/Skybox/Skybox.cpp
 )
 
 target_link_libraries(CalebsRenderer "-framework QuartzCore -framework GameController -framework Cocoa -framework OpenGL" ${sdl} ${gl} ${as} imgui)

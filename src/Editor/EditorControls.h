@@ -10,7 +10,7 @@
 #include <matrix_transform.hpp>
 #include <type_ptr.hpp>
 #include "../Rendering/Camera.h"
-#include "OpenGLWindow.h"
+#include "EditorWindow.h"
 
 
 enum class GameState {
@@ -19,11 +19,11 @@ enum class GameState {
 };
 
 
-class MainGame
+class EditorControls
 {
 public:
-    MainGame();
-    ~MainGame();
+    EditorControls();
+    ~EditorControls();
 
     void run();
 
@@ -33,7 +33,7 @@ private:
     void processInputUnpaused(SDL_Event * e);
     void processInputPaused(SDL_Event * e);
 
-    OpenGLWindow _window;
+    EditorWindow _window;
 
     GameState _gameState;
 };

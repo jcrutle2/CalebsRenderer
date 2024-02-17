@@ -2,7 +2,7 @@
 // Created by Caleb Rutledge on 1/4/24.
 //
 
-#include "OpenGLWindow.h"
+#include "EditorWindow.h"
 
 void sdlFatalError(const std::string &errorString) {
     std::cout << errorString << std::endl;
@@ -12,7 +12,7 @@ void sdlFatalError(const std::string &errorString) {
     SDL_Quit();
 }
 
-OpenGLWindow::OpenGLWindow( int screenWidth, int screenHeight) {
+EditorWindow::EditorWindow(int screenWidth, int screenHeight) {
     _window = nullptr;
     _context = nullptr;
     _screenWidth = screenWidth;
@@ -22,9 +22,9 @@ OpenGLWindow::OpenGLWindow( int screenWidth, int screenHeight) {
     initSystems();
 }
 
-OpenGLWindow::~OpenGLWindow() = default;
+EditorWindow::~EditorWindow() = default;
 
-void OpenGLWindow::initSystems() {
+void EditorWindow::initSystems() {
     // Initialize SDL
     SDL_Init(SDL_INIT_EVERYTHING);
 
@@ -93,12 +93,12 @@ void OpenGLWindow::initSystems() {
     UI::Initalize(_window, _context);
 }
 
-void OpenGLWindow::toggleRenderMode() {
+void EditorWindow::toggleRenderMode() {
     _renderMode = (_renderMode == GL_FILL) ? GL_LINE : GL_FILL;
     glPolygonMode( GL_FRONT_AND_BACK, _renderMode );
 }
 
-void OpenGLWindow::stopSystems() {
+void EditorWindow::stopSystems() {
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
@@ -108,11 +108,11 @@ void OpenGLWindow::stopSystems() {
     SDL_Quit();
 }
 
-void OpenGLWindow::update() {
+void EditorWindow::update() {
     SDL_GL_SwapWindow(_window);
 }
 
-void OpenGLWindow::drawBuffered() {
+void EditorWindow::drawBuffered() {
     // trigger IMGUI
     UI::FrameStart();
     UI::renderWindows(scene, camera, _frameRate);
@@ -154,7 +154,7 @@ void OpenGLWindow::drawBuffered() {
     logFrames();
 }
 
-void OpenGLWindow::logFrames() {
+void EditorWindow::logFrames() {
     _currentFrame = SDL_GetPerformanceCounter();
     _deltaTime = (float) (_currentFrame - _lastFrame) / (float) SDL_GetPerformanceFrequency();
     _elapsedMS = _deltaTime * 1000;
@@ -168,6 +168,6 @@ void OpenGLWindow::logFrames() {
     _lastFrame = SDL_GetPerformanceCounter();
 }
 
-float OpenGLWindow::getElapsedMS() const {
+float EditorWindow::getElapsedMS() const {
     return _elapsedMS;
 }

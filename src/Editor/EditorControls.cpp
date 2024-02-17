@@ -2,7 +2,7 @@
 // Created by Caleb Rutledge on 12/31/23.
 //
 
-#include "MainGame.h"
+#include "EditorControls.h"
 #include "imgui_impl_sdl2.h"
 #define SPEED 0.5
 
@@ -14,25 +14,25 @@ void fatalError(std::string errorString) {
     SDL_Quit();
 }
 
-MainGame::MainGame() {
+EditorControls::EditorControls() {
     _gameState = GameState::PLAY;
 }
 
-MainGame::~MainGame() = default;
+EditorControls::~EditorControls() = default;
 
-void MainGame::run() {
+void EditorControls::run() {
     gameLoop();
     _window.stopSystems();
 }
 
-void MainGame::gameLoop() {
+void EditorControls::gameLoop() {
     while (_gameState != GameState::EXIT) {
         processInput();
         _window.drawBuffered();
     }
 }
 
-void MainGame::processInput() {
+void EditorControls::processInput() {
     SDL_Event e;
     const float speed = 0.025f * _window.getElapsedMS();
     while (SDL_PollEvent(&e)){
@@ -48,7 +48,7 @@ void MainGame::processInput() {
     }
 }
 
-void MainGame::processInputUnpaused(SDL_Event * e) {
+void EditorControls::processInputUnpaused(SDL_Event * e) {
     switch (e->type) {
         case SDL_QUIT:
             _gameState = GameState::EXIT;
@@ -97,7 +97,7 @@ void MainGame::processInputUnpaused(SDL_Event * e) {
     }
 }
 
-void MainGame::processInputPaused(SDL_Event * e) {
+void EditorControls::processInputPaused(SDL_Event * e) {
     switch (e->type) {
         case SDL_QUIT:
             _gameState = GameState::EXIT;
