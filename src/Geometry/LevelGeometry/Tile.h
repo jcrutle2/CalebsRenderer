@@ -28,7 +28,7 @@ private:
 
     void setup();
     void updateVertex();
-    float vertex[20];
+    float vertex[32];
     unsigned int indices[6];
 };
 

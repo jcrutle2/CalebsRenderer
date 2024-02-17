@@ -16,29 +16,46 @@ Tile::Tile(const glm::vec3 &v1, const glm::vec3 &v2, const glm::vec3 &v3, const 
 }
 
 void Tile::updateVertex() {
+    glm::vec3 norm1 = glm::normalize(glm::cross(vert2 - vert1, vert4 - vert1));
+    glm::vec3 norm2 = glm::normalize(glm::cross(vert3 - vert2, vert1 - vert2));
+    glm::vec3 norm3 = glm::normalize(glm::cross(vert4 - vert3, vert2 - vert3));
+    glm::vec3 norm4 = glm::normalize(glm::cross(vert1 - vert4, vert3 - vert4));
+
     vertex[0] = vert1.x;
     vertex[1] = vert1.y;
     vertex[2] = vert1.z;
-    vertex[3] = 1.0f;
-    vertex[4] = 1.0f;
+    vertex[3] = norm1.x;
+    vertex[4] = norm1.y;
+    vertex[5] = norm1.z;
+    vertex[6] = 1.0f;
+    vertex[7] = 1.0f;
 
-    vertex[5] = vert2.x;
-    vertex[6] = vert2.y;
-    vertex[7] = vert2.z;
-    vertex[8] = 0.0f;
-    vertex[9] = 1.0f;
-
-    vertex[10] = vert3.x;
-    vertex[11] = vert3.y;
-    vertex[12] = vert3.z;
-    vertex[13] = 0.0f;
+    vertex[8] = vert2.x;
+    vertex[9] = vert2.y;
+    vertex[10] = vert2.z;
+    vertex[11] = norm2.x;
+    vertex[12] = norm2.y;
+    vertex[13] = norm2.z;
     vertex[14] = 0.0f;
+    vertex[15] = 1.0f;
 
-    vertex[15] = vert4.x;
-    vertex[16] = vert4.y;
-    vertex[17] = vert4.z;
-    vertex[18] = 1.0f;
-    vertex[19] = 0.0f;
+    vertex[16] = vert3.x;
+    vertex[17] = vert3.y;
+    vertex[18] = vert3.z;
+    vertex[19] = norm3.x;
+    vertex[20] = norm3.y;
+    vertex[21] = norm3.z;
+    vertex[22] = 0.0f;
+    vertex[23] = 0.0f;
+
+    vertex[24] = vert4.x;
+    vertex[25] = vert4.y;
+    vertex[26] = vert4.z;
+    vertex[27] = norm4.x;
+    vertex[28] = norm4.y;
+    vertex[29] = norm4.z;
+    vertex[30] = 1.0f;
+    vertex[31] = 0.0f;
 }
 
 void Tile::setup() {
@@ -62,12 +79,16 @@ void Tile::setup() {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5*sizeof(float),
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float),
                           (void *) 0);
 
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5*sizeof(float),
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float),
                           (void *) (3*sizeof(float)));
+
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8*sizeof(float),
+                          (void *) (6*sizeof(float)));
 }
 
 void Tile::draw(const Shader &shader) const {
