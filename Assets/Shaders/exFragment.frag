@@ -48,7 +48,6 @@ in vec3 FragPos;
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, vec3 diffuseVec, vec3 specVec)
 {
-
     vec3 lightDir = normalize(-light.direction);
     // diffuse shading
     float diff = max(dot(normal, lightDir), 0.0);
@@ -99,7 +98,7 @@ void main()
     vec3 specVec = vec3(texture(material.texture_specular1, texs));
 
     // calculate lights
-    vec3 directionLight = CalcDirLight(dirLight, FragPos, viewDir, diffuseVec, specVec);
+    vec3 directionLight = CalcDirLight(dirLight, norm, viewDir, diffuseVec, specVec);
     vec3 pointLight = vec3(0,0,0);
     for (int i = 0; i < size; i++) {
         pointLight += CalcPointLight(pointLights[i], norm, FragPos, viewDir, diffuseVec, specVec);
