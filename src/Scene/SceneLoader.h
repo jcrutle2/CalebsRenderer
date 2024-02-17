@@ -7,14 +7,14 @@
 #define CALEBSRENDERER_SCENELOADER_H
 
 #include <vector>
-#include "../Models/Model.h"
-#include "../Light/Light.h"
+#include "../Geometry/Models/Model.h"
+#include "../Environment/Light/Light.h"
 #include "glm.hpp"
 #include "cereal/archives/binary.hpp"
 #include "cereal/access.hpp"
 #include "ModelInfo.h"
 #include "Scene.h"
-#include "../Skybox/Skybox.h"
+#include "../Environment/Skybox/Skybox.h"
 
 namespace SceneLoader {
 

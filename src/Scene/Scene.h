@@ -7,15 +7,15 @@
 #pragma once
 
 #include <vector>
-#include "../Models/Model.h"
-#include "../Light/Light.h"
+#include "../Geometry/Models/Model.h"
+#include "../Environment/Light/Light.h"
 #include "glm.hpp"
 #include "cereal/archives/binary.hpp"
 #include "cereal/types/string.hpp"
 #include "cereal/types/vector.hpp"
 #include "cereal/access.hpp"
-#include "../Skybox/Skybox.h"
-#include "../LevelGeometry/Tile.h"
+#include "../Environment/Skybox/Skybox.h"
+#include "../Geometry/LevelGeometry/Tile.h"
 
 // Codes that the machine uses to identify type of data being read from device
 #define MODEL_LOAD_CODE '\xff'

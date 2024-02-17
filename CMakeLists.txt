@@ -26,13 +26,13 @@ add_executable(
         src/Editor/EditorWindow.cpp
         src/Geometry/Models/Mesh.cpp
         src/Geometry/Models/Model.cpp
-        src/Geometry/Light/Light.cpp
+        src/Environment/Light/Light.cpp
         src/UI/UI.cpp
-        src/Geometry/Scene/Scene.cpp
+        src/Scene/Scene.cpp
         src/UI/UIGlobals.cpp
         src/UI/UIWindows.cpp
         src/UI/UIUtil.cpp
-        src/Geometry/Skybox/Skybox.cpp
+        src/Environment/Skybox/Skybox.cpp
         src/Geometry/LevelGeometry/Tile.cpp
 )
 

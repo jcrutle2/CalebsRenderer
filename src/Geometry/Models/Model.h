@@ -10,8 +10,8 @@
 #include "Mesh.h"
 #include "postprocess.h"
 #include <map>
-#include "../Scene/ModelInfo.h"
-#include "../Light/Light.h"
+#include "../../Scene/ModelInfo.h"
+#include "../../Environment/Light/Light.h"
 
 struct BoneInfo
 {

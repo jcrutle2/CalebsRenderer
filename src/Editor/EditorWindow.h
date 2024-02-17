@@ -12,10 +12,10 @@
 #include <matrix_transform.hpp>
 #include <type_ptr.hpp>
 #include "../Rendering/Camera.h"
-#include "../Geometry/Scene/Scene.h"
+#include "../Scene/Scene.h"
 #include "../UI/UI.h"
-#include "../Geometry/Skybox/Skybox.h"
-#include "../Geometry//Models/Shader.h"
+#include "../Environment/Skybox/Skybox.h"
+#include "../Geometry/Models/Shader.h"
 
 
 class EditorWindow {

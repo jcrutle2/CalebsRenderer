@@ -9,7 +9,7 @@
 #include <sstream>
 #include <iostream>
 #include "glm.hpp"
-#include "../Light/Light.h"
+#include "../../Environment/Light/Light.h"
 #include "../../Rendering/Camera.h"
 #include "Model.h"
 

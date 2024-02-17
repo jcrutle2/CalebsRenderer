@@ -5,7 +5,7 @@
 #ifndef CALEBSRENDERER_SKYBOX_H
 #define CALEBSRENDERER_SKYBOX_H
 
-#include "../Models/Shader.h"
+#include "../../Geometry/Models/Shader.h"
 #include <vector>
 #include "glm.hpp"
 
