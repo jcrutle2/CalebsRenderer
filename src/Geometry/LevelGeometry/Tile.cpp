@@ -10,6 +10,8 @@ Tile::Tile(const glm::vec3 &v1, const glm::vec3 &v2, const glm::vec3 &v3, const 
     vert3 = v3;
     vert4 = v4;
 
+    textureScale = TEXTURE_SCALE_DEFAULT;
+
     updateVertex();
     setup();
     newTexture(texture, "Assets/Textures/error.png", "png");
@@ -21,14 +23,25 @@ void Tile::updateVertex() {
     glm::vec3 norm3 = glm::normalize(glm::cross(vert4 - vert3, vert2 - vert3));
     glm::vec3 norm4 = glm::normalize(glm::cross(vert1 - vert4, vert3 - vert4));
 
+    glm::vec3 rHat = glm::normalize(vert4 - vert3);
+    float rMag = glm::length(vert4 - vert3);
+
+    glm::vec3 vecTwoThree = vert2 - vert3;
+    glm::vec3 vecOneThree = vert1 - vert3;
+
+    float xOne = glm::length(rHat * glm::dot(rHat, vecOneThree));
+    float yOne = glm::length(glm::vec3((vecOneThree) - (rHat * glm::dot(rHat, vecOneThree))));
+    float xTwo = glm::length(rHat * glm::dot(rHat, vecTwoThree));
+    float yTwo = glm::length((vecTwoThree) - (rHat * glm::dot(rHat, vecTwoThree)));
+
     vertex[0] = vert1.x;
     vertex[1] = vert1.y;
     vertex[2] = vert1.z;
     vertex[3] = norm1.x;
     vertex[4] = norm1.y;
     vertex[5] = norm1.z;
-    vertex[6] = 1.0f;
-    vertex[7] = 1.0f;
+    vertex[6] = xOne * textureScale;
+    vertex[7] = yOne * textureScale;
 
     vertex[8] = vert2.x;
     vertex[9] = vert2.y;
@@ -36,8 +49,8 @@ void Tile::updateVertex() {
     vertex[11] = norm2.x;
     vertex[12] = norm2.y;
     vertex[13] = norm2.z;
-    vertex[14] = 0.0f;
-    vertex[15] = 1.0f;
+    vertex[14] = xTwo * textureScale;
+    vertex[15] = yTwo * textureScale;
 
     vertex[16] = vert3.x;
     vertex[17] = vert3.y;
@@ -54,7 +67,7 @@ void Tile::updateVertex() {
     vertex[27] = norm4.x;
     vertex[28] = norm4.y;
     vertex[29] = norm4.z;
-    vertex[30] = 1.0f;
+    vertex[30] = rMag * textureScale;
     vertex[31] = 0.0f;
 }
 
