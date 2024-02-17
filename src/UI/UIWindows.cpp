@@ -148,12 +148,15 @@ void UI::newModelWindow(std::vector<Model> &m) {
         std::string shortPath = UI::shorten(entryPath);
 
         if (shortPath[1] != '.') {
-            if (ImGui::Button(shortPath.c_str())) {
-                if (fs::is_directory(entry))
-                    modelPath = entry.path();
-                else {
-                    m.emplace_back(Model(shortPath.substr(1, shortPath.length() - 1), static_cast<std::string>(entry.path())));
-                    openLoadModel = false;
+            std::string f = fileExtension(shortPath);
+            if (f != ".jpg" && f != ".png") {
+                if (ImGui::Button(shortPath.c_str())) {
+                    if (fs::is_directory(entry))
+                        modelPath = entry.path();
+                    else {
+                        m.emplace_back(Model(shortPath.substr(1, shortPath.length() - 1), static_cast<std::string>(entry.path())));
+                        openLoadModel = false;
+                    }
                 }
             }
         }

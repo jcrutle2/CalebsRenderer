@@ -22,6 +22,15 @@ std::string UI::shorten(const std::string &s) {
     return "";
 }
 
+std::string UI::fileExtension(const std::string &s) {
+    for (int i = s.length() - 1; i > 0; i--) {
+        if (s[i] == '.') {
+            return s.substr(i, s.length() - i);
+        }
+    }
+    return "";
+}
+
 void UI::FrameStart() {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame();

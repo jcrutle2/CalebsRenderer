@@ -37,6 +37,7 @@ namespace UI {
 
     void back(std::string &s);
     std::string shorten(const std::string &s);
+    std::string fileExtension(const std::string &s);
 
     // extern globals
     extern std::unordered_map<int, bool> openModels;
