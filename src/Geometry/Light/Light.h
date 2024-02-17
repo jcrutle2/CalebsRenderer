@@ -7,8 +7,8 @@
 
 #define DIRECTION_DEFAULT glm::vec3(0,0,0)
 #define POSITION_DEFAULT glm::vec3(0,0,0)
-#define AMBIENT_DEFAULT glm::vec3(0.1f, 0.1f, 0.1f)
-#define SPECULAR_DEFAULT glm::vec3(0.2f, 0.2f, 0.2f)
+#define AMBIENT_DEFAULT glm::vec3(0.4f, 0.4f, 0.4f)
+#define SPECULAR_DEFAULT glm::vec3(0.5f, 0.5f, 0.5f)
 #define DIFFUSE_DEFAULT glm::vec3(0.4f, 0.4f, 0.4f)
 #define CONSTANT_DEFAULT 1.0f
 #define LINEAR_DEFAULT 0.18f
