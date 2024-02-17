@@ -24,8 +24,12 @@ void newTexture(Texture &t, const char* path, const char* type) {
                                     &nrChannels, 0);
     if (data)
     {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
-                     GL_UNSIGNED_BYTE, data);
+        if (!strcmp(type, "jpg"))
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
+                         GL_UNSIGNED_BYTE, data);
+        else
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
+                        GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
     }
     else
@@ -37,7 +41,7 @@ void newTexture(Texture &t, const char* path, const char* type) {
     t.type = type;
 }
 
-void useTexture(Texture &t) {
+void useTexture(const Texture &t) {
     glBindTexture(GL_TEXTURE_2D, t.id);
 }
 

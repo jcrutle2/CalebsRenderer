@@ -32,6 +32,7 @@ class EditorWindow {
 
         Camera camera;
         Shader shader;
+        Shader tileShader;
 
         Scene scene;
 

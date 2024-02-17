@@ -42,7 +42,7 @@ struct Texture {
 
 void newTexture(Texture &t, const char* path, const char* type);
 
-void useTexture(Texture &t);
+void useTexture(const Texture &t);
 
 class Mesh {
     public:

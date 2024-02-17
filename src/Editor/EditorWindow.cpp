@@ -61,6 +61,7 @@ void EditorWindow::initSystems() {
 
     // initialize default shader
     shader = Shader("Assets/Shaders/exVertex.vert", "Assets/Shaders/exFragment.frag");
+    tileShader = Shader("Assets/Shaders/tiles.vert", "Assets/Shaders/tiles.frag");
 
     // initialize VAO
     glGenVertexArrays(1, &VAO);
@@ -73,8 +74,8 @@ void EditorWindow::initSystems() {
 
     // enable depth testing
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-    glDepthFunc(GL_LESS);
+  //  glEnable(GL_CULL_FACE);
+    //glDepthFunc(GL_LESS);
 
     // enable anti-aliasing
     glEnable(GL_MULTISAMPLE);
@@ -88,6 +89,12 @@ void EditorWindow::initSystems() {
     // uncomment to test in wireframe mode
     _renderMode = GL_FILL;
     glPolygonMode( GL_FRONT_AND_BACK, _renderMode );
+
+    // Test Tiles
+    scene.tiles.emplace_back(glm::vec3(1.0f, 0.0f, -1.0f),
+                             glm::vec3(-1.0f, 0.0f, -1.0f),
+                             glm::vec3(-1.0f, 0.0f, 1.0f),
+                             glm::vec3(1.0f, 0.0f, 1.0f));
 
     // open IMGUI
     UI::Initalize(_window, _context);
@@ -121,8 +128,11 @@ void EditorWindow::drawBuffered() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
-    // select shaders
-    useTexture(_texture);
+    // use shader
+    tileShader.use();
+    tileShader.setMats(glm::mat4(1.0f), camera.getView(), camera.getPerspective());
+    scene.tiles[0].draw(tileShader);
+
 
     // use shader
     shader.use();
@@ -139,6 +149,8 @@ void EditorWindow::drawBuffered() {
 
     // send camera position
     shader.setCamera(camera);
+
+    scene.tiles[0].draw(shader);
 
     // draw OpenGL
     for (auto m : scene.models) {
