@@ -8,6 +8,10 @@
 #include <matrix_transform.hpp>
 #include <SDL.h>
 
+#define CAMERA_POSITION_DEFAULT (glm::vec3(0.0f, 1.0f, 0.0f))
+#define CAMERA_FRONT_DEFAULT (glm::vec3(0.0f, 0.0f, -1.0f))
+#define CAMERA_UP_DEFAULT (glm::vec3(0.0f, 1.0f, 0.0f))
+
 typedef enum CameraState {
     CAMERA_STATE_PAUSED,
     CAMERA_STATE_UNPAUSED,
@@ -15,7 +19,7 @@ typedef enum CameraState {
 
 class Camera {
     public:
-    explicit Camera(glm::vec3 camP = glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3 camF = glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3 camU = glm::vec3(0.0f, 1.0f, 0.0f));
+    explicit Camera(glm::vec3 camP = CAMERA_POSITION_DEFAULT, glm::vec3 camF = CAMERA_FRONT_DEFAULT, glm::vec3 camU = CAMERA_UP_DEFAULT);
     ~Camera();
 
     void moveForward(const float speed);
