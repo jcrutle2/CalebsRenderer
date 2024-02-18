@@ -14,6 +14,7 @@
 #include <string>
 #include <iostream>
 #include "scene.h"
+#include "../Textures/Texture.h"
 
 struct Vertex {
     // position
@@ -34,15 +35,7 @@ struct Vertex {
     float m_Weights[MAX_BONE_WEIGHTS];
 };
 
-struct Texture {
-    unsigned int id;
-    std::string type;
-    aiString path;
-};
 
-void newTexture(Texture &t, const char* path, const char* type);
-
-void useTexture(const Texture &t);
 
 class Mesh {
     public:
