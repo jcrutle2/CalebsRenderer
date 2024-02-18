@@ -14,6 +14,16 @@ SquareTile::SquareTile(const glm::vec3 &v1, const glm::vec3 &v2, const glm::vec3
     setup();
 }
 
+SquareTile::SquareTile(const SquareTile &S) {
+    vert1 = S.vert1;
+    vert2 = S.vert2;
+    vert3 = S.vert3;
+    vert4 = S.vert4;
+
+    updateVertex();
+    setup();
+}
+
 void SquareTile::updateVertex() {
     glm::vec3 norm1 = glm::normalize(glm::cross(vert2 - vert1, vert4 - vert1));
     glm::vec3 norm2 = glm::normalize(glm::cross(vert3 - vert2, vert1 - vert2));
@@ -102,9 +112,6 @@ void SquareTile::setup() {
 }
 
 void SquareTile::draw(const Shader &shader) const {
-    glm::mat4 model(1.0f);
-    shader.setModel(model);
-
     useTexture(texture);
     glBindVertexArray(VAO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
@@ -119,4 +126,20 @@ void SquareTile::setVertexes(const glm::vec3 &v1, const glm::vec3 &v2, const glm
 
     updateVertex();
     setup();
+}
+
+glm::vec3 SquareTile::getVert1() const {
+    return vert1;
+}
+
+glm::vec3 SquareTile::getVert2() const {
+    return vert2;
+}
+
+glm::vec3 SquareTile::getVert3() const {
+    return vert3;
+}
+
+glm::vec3 SquareTile::getVert4() const {
+    return vert4;
 }

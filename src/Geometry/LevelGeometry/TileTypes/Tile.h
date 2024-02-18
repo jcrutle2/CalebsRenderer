@@ -8,8 +8,8 @@
 #define TEXTURE_SCALE_DEFAULT 0.25
 
 #include "glm.hpp"
-#include "../Models/Shader.h"
-#include "../Models/Mesh.h"
+#include "../../Models/Shader.h"
+#include "../../Models/Mesh.h"
 
 namespace TileUtil {
 
@@ -24,6 +24,11 @@ public:
     virtual void setup();
     virtual void updateVertex();
     virtual void setVertexes(const glm::vec3 &v1, const glm::vec3 &v2, const glm::vec3 &v3, const glm::vec3 &v4);
+    virtual glm::vec3 getVert1() const;
+    virtual glm::vec3 getVert2() const;
+    virtual glm::vec3 getVert3() const;
+    virtual glm::vec3 getVert4() const;
+
 
 protected:
     float textureScale;

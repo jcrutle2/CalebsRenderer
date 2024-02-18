@@ -5,14 +5,19 @@
 #ifndef CALEBSRENDERER_SQUARETILE_H
 #define CALEBSRENDERER_SQUARETILE_H
 
-#include "../Tile.h"
+#include "Tile.h"
 
 class SquareTile : public Tile {
 public:
     SquareTile(const glm::vec3 &v1, const glm::vec3 &v2, const glm::vec3 &v3, const glm::vec3 &v4);
+    SquareTile(const SquareTile &S);
     ~SquareTile() = default;
 
     void setVertexes(const glm::vec3 &v1, const glm::vec3 &v2, const glm::vec3 &v3, const glm::vec3 &v4) override;
+    glm::vec3 getVert1() const override;
+    glm::vec3 getVert2() const override;
+    glm::vec3 getVert3() const override;
+    glm::vec3 getVert4() const override;
 
 private:
     glm::vec3 vert1;

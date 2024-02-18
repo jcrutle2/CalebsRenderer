@@ -29,3 +29,22 @@ void Tile::setVertexes(const glm::vec3 &v1, const glm::vec3 &v2, const glm::vec3
     exit(1);
 }
 
+glm::vec3 Tile::getVert1() const {
+    std::cout << "ERROR: INVALID TILE TYPE";
+    exit(1);
+}
+
+glm::vec3 Tile::getVert2() const {
+    std::cout << "ERROR: INVALID TILE TYPE";
+    exit(1);
+}
+
+glm::vec3 Tile::getVert3() const {
+    std::cout << "ERROR: INVALID TILE TYPE";
+    exit(1);
+}
+
+glm::vec3 Tile::getVert4() const {
+    std::cout << "ERROR: INVALID TILE TYPE";
+    exit(1);
+}

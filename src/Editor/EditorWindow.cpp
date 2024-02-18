@@ -91,11 +91,7 @@ void EditorWindow::initSystems() {
     glPolygonMode( GL_FRONT_AND_BACK, _renderMode );
 
     // Test Tiles
-    scene.tiles.emplace_back(TILE_SQUARE);
-    scene.tiles[0].setVertexes( glm::vec3(8.0f, 0.0f, -8.0f),
-                                glm::vec3(-8.0f, 0.0f, -8.0f),
-                                glm::vec3(-8.0f, 0.0f, 8.0f),
-                                glm::vec3(8.0f, 0.0f, 8.0f));
+    scene.boxes.emplace_back(glm::vec3(0.0f,0.0f,0.0f));
 
     // open IMGUI
     UI::Initalize(_window, _context);
@@ -135,8 +131,7 @@ void EditorWindow::drawBuffered() {
     tileShader.setDirectionLight(scene.dirLight);
     tileShader.setPointLights(scene.pointLights, scene.models);
     tileShader.setCamera(camera);
-    scene.tiles[0].draw(tileShader);
-
+    scene.boxes[0].draw(tileShader);
 
     // use shader
     shader.use();
