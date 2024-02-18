@@ -4,7 +4,9 @@
 
 #include "Box.h"
 
-Box::Box(glm::vec3 pos) {
+Box::Box(const std::string &n, const glm::vec3 &pos) {
+    name = n;
+
     tiles.emplace_back(TILE_SQUARE);
     tiles.emplace_back(TILE_SQUARE);
     tiles.emplace_back(TILE_SQUARE);
@@ -17,14 +19,14 @@ Box::Box(glm::vec3 pos) {
     rotation = BOX_ROTATION_DEFAULT;
     scale = BOX_SCALE_DEFAULT;
 
-    setupCube(BOX_VERTEX_0_DEFAULT, BOX_VERTEX_1_DEFAULT,
-              BOX_VERTEX_2_DEFAULT, BOX_VERTEX_3_DEFAULT,
-              BOX_VERTEX_4_DEFAULT, BOX_VERTEX_5_DEFAULT,
-              BOX_VERTEX_6_DEFAULT, BOX_VERTEX_7_DEFAULT);
+    editCube(BOX_VERTEX_0_DEFAULT, BOX_VERTEX_1_DEFAULT,
+             BOX_VERTEX_2_DEFAULT, BOX_VERTEX_3_DEFAULT,
+             BOX_VERTEX_4_DEFAULT, BOX_VERTEX_5_DEFAULT,
+             BOX_VERTEX_6_DEFAULT, BOX_VERTEX_7_DEFAULT);
 }
 
-void Box::setupCube(glm::vec3 b0, glm::vec3 b1, glm::vec3 b2, glm::vec3 b3, glm::vec3 b4, glm::vec3 b5, glm::vec3 b6,
-                    glm::vec3 b7) {
+void Box::editCube(glm::vec3 b0, glm::vec3 b1, glm::vec3 b2, glm::vec3 b3, glm::vec3 b4, glm::vec3 b5, glm::vec3 b6,
+                   glm::vec3 b7) {
     boxVertices[0] = b0;
     boxVertices[1] = b1;
     boxVertices[2] = b2;
@@ -34,20 +36,32 @@ void Box::setupCube(glm::vec3 b0, glm::vec3 b1, glm::vec3 b2, glm::vec3 b3, glm:
     boxVertices[6] = b6;
     boxVertices[7] = b7;
 
+    setupCube();
+}
+
+void Box::setupCube() {
     // front + back cubes
-    tiles[0].setVertexes(b1, b7, b6, b2);
-    tiles[1].setVertexes(b3, b5, b4, b0);
+    tiles[0].setVertexes(boxVertices[1], boxVertices[7], boxVertices[6], boxVertices[2]);
+    tiles[1].setVertexes(boxVertices[3], boxVertices[5], boxVertices[4], boxVertices[0]);
     // left + right cubes
-    tiles[2].setVertexes(b2, b6, b5, b3);
-    tiles[3].setVertexes(b0, b4, b7, b1);
+    tiles[2].setVertexes(boxVertices[2], boxVertices[6], boxVertices[5], boxVertices[3]);
+    tiles[3].setVertexes(boxVertices[0], boxVertices[4], boxVertices[7], boxVertices[1]);
     // top + bottom cubes
-    tiles[4].setVertexes(b0, b1, b2, b3);
-    tiles[5].setVertexes(b4, b5, b6, b7);
+    tiles[4].setVertexes(boxVertices[0], boxVertices[1], boxVertices[2], boxVertices[3]);
+    tiles[5].setVertexes(boxVertices[4], boxVertices[5], boxVertices[6], boxVertices[7]);
 }
 
 void Box::draw(const Shader &s) const {
+    glm::mat4 model = glm::mat4(1.0f);
+
+    model = glm::translate(model, position);
+    model = glm::rotate(model, (rotation / 360.0f) * (static_cast<float>(2.0f*M_PI_2)), rotationAxis);
+    model = glm::scale(model, scale);
+
+    s.setModel(model);
     for (auto const &t : tiles) {
         if (t.active)
             t.draw(s);
     }
 }
+

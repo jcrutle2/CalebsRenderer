@@ -33,6 +33,12 @@ void UI::renderWindows(Scene &s, Camera &c, const std::string &frameRate) {
         if (openLights[lightCount]) lightWindow(s.pointLights, lightCount);
     }
 
+    for (int boxCount = 0; boxCount < s.boxes.size(); boxCount++) {
+        if (openBox[boxCount]) {
+            boxWindow(s.boxes, boxCount);
+        }
+    }
+
     if (openLoadModel) newModelWindow(s.models);
     else modelPath = filePath + + "/Assets/Models";
 

@@ -91,7 +91,7 @@ void EditorWindow::initSystems() {
     glPolygonMode( GL_FRONT_AND_BACK, _renderMode );
 
     // Test Tiles
-    scene.boxes.emplace_back(glm::vec3(0.0f,0.0f,0.0f));
+    scene.boxes.emplace_back("Box1", glm::vec3(0.0f,0.0f,0.0f));
 
     // open IMGUI
     UI::Initalize(_window, _context);

@@ -40,6 +40,15 @@ void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
         openChangeSkybox = true;
     }
 
+    ImGui::Text("\nBox List: ");
+    int boxCount = 0;
+    for (auto const &b : s.boxes) {
+        if (ImGui::Button(b.name.c_str())) {
+            openBox[boxCount] = true;
+        }
+        boxCount++;
+    }
+
     ImGui::Text("\nScene Info");
     ImGui::InputText("Name", sceneBuf, 64);
     if (ImGui::Button("Save Scene")) {
@@ -86,6 +95,73 @@ void UI::modelWindow(std::vector<Model> &m, int num) {
     }
     if(ImGui::MenuItem("Close")) {
             openModels[num] = false;
+    }
+
+    ImGui::End();
+}
+
+void UI::boxWindow(std::vector<Box> &boxes, int num) {
+    ImGui::Begin(boxes[num].name.c_str(), &my_tool_active, ImGuiWindowFlags_MenuBar);
+
+    ImGui::InputText("Name", nameBuf, 32);
+    if (ImGui::Button("Save Name")) {
+        boxes[num].name = nameBuf;
+    }
+
+    glm::vec3 position = boxes[num].getPosition();
+    glm::vec3 axis = boxes[num].getRotationAxis();
+    float rotation = boxes[num].getRotation();
+    glm::vec3 scale = boxes[num].getScale();
+
+    if (ImGui::InputFloat3("Position", &position.x)) {
+        boxes[num].setPosition(position);
+    }
+    if (ImGui::InputFloat("Rotation", &rotation)) {
+        boxes[num].setRotation(rotation);
+    }
+    if (ImGui::InputFloat3("Axis", &axis.x)) {
+        boxes[num].setRotationAxis(axis);
+    }
+    if (ImGui::InputFloat3("Scale", &scale.x)) {
+        boxes[num].setScale(scale);
+    }
+
+    ImGui::Text("\nVertex List");
+    glm::vec3 V0 = boxes[num].getV0();
+    glm::vec3 V1 = boxes[num].getV1();
+    glm::vec3 V2 = boxes[num].getV2();
+    glm::vec3 V3 = boxes[num].getV3();
+    glm::vec3 V4 = boxes[num].getV4();
+    glm::vec3 V5 = boxes[num].getV5();
+    glm::vec3 V6 = boxes[num].getV6();
+    glm::vec3 V7 = boxes[num].getV7();
+    if (ImGui::InputFloat3("V0", &V0.x)) {
+        boxes[num].setV0(V0);
+    }
+    if (ImGui::InputFloat3("V1", &V1.x)) {
+        boxes[num].setV1(V1);
+    }
+    if (ImGui::InputFloat3("V2", &V2.x)) {
+        boxes[num].setV2(V2);
+    }
+    if (ImGui::InputFloat3("V3", &V3.x)) {
+        boxes[num].setV3(V3);
+    }
+    if (ImGui::InputFloat3("V4", &V4.x)) {
+        boxes[num].setV4(V4);
+    }
+    if (ImGui::InputFloat3("V5", &V5.x)) {
+        boxes[num].setV5(V5);
+    }
+    if (ImGui::InputFloat3("V6", &V6.x)) {
+        boxes[num].setV6(V6);
+    }
+    if (ImGui::InputFloat3("V7", &V7.x)) {
+        boxes[num].setV7(V7);
+    }
+
+    if(ImGui::MenuItem("Close")) {
+        openBox[num] = false;
     }
 
     ImGui::End();

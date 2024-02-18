@@ -15,7 +15,7 @@ out vec3 Normal;
 void main()
 {
     mat4 viewModel = view * model;
-    gl_Position =  projection * view * vec4(aPos, 1.0);
+    gl_Position =  projection * viewModel * vec4(aPos, 1.0);
     TexCoords = aTexCoords;
     FragPos = vec3(model * vec4(aPos, 1.0));
     Normal = mat3(invModel) * aNormal;

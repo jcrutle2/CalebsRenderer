@@ -37,6 +37,7 @@ add_executable(
         src/Geometry/LevelGeometry/TileTypes/SquareTile.cpp
         src/Geometry/LevelGeometry/TileWrapper.cpp
         src/Geometry/LevelGeometry/Box/Box.cpp
+        src/Geometry/LevelGeometry/Box/BoxAccess.cpp
 )
 
 target_link_libraries(CalebsRenderer "-framework QuartzCore -framework GameController -framework Cocoa -framework OpenGL" ${sdl} ${gl} ${as} imgui)

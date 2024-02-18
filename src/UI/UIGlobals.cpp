@@ -9,6 +9,7 @@ bool my_tool_active = true;
 namespace UI {
     std::unordered_map<int, bool> openModels;
     std::unordered_map<int, bool> openLights;
+    std::unordered_map<int, bool> openBox;
     bool openLoadModel = false;
     bool openDirLight = false;
     bool openLoadScene = false;

@@ -26,6 +26,7 @@ namespace UI {
     void modelWindow(std::vector<Model> &m, int num);
     void directionLightWindow(DirectionLight &l);
     void lightWindow(std::vector<PointLight> &lights, int num);
+    void boxWindow(std::vector<Box> &boxes, int num);
     void newModelWindow(std::vector<Model> &m);
     void loadSceneWindow(Scene &s);
     void changeSkyboxWindow(Skybox &s);
@@ -42,6 +43,7 @@ namespace UI {
     // extern globals
     extern std::unordered_map<int, bool> openModels;
     extern std::unordered_map<int, bool> openLights;
+    extern std::unordered_map<int, bool> openBox;
     extern bool openLoadModel;
     extern bool openDirLight;
     extern bool openLoadScene;
