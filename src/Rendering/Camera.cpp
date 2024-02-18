@@ -85,7 +85,7 @@ glm::mat4 Camera::getView() {
 
 glm::mat4 Camera::getPerspective() {
     return glm::perspective(glm::radians(_zoom), 800.0f / 600.0f, 0.1f,
-                            100.0f);
+                            1000.0f);
 }
 
 void Camera::toggleCameraState() {

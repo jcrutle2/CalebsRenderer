@@ -57,6 +57,7 @@ void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
         savePath += ".bin";
         SceneLoader::storeScene(s, savePath);
     }
+    ImGui::SameLine();
     if (ImGui::Button("Load Scene")) {
         openLoadScene = true;
     }
@@ -103,61 +104,80 @@ void UI::modelWindow(std::vector<Model> &m, int num) {
 void UI::boxWindow(std::vector<Box> &boxes, int num) {
     ImGui::Begin(boxes[num].name.c_str(), &my_tool_active, ImGuiWindowFlags_MenuBar);
 
+    auto &box = boxes[num];
+
     ImGui::InputText("Name", nameBuf, 32);
     if (ImGui::Button("Save Name")) {
-        boxes[num].name = nameBuf;
+        box.name = nameBuf;
     }
 
-    glm::vec3 position = boxes[num].getPosition();
-    glm::vec3 axis = boxes[num].getRotationAxis();
-    float rotation = boxes[num].getRotation();
-    glm::vec3 scale = boxes[num].getScale();
+    glm::vec3 position = box.getPosition();
+    glm::vec3 axis = box.getRotationAxis();
+    float rotation = box.getRotation();
+    glm::vec3 scale = box.getScale();
 
     if (ImGui::InputFloat3("Position", &position.x)) {
-        boxes[num].setPosition(position);
+        box.setPosition(position);
     }
     if (ImGui::InputFloat("Rotation", &rotation)) {
-        boxes[num].setRotation(rotation);
+        box.setRotation(rotation);
     }
     if (ImGui::InputFloat3("Axis", &axis.x)) {
-        boxes[num].setRotationAxis(axis);
+        box.setRotationAxis(axis);
     }
     if (ImGui::InputFloat3("Scale", &scale.x)) {
-        boxes[num].setScale(scale);
+        box.setScale(scale);
     }
 
     ImGui::Text("\nVertex List");
-    glm::vec3 V0 = boxes[num].getV0();
-    glm::vec3 V1 = boxes[num].getV1();
-    glm::vec3 V2 = boxes[num].getV2();
-    glm::vec3 V3 = boxes[num].getV3();
-    glm::vec3 V4 = boxes[num].getV4();
-    glm::vec3 V5 = boxes[num].getV5();
-    glm::vec3 V6 = boxes[num].getV6();
-    glm::vec3 V7 = boxes[num].getV7();
+    glm::vec3 V0 = box.getV0();
+    glm::vec3 V1 = box.getV1();
+    glm::vec3 V2 = box.getV2();
+    glm::vec3 V3 = box.getV3();
+    glm::vec3 V4 = box.getV4();
+    glm::vec3 V5 = box.getV5();
+    glm::vec3 V6 = box.getV6();
+    glm::vec3 V7 = box.getV7();
     if (ImGui::InputFloat3("V0", &V0.x)) {
-        boxes[num].setV0(V0);
+        box.setV0(V0);
     }
     if (ImGui::InputFloat3("V1", &V1.x)) {
-        boxes[num].setV1(V1);
+        box.setV1(V1);
     }
     if (ImGui::InputFloat3("V2", &V2.x)) {
-        boxes[num].setV2(V2);
+        box.setV2(V2);
     }
     if (ImGui::InputFloat3("V3", &V3.x)) {
-        boxes[num].setV3(V3);
+        box.setV3(V3);
     }
     if (ImGui::InputFloat3("V4", &V4.x)) {
-        boxes[num].setV4(V4);
+        box.setV4(V4);
     }
     if (ImGui::InputFloat3("V5", &V5.x)) {
-        boxes[num].setV5(V5);
+        box.setV5(V5);
     }
     if (ImGui::InputFloat3("V6", &V6.x)) {
-        boxes[num].setV6(V6);
+        box.setV6(V6);
     }
     if (ImGui::InputFloat3("V7", &V7.x)) {
-        boxes[num].setV7(V7);
+        box.setV7(V7);
+    }
+
+    ImGui::Text("Hide Walls: ");
+    for (int tileCounter = 0; tileCounter < box.getTileList().size(); tileCounter++) {
+        bool flag = false;
+        ImGui::SameLine();
+        if (!box.getActive(tileCounter)) {
+            flag = true;
+            ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor(0.05f, 0.05f, 0.05f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor(0.1f, 0.1f, 0.2f));
+        }
+        if (ImGui::Button(boxSides[tileCounter])) {
+            box.toggleActive(tileCounter);
+        }
+        if (flag) {
+            ImGui::PopStyleColor(2);
+        }
     }
 
     if(ImGui::MenuItem("Close")) {

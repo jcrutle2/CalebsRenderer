@@ -21,4 +21,5 @@ namespace UI {
     char nameBuf[32] = "";
     char sceneBuf[64] = "";
     char lightBuf[32] = "";
+    const char boxSides[6][2] = {"F", "B", "L", "R", "T", "B"};
 }

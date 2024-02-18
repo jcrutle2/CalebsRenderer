@@ -65,3 +65,18 @@ void Box::draw(const Shader &s) const {
     }
 }
 
+std::vector<TileWrapper>& Box::getTileList() {
+    return tiles;
+}
+
+void Box::toggleActive(unsigned int side) {
+    if (side < tiles.size()) {
+        tiles[side].active = !tiles[side].active;
+    }
+}
+
+bool Box::getActive(unsigned int side) {
+    if (side < tiles.size()) {
+        return tiles[side].active;
+    }
+}

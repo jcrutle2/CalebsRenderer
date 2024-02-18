@@ -55,6 +55,7 @@ namespace UI {
     extern char nameBuf[32];
     extern char sceneBuf[64];
     extern char lightBuf[32];
+    extern const char boxSides[6][2];
 }
 
 

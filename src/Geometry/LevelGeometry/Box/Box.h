@@ -40,6 +40,7 @@ public:
     glm::vec3 getV5() const;
     glm::vec3 getV6() const;
     glm::vec3 getV7() const;
+    bool getActive(unsigned int side);
 
 
     // setter methods
@@ -55,6 +56,7 @@ public:
     void setV5(const glm::vec3 &v);
     void setV6(const glm::vec3 &v);
     void setV7(const glm::vec3 &v);
+    void toggleActive(unsigned int side);
 
     // tiling
     std::vector<TileWrapper>& getTileList();
