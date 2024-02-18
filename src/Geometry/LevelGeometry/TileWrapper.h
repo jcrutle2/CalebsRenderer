@@ -19,15 +19,16 @@ enum TileWrapperType {
 
 class TileWrapper {
 public:
-    explicit TileWrapper(enum TileWrapperType ty);
+    explicit TileWrapper(const std::string &n, enum TileWrapperType ty);
     TileWrapper(const TileWrapper &T);
     ~TileWrapper();
-    TileWrapper& operator= (const TileWrapper &T);
 
     void draw(const Shader &s) const;
     void setVertexes(const glm::vec3 &v1, const glm::vec3 &v2, const glm::vec3 &v3, const glm::vec3 &v4);
 
     enum TileWrapperType type;
+
+    std::string getName() const;
 
     bool active;
 

@@ -18,8 +18,5 @@ namespace UI {
     std::string modelPath = filePath + "/Assets/Models";
     std::string scenesPath = filePath + "/Assets/Scenes";
     std::string skyboxPath = filePath + "/Assets/Skyboxes";
-    char nameBuf[32] = "";
-    char sceneBuf[64] = "";
-    char lightBuf[32] = "";
-    const char boxSides[6][2] = {"F", "B", "L", "R", "T", "B"};
+    std::unordered_map<std::string, char[32]> charBuffers;
 }

@@ -4,7 +4,8 @@
 
 #include "Tile.h"
 
-Tile::Tile() {
+Tile::Tile(const std::string &n) {
+    name = n;
     textureScale = TEXTURE_SCALE_DEFAULT;
     newTexture(texture, "Assets/Textures/error.png", "png");
 }

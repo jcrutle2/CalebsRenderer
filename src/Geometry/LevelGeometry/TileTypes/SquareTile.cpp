@@ -4,7 +4,7 @@
 
 #include "SquareTile.h"
 
-SquareTile::SquareTile(const glm::vec3 &v1, const glm::vec3 &v2, const glm::vec3 &v3, const glm::vec3 &v4) : Tile() {
+SquareTile::SquareTile(const std::string &n, const glm::vec3 &v1, const glm::vec3 &v2, const glm::vec3 &v3, const glm::vec3 &v4) : Tile(n) {
     vert1 = v1;
     vert2 = v2;
     vert3 = v3;
@@ -14,7 +14,7 @@ SquareTile::SquareTile(const glm::vec3 &v1, const glm::vec3 &v2, const glm::vec3
     setup();
 }
 
-SquareTile::SquareTile(const SquareTile &S) {
+SquareTile::SquareTile(const SquareTile &S) : Tile(S.name){
     vert1 = S.vert1;
     vert2 = S.vert2;
     vert3 = S.vert3;

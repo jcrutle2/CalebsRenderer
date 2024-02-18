@@ -30,7 +30,6 @@ add_executable(
         src/UI/UI.cpp
         src/Scene/Scene.cpp
         src/UI/UIGlobals.cpp
-        src/UI/UIWindows.cpp
         src/UI/UIUtil.cpp
         src/Environment/Skybox/Skybox.cpp
         src/Geometry/LevelGeometry/TileTypes/Tile.cpp
@@ -39,6 +38,12 @@ add_executable(
         src/Geometry/LevelGeometry/Box/Box.cpp
         src/Geometry/LevelGeometry/Box/BoxAccess.cpp
         src/Geometry/Textures/Texture.cpp
+        src/UI/Windows/MainWindow.cpp
+        src/UI/Windows/ModelWindow.cpp
+        src/UI/Windows/BoxWindow.cpp
+        src/UI/Windows/LightWindow.cpp
+        src/UI/Windows/SkyboxWindow.cpp
+        src/UI/Windows/SceneWindow.cpp
 )
 
 target_link_libraries(CalebsRenderer "-framework QuartzCore -framework GameController -framework Cocoa -framework OpenGL" ${sdl} ${gl} ${as} imgui)

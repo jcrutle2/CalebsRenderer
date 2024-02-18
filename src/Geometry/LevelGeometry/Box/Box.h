@@ -19,6 +19,10 @@
 #define BOX_ROTATION_AXIS_DEFAULT (glm::vec3(0.0f, 1.0f, 0.0f))
 #define BOX_ROTATION_DEFAULT (0.0f)
 #define BOX_SCALE_DEFAULT (glm::vec3(1.0f, 1.0f, 1.0f))
+#define NEW_GEOMETRY_0_DEFAULT (glm::vec3(1.0f, 1.0f, 0.0f))
+#define NEW_GEOMETRY_1_DEFAULT (glm::vec3(-1.0f, 1.0f, 0.0f))
+#define NEW_GEOMETRY_2_DEFAULT (glm::vec3(-1.0f, -1.0f, 0.0f))
+#define NEW_GEOMETRY_3_DEFAULT (glm::vec3(1.0f, -1.0f, 0.0f))
 
 class Box {
 public:

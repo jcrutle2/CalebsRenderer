@@ -44,6 +44,7 @@ namespace UI {
     extern std::unordered_map<int, bool> openModels;
     extern std::unordered_map<int, bool> openLights;
     extern std::unordered_map<int, bool> openBox;
+    extern std::unordered_map<std::string, char[32]> charBuffers;
     extern bool openLoadModel;
     extern bool openDirLight;
     extern bool openLoadScene;
@@ -52,10 +53,6 @@ namespace UI {
     extern std::string modelPath;
     extern std::string scenesPath;
     extern std::string skyboxPath;
-    extern char nameBuf[32];
-    extern char sceneBuf[64];
-    extern char lightBuf[32];
-    extern const char boxSides[6][2];
 }
 
 

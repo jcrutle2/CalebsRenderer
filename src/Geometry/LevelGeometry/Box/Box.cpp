@@ -7,12 +7,12 @@
 Box::Box(const std::string &n, const glm::vec3 &pos) {
     name = n;
 
-    tiles.emplace_back(TILE_SQUARE);
-    tiles.emplace_back(TILE_SQUARE);
-    tiles.emplace_back(TILE_SQUARE);
-    tiles.emplace_back(TILE_SQUARE);
-    tiles.emplace_back(TILE_SQUARE);
-    tiles.emplace_back(TILE_SQUARE);
+    tiles.emplace_back("Front", TILE_SQUARE);
+    tiles.emplace_back("Back", TILE_SQUARE);
+    tiles.emplace_back("Left", TILE_SQUARE);
+    tiles.emplace_back("Right", TILE_SQUARE);
+    tiles.emplace_back("Top", TILE_SQUARE);
+    tiles.emplace_back("Bottom", TILE_SQUARE);
 
     position = pos;
     rotationAxis = BOX_ROTATION_AXIS_DEFAULT;
@@ -79,4 +79,9 @@ bool Box::getActive(unsigned int side) {
     if (side < tiles.size()) {
         return tiles[side].active;
     }
+}
+
+void Box::pushBack(enum TileWrapperType type) {
+    std::string tileName = "Side " + std::to_string(tiles.size() + 1);
+    tiles.emplace_back(tileName, type);
 }

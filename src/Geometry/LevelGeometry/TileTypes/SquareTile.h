@@ -9,7 +9,7 @@
 
 class SquareTile : public Tile {
 public:
-    SquareTile(const glm::vec3 &v1, const glm::vec3 &v2, const glm::vec3 &v3, const glm::vec3 &v4);
+    SquareTile(const std::string &n, const glm::vec3 &v1, const glm::vec3 &v2, const glm::vec3 &v3, const glm::vec3 &v4);
     SquareTile(const SquareTile &S);
     ~SquareTile() = default;
 

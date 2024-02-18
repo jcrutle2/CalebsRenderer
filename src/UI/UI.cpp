@@ -45,4 +45,6 @@ void UI::renderWindows(Scene &s, Camera &c, const std::string &frameRate) {
     if (openLoadScene) loadSceneWindow(s);
 
     if (openChangeSkybox) changeSkyboxWindow(s.skybox);
+
+ //   ImGui::ShowDemoWindow();
 }

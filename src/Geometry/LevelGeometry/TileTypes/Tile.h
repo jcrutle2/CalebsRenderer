@@ -17,8 +17,10 @@ namespace TileUtil {
 
 class Tile {
 public:
-    Tile();
+    Tile(const std::string &n);
     ~Tile() = default;
+
+    std::string name;
 
     virtual void draw(const Shader &shader) const;
     virtual void setup();
