@@ -22,29 +22,29 @@ Camera::Camera(glm::vec3 camP, glm::vec3 camF, glm::vec3 camU) {
 
 Camera::~Camera() = default;
 
-void Camera::moveForward(const float speed) {
+void Camera::moveForward(const float &speed) {
     cameraPos += speed * cameraFront;
 }
 
-void Camera::moveBackward(const float speed) {
+void Camera::moveBackward(const float &speed) {
     cameraPos -= speed * cameraFront;
 }
 
-void Camera::moveRight(const float speed) {
+void Camera::moveRight(const float &speed) {
     cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) *
                  speed;
 }
 
-void Camera::moveLeft(const float speed) {
+void Camera::moveLeft(const float &speed) {
     cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) *
                  speed;
 }
 
-void Camera::moveUp(const float speed) {
+void Camera::moveUp(const float &speed) {
     cameraPos += speed * cameraUp;
 }
 
-void Camera::moveDown(const float speed) {
+void Camera::moveDown(const float &speed) {
     cameraPos -= speed * cameraUp;
 }
 

@@ -22,12 +22,12 @@ class Camera {
     explicit Camera(glm::vec3 camP = CAMERA_POSITION_DEFAULT, glm::vec3 camF = CAMERA_FRONT_DEFAULT, glm::vec3 camU = CAMERA_UP_DEFAULT);
     ~Camera();
 
-    void moveForward(const float speed);
-    void moveBackward(const float speed);
-    void moveRight(const float speed);
-    void moveLeft(const float speed);
-    void moveUp(const float speed);
-    void moveDown(const float speed);
+    void moveForward(const float &speed);
+    void moveBackward(const float &speed);
+    void moveRight(const float &speed);
+    void moveLeft(const float &speed);
+    void moveUp(const float &speed);
+    void moveDown(const float &speed);
     void updateDirection(int32_t xMovement, int32_t yMovement);
     void updateZoom(int32_t zoom);
     void updateView();
