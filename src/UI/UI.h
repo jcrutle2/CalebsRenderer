@@ -39,14 +39,13 @@ namespace UI {
     void back(std::string &s);
     std::string shorten(const std::string &s);
     std::string fileExtension(const std::string &s);
+    std::string getKey(const std::string &type, const std::string &name);
 
     // extern globals
     extern std::unordered_map<int, bool> openModels;
-    extern std::unordered_map<int, bool> openLights;
-    extern std::unordered_map<int, bool> openBox;
+    extern std::unordered_map<std::string, bool> openWindows;
     extern std::unordered_map<std::string, char[32]> charBuffers;
     extern bool openLoadModel;
-    extern bool openDirLight;
     extern bool openLoadScene;
     extern bool openChangeSkybox;
     extern std::string filePath;

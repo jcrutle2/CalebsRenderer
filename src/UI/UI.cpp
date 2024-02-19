@@ -4,6 +4,10 @@
 
 #include "UI.h"
 
+std::string UI::getKey(const std::string &type, const std::string &name) {
+    return type + "_" + name;
+}
+
 void UI::Initalize(SDL_Window * window, void * sdl_gl_context) {
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
@@ -21,20 +25,24 @@ void UI::Initalize(SDL_Window * window, void * sdl_gl_context) {
 void UI::renderWindows(Scene &s, Camera &c, const std::string &frameRate) {
     mainWindow(s, c, frameRate);
 
-    int modelCount = 0;
-    for (auto &model : s.models) {
-        if (openModels[modelCount]) modelWindow(s.models, modelCount);
-        modelCount++;
+
+    for (int modelCount = 0; modelCount < s.models.size(); modelCount++) {
+        if (openWindows[getKey("Model", s.models[modelCount].name)])
+            modelWindow(s.models, modelCount);
+        if (s.models[modelCount].lights.empty()) {
+
+        }
     }
 
-    if (openDirLight) directionLightWindow(s.dirLight);
+    if (openWindows[getKey("Light", "Direction Light")]) directionLightWindow(s.dirLight);
 
     for (int lightCount = 0; lightCount < s.pointLights.size(); lightCount++) {
-        if (openLights[lightCount]) lightWindow(s.pointLights, lightCount);
+        if (openWindows[getKey("Light", s.pointLights[lightCount].name)])
+            lightWindow(s.pointLights, lightCount);
     }
 
     for (int boxCount = 0; boxCount < s.boxes.size(); boxCount++) {
-        if (openBox[boxCount]) {
+        if (openWindows[getKey("Box", s.boxes[boxCount].name)]) {
             boxWindow(s.boxes, boxCount);
         }
     }

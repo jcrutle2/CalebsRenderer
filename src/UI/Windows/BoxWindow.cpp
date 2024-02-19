@@ -9,7 +9,7 @@ void UI::boxWindow(std::vector<Box> &boxes, int num) {
 
     auto &box = boxes[num];
 
-    std::string bufferKey = "Box_" + box.name;
+    std::string bufferKey = getKey("Box", box.name);
     if (ImGui::CollapsingHeader("Properties")) {
         ImGui::InputText(" ", charBuffers[bufferKey], 32);
         ImGui::SameLine();
@@ -24,6 +24,7 @@ void UI::boxWindow(std::vector<Box> &boxes, int num) {
             if (safeToRename) {
                 box.name = charBuffers[bufferKey];
                 charBuffers.erase(bufferKey);
+                openWindows.erase(bufferKey);
             }
         }
     }
@@ -273,13 +274,11 @@ void UI::boxWindow(std::vector<Box> &boxes, int num) {
     }
 
     if(ImGui::MenuItem("Delete")) {
-        for (auto x : openBox) {
-            x.second = false;
-        }
         boxes.erase(boxes.begin() + num);
+        openWindows.erase(bufferKey);
+        charBuffers.erase(bufferKey);
     }
     if(ImGui::MenuItem("Close")) {
-        openBox[num] = false;
         charBuffers.erase(bufferKey);
     }
 

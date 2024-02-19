@@ -12,23 +12,26 @@ void UI::directionLightWindow(DirectionLight &l) {
     ImGui::InputFloat3("Specular", &l.specular.x);
     ImGui::InputFloat3("Diffuse", &l.diffuse.x);
     if(ImGui::MenuItem("Close")) {
-        openDirLight = false;
+        openWindows[getKey("Light", "Direction Light")] = false;
     }
 
     ImGui::End();
 }
 
 void UI::lightWindow(std::vector<PointLight> &lights, int num) {
-    std::string name = lights[num].name;
+
     PointLight &l = lights[num];
+    std::string name = l.name;
+    std::string bufferKey = getKey("Light", name);
+
     ImGui::Begin(name.c_str(), &my_tool_active, ImGuiWindowFlags_MenuBar);
 
-    std::string bufferKey = "Light_" + l.name;
     ImGui::InputText("Name", charBuffers[bufferKey], 32);
     if (ImGui::Button("Save Name")) {
         if (strcmp(charBuffers[bufferKey], "") != 0) {
             l.name = charBuffers[bufferKey];
             charBuffers.erase(bufferKey);
+            openWindows.erase(bufferKey);
         }
     }
 
@@ -42,13 +45,12 @@ void UI::lightWindow(std::vector<PointLight> &lights, int num) {
 
 
     if(ImGui::MenuItem("Delete")) {
-        for (auto x : openLights) {
-            x.second = false;
-        }
         lights.erase(lights.begin() + num);
+        openWindows.erase(bufferKey);
+        charBuffers.erase(bufferKey);
     }
     if(ImGui::MenuItem("Close")) {
-        openLights[num] = false;
+        openWindows[bufferKey] = false;
         charBuffers.erase(bufferKey);
     }
 

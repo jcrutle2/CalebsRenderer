@@ -16,7 +16,7 @@ void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
         ImGui::BeginChild("Boxes", ImVec2(175, 100), ImGuiChildFlags_Border | ImGuiChildFlags_ResizeY);
         for (auto const &b: s.boxes) {
             if (ImGui::Selectable(b.name.c_str())) {
-                openBox[boxCount] = true;
+                openWindows[getKey("Box", b.name)] = true;
             }
             boxCount++;
         }
@@ -44,7 +44,7 @@ void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
         ImGui::BeginChild("Models", ImVec2(175, 100), ImGuiChildFlags_Border | ImGuiChildFlags_ResizeY);
             for (auto const &m : s.models) {
                 if (ImGui::Selectable(m.name.c_str())) {
-                    openModels[modelCount] = true;
+                    openWindows[getKey("Model", m.name)] = true;
                 }
                 modelCount++;
             }
@@ -62,12 +62,12 @@ void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
     if (ImGui::CollapsingHeader("Environment")) {
         ImGui::BeginChild("Lights", ImVec2(175, 100), ImGuiChildFlags_Border | ImGuiChildFlags_ResizeY);
             if (ImGui::Selectable("Direction Light")) {
-                openDirLight = true;
+                openWindows[getKey("Light", "Direction Light")] = true;
             }
             for (int i = 0; i < s.pointLights.size(); i++) {
                 std::string n = s.pointLights[i].name;
                 if (ImGui::Selectable(n.c_str())) {
-                    openLights[i] = true;
+                    openWindows[getKey("Light", n)] = true;
                 }
             }
         ImGui::EndChild();

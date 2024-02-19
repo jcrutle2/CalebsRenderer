@@ -8,10 +8,8 @@ bool my_tool_active = true;
 
 namespace UI {
     std::unordered_map<int, bool> openModels;
-    std::unordered_map<int, bool> openLights;
-    std::unordered_map<int, bool> openBox;
+    std::unordered_map<std::string, bool> openWindows;
     bool openLoadModel = false;
-    bool openDirLight = false;
     bool openLoadScene = false;
     bool openChangeSkybox = false;
     std::string filePath = fs::current_path();
