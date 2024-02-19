@@ -7,7 +7,7 @@
 #define OPENGL_TESTS_UI_H
 
 #include <vector>
-#include "../Geometry//Models/Model.h"
+#include "../Geometry/Models/Model.h"
 #include "../Environment/Light/Light.h"
 #include "imgui/imgui_impl_osx.h"
 #include "imgui/imgui_impl_sdl2.h"

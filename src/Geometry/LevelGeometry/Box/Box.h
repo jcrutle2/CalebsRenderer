@@ -45,6 +45,13 @@ public:
     glm::vec3 getV6() const;
     glm::vec3 getV7() const;
     bool getActive(unsigned int side);
+    glm::vec3 getTileVert1(const unsigned int &n) const;
+    glm::vec3 getTileVert2(const unsigned int &n) const;
+    glm::vec3 getTileVert3(const unsigned int &n) const;
+    glm::vec3 getTileVert4(const unsigned int &n) const;
+    float getTextureRotation(const unsigned int &n) const;
+    float getTextureScale(const unsigned int &n) const;
+    glm::vec2 getTexturePosition(const unsigned int &n) const;
 
 
     // setter methods
@@ -61,6 +68,22 @@ public:
     void setV6(const glm::vec3 &v);
     void setV7(const glm::vec3 &v);
     void toggleActive(unsigned int side);
+    void setBoxTextures(std::string path);
+    void setAllTextures(std::string path);
+    void setTexture(const unsigned int &n, const std::string &path);
+    void setTileVert1(const unsigned int &n, const glm::vec3 &v);
+    void setTileVert2(const unsigned int &n, const glm::vec3 &v);
+    void setTileVert3(const unsigned int &n, const glm::vec3 &v);
+    void setTileVert4(const unsigned int &n, const glm::vec3 &v);
+    void setAllTextureScale(const float &r);
+    void setAllTextureRotation(const float &r);
+    void setAllTexturePosition(const glm::vec2 &v);
+    void setBoxTextureScale(const float &r);
+    void setBoxTextureRotation(const float &r);
+    void setBoxTexturePosition(const glm::vec2 &v);
+    void setTextureScale(const unsigned int &n, const float &s);
+    void setTextureRotation(const unsigned int &n, const float &r);
+    void setTexturePosition(const unsigned int &n, const glm::vec2 &v);
 
     // tiling
     std::vector<TileWrapper>& getTileList();

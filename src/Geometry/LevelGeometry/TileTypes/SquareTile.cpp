@@ -11,7 +11,6 @@ SquareTile::SquareTile(const std::string &n, const glm::vec3 &v1, const glm::vec
     vert4 = v4;
 
     updateVertex();
-    setup();
 }
 
 SquareTile::SquareTile(const SquareTile &S) : Tile(S.name){
@@ -21,34 +20,70 @@ SquareTile::SquareTile(const SquareTile &S) : Tile(S.name){
     vert4 = S.vert4;
 
     updateVertex();
-    setup();
 }
 
 void SquareTile::updateVertex() {
+    // calculate normal vectors
     glm::vec3 norm1 = glm::normalize(glm::cross(vert2 - vert1, vert4 - vert1));
     glm::vec3 norm2 = glm::normalize(glm::cross(vert3 - vert2, vert1 - vert2));
     glm::vec3 norm3 = glm::normalize(glm::cross(vert4 - vert3, vert2 - vert3));
     glm::vec3 norm4 = glm::normalize(glm::cross(vert1 - vert4, vert3 - vert4));
 
+    // Used to Calculate Mapping Points
     glm::vec3 rHat = glm::normalize(vert4 - vert3);
     float rMag = glm::length(vert4 - vert3);
-
     glm::vec3 vecTwoThree = vert2 - vert3;
     glm::vec3 vecOneThree = vert1 - vert3;
 
-    float xOne = glm::length(rHat * glm::dot(rHat, vecOneThree));
-    float yOne = glm::length(glm::vec3((vecOneThree) - (rHat * glm::dot(rHat, vecOneThree))));
-    float xTwo = glm::length(rHat * glm::dot(rHat, vecTwoThree));
-    float yTwo = glm::length((vecTwoThree) - (rHat * glm::dot(rHat, vecTwoThree)));
+    // Texture Mapping Coordinates
+    glm::vec4 coordsOne = glm::vec4(
+            1.0f - (glm::length(glm::vec3((vecOneThree) - (rHat * glm::dot(rHat, vecOneThree)))) / textureScale),
+            1.0f - (glm::length(rHat * glm::dot(rHat, vecOneThree)) / textureScale),
+            0.0f,
+            0.0f
+    );
+    glm::vec4 coordsTwo = glm::vec4(
+            1.0f - (glm::length((vecTwoThree) - (rHat * glm::dot(rHat, vecTwoThree))) / textureScale),
+            1.0f - (glm::length(rHat * glm::dot(rHat, vecTwoThree)) / textureScale),
+            0.0f,
+            0.0f
+    );
+    glm::vec4 coordsThree = glm::vec4(
+            1.0f,
+            1.0f,
+            0.0f,
+            0.0f
+    );
+    glm::vec4 coordsFour = glm::vec4(
+            1.0f,
+            vertex[31] = 1.0f - (rMag / textureScale),
+            0.0f,
+            0.0f
+    );
 
+    // Rotate Texture Coordinates
+    glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), (textureRotation / 360.0f) * 2 * (float) M_PI, glm::vec3(0.0f, 0.0f, 1.0f));
+    coordsOne = rotation * coordsOne;
+    coordsTwo = rotation * coordsTwo;
+    coordsThree = rotation * coordsThree;
+    coordsFour = rotation * coordsFour;
+
+    // Translate Texture Coordinates
+    glm::vec4 translation = glm::vec4(texturePosition, 0.0f, 0.0f);
+    coordsOne += translation;
+    coordsTwo += translation;
+    coordsThree += translation;
+    coordsFour += translation;
+
+    // Assign Calculated Values to Vertex Array
     vertex[0] = vert1.x;
     vertex[1] = vert1.y;
     vertex[2] = vert1.z;
     vertex[3] = norm1.x;
     vertex[4] = norm1.y;
     vertex[5] = norm1.z;
-    vertex[6] = xOne * textureScale;
-    vertex[7] = yOne * textureScale;
+    vertex[6] = coordsOne.x;
+    vertex[7] = coordsOne.y;
 
     vertex[8] = vert2.x;
     vertex[9] = vert2.y;
@@ -56,8 +91,8 @@ void SquareTile::updateVertex() {
     vertex[11] = norm2.x;
     vertex[12] = norm2.y;
     vertex[13] = norm2.z;
-    vertex[14] = xTwo * textureScale;
-    vertex[15] = yTwo * textureScale;
+    vertex[14] = coordsTwo.x;
+    vertex[15] = coordsTwo.y;
 
     vertex[16] = vert3.x;
     vertex[17] = vert3.y;
@@ -65,8 +100,8 @@ void SquareTile::updateVertex() {
     vertex[19] = norm3.x;
     vertex[20] = norm3.y;
     vertex[21] = norm3.z;
-    vertex[22] = 0.0f;
-    vertex[23] = 0.0f;
+    vertex[22] = coordsThree.x;
+    vertex[23] = coordsThree.y;
 
     vertex[24] = vert4.x;
     vertex[25] = vert4.y;
@@ -74,11 +109,9 @@ void SquareTile::updateVertex() {
     vertex[27] = norm4.x;
     vertex[28] = norm4.y;
     vertex[29] = norm4.z;
-    vertex[30] = rMag * textureScale;
-    vertex[31] = 0.0f;
-}
+    vertex[30] = coordsFour.x;
+    vertex[31] = coordsFour.y;
 
-void SquareTile::setup() {
     indices[0] = 0;
     indices[1] = 1;
     indices[2] = 3;
@@ -86,6 +119,7 @@ void SquareTile::setup() {
     indices[4] = 2;
     indices[5] = 3;
 
+    //Initialize Info for OpenGL
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
@@ -125,7 +159,6 @@ void SquareTile::setVertexes(const glm::vec3 &v1, const glm::vec3 &v2, const glm
     vert4 = v4;
 
     updateVertex();
-    setup();
 }
 
 glm::vec3 SquareTile::getVert1() const {
@@ -142,4 +175,24 @@ glm::vec3 SquareTile::getVert3() const {
 
 glm::vec3 SquareTile::getVert4() const {
     return vert4;
+}
+
+void SquareTile::setVert1(const glm::vec3 &v) {
+    vert1 = v;
+    updateVertex();
+}
+
+void SquareTile::setVert2(const glm::vec3 &v) {
+    vert2 = v;
+    updateVertex();
+}
+
+void SquareTile::setVert3(const glm::vec3 &v) {
+    vert3 = v;
+    updateVertex();
+}
+
+void SquareTile::setVert4(const glm::vec3 &v) {
+    vert4 = v;
+    updateVertex();
 }

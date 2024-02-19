@@ -44,6 +44,7 @@ add_executable(
         src/UI/Windows/LightWindow.cpp
         src/UI/Windows/SkyboxWindow.cpp
         src/UI/Windows/SceneWindow.cpp
+        src/Geometry/Textures/TextureUtil.cpp
 )
 
 target_link_libraries(CalebsRenderer "-framework QuartzCore -framework GameController -framework Cocoa -framework OpenGL" ${sdl} ${gl} ${as} imgui)

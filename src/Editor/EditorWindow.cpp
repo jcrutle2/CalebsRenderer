@@ -93,6 +93,9 @@ void EditorWindow::initSystems() {
     // Test Tiles
     scene.boxes.emplace_back("Box1", glm::vec3(0.0f,0.0f,0.0f));
 
+    // Load Textures
+    TextureGlobals::loadAllTextures();
+
     // open IMGUI
     UI::Initalize(_window, _context);
 }
@@ -131,7 +134,8 @@ void EditorWindow::drawBuffered() {
     tileShader.setDirectionLight(scene.dirLight);
     tileShader.setPointLights(scene.pointLights, scene.models);
     tileShader.setCamera(camera);
-    scene.boxes[0].draw(tileShader);
+    for (const auto &b : scene.boxes)
+        b.draw(tileShader);
 
     // use shader
     shader.use();

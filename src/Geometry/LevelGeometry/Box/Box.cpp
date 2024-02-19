@@ -48,7 +48,7 @@ void Box::setupCube() {
     tiles[3].setVertexes(boxVertices[0], boxVertices[4], boxVertices[7], boxVertices[1]);
     // top + bottom cubes
     tiles[4].setVertexes(boxVertices[0], boxVertices[1], boxVertices[2], boxVertices[3]);
-    tiles[5].setVertexes(boxVertices[4], boxVertices[5], boxVertices[6], boxVertices[7]);
+    tiles[5].setVertexes(boxVertices[7], boxVertices[4], boxVertices[5], boxVertices[6]);
 }
 
 void Box::draw(const Shader &s) const {
@@ -79,6 +79,7 @@ bool Box::getActive(unsigned int side) {
     if (side < tiles.size()) {
         return tiles[side].active;
     }
+    return false;
 }
 
 void Box::pushBack(enum TileWrapperType type) {

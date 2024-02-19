@@ -45,6 +45,32 @@ glm::vec3 Box::getV7() const {
     return boxVertices[7];
 }
 
+glm::vec3 Box::getTileVert1(const unsigned int &n) const {
+    return tiles[n].getVert1();
+}
+glm::vec3 Box::getTileVert2(const unsigned int &n) const {
+    return tiles[n].getVert2();
+}
+glm::vec3 Box::getTileVert3(const unsigned int &n) const {
+    return tiles[n].getVert3();
+}
+glm::vec3 Box::getTileVert4(const unsigned int &n) const {
+    return tiles[n].getVert4();
+}
+
+float Box::getTextureScale(const unsigned int &n) const {
+    return tiles[n].getTextureScale();
+}
+float Box::getTextureRotation(const unsigned int &n) const {
+    return tiles[n].getTextureRotation();
+}
+glm::vec2 Box::getTexturePosition(const unsigned int &n) const {
+    return tiles[n].getTexturePosition();
+}
+
+
+
+
 void Box::setPosition(glm::vec3 pos) {
     position = pos;
 }
@@ -92,4 +118,65 @@ void Box::setV6(const glm::vec3 &v) {
 void Box::setV7(const glm::vec3 &v) {
     boxVertices[7] = v;
     setupCube();
+}
+
+void Box::setTexture(const unsigned int &n, const std::string &path) {
+    tiles[n].setTexture(path);
+}
+void Box::setAllTextures(std::string path) {
+    for (int i = 0; i < tiles.size(); i++) {
+        tiles[i].setTexture(path);
+    }
+}
+void Box::setBoxTextures(std::string path) {
+    for (int i = 0; i < 6; i++) {
+        tiles[i].setTexture(path);
+    }
+}
+
+void Box::setTileVert1(const unsigned int &n, const glm::vec3 &v) {
+    tiles[n].setVert1(v);
+}
+void Box::setTileVert2(const unsigned int &n, const glm::vec3 &v) {
+    tiles[n].setVert2(v);
+}
+void Box::setTileVert3(const unsigned int &n, const glm::vec3 &v) {
+    tiles[n].setVert3(v);
+}
+void Box::setTileVert4(const unsigned int &n, const glm::vec3 &v) {
+    tiles[n].setVert4(v);
+}
+
+void Box::setAllTextureScale(const float &r) {
+    for (auto &tile : tiles)
+        tile.setTextureScale(r);
+}
+void Box::setAllTextureRotation(const float &r) {
+    for (auto &tile : tiles)
+        tile.setTextureRotation(r);
+}
+void Box::setAllTexturePosition(const glm::vec2 &v) {
+    for (auto &tile : tiles)
+        tile.setTexturePosition(v);
+}
+void Box::setBoxTextureScale(const float &r) {
+    for (int i = 0; i < 6; i++)
+        tiles[i].setTextureScale(r);
+}
+void Box::setBoxTextureRotation(const float &r) {
+    for (int i = 0; i < 6; i++)
+        tiles[i].setTextureRotation(r);
+}
+void Box::setBoxTexturePosition(const glm::vec2 &v) {
+    for (int i = 0; i < 6; i++)
+        tiles[i].setTexturePosition(v);
+}
+void Box::setTextureScale(const unsigned int &n, const float &r) {
+    tiles[n].setTextureScale(r);
+}
+void Box::setTextureRotation(const unsigned int &n, const float &r) {
+    tiles[n].setTextureRotation(r);
+}
+void Box::setTexturePosition(const unsigned int &n, const glm::vec2 &v) {
+    tiles[n].setTexturePosition(v);
 }

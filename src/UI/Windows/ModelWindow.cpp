@@ -50,6 +50,7 @@ void UI::newModelWindow(std::vector<Model> &m) {
 
     ImGui::Text("%s", modelPath.c_str());
 
+    ImGui::BeginChild("File Paths", ImVec2(175, 100), ImGuiChildFlags_ResizeY |ImGuiChildFlags_Border);
     for (const auto& entry : fs::directory_iterator(modelPath)) {
         std::string entryPath = entry.path();
         std::string shortPath = UI::shorten(entryPath);
@@ -57,7 +58,7 @@ void UI::newModelWindow(std::vector<Model> &m) {
         if (shortPath[1] != '.') {
             std::string f = fileExtension(shortPath);
             if (f != ".jpg" && f != ".png") {
-                if (ImGui::Button(shortPath.c_str())) {
+                if (ImGui::Selectable(shortPath.c_str())) {
                     if (fs::is_directory(entry))
                         modelPath = entry.path();
                     else {
@@ -68,6 +69,7 @@ void UI::newModelWindow(std::vector<Model> &m) {
             }
         }
     }
+    ImGui::EndChild();
 
     if(ImGui::MenuItem("Back")) {
         UI::back(modelPath);

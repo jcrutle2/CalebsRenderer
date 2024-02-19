@@ -8,8 +8,7 @@
 #endif //CALEBSRENDERER_TEXTURE_H
 #include <string>
 #include <assimp/Importer.hpp>
-
-
+#include <filesystem>
 
 struct Texture {
 public:
@@ -17,6 +16,13 @@ public:
     std::string type;
     aiString path;
 };
+
+namespace TextureGlobals {
+    extern std::vector<Texture> loaded;
+    std::string shorten(const std::string &s);
+    void loadAllTextures();
+    std::string fileExtension(const std::string &file);
+}
 
 void newTexture(Texture &t, const char* path, const char* type);
 

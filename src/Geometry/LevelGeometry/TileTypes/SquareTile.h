@@ -18,6 +18,10 @@ public:
     glm::vec3 getVert2() const override;
     glm::vec3 getVert3() const override;
     glm::vec3 getVert4() const override;
+    void setVert1(const glm::vec3 &v) override;
+    void setVert2(const glm::vec3 &v) override;
+    void setVert3(const glm::vec3 &v) override;
+    void setVert4(const glm::vec3 &v) override;
 
 private:
     glm::vec3 vert1;
@@ -29,7 +33,6 @@ private:
     unsigned int indices[6];
 
     void updateVertex() override;
-    void setup() override;
     void draw(const Shader &shader) const override;
 
 };

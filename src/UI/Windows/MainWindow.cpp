@@ -5,60 +5,83 @@
 #include "../UI.h"
 
 void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
-    ImGui::Text("%s", ("Frame Rate: " + frameRate).c_str());
-    ImGui::InputFloat3("Camera", &c.cameraPos.x);
+
+    if (ImGui::CollapsingHeader("Info")) {
+        ImGui::Text("%s", ("Frame Rate: " + frameRate).c_str());
+        ImGui::InputFloat3("Camera", &c.cameraPos.x);
+    }
+
+    if (ImGui::CollapsingHeader("Boxes")) {
+        int boxCount = 0;
+        ImGui::BeginChild("Boxes", ImVec2(175, 100), ImGuiChildFlags_Border | ImGuiChildFlags_ResizeY);
+        for (auto const &b: s.boxes) {
+            if (ImGui::Selectable(b.name.c_str())) {
+                openBox[boxCount] = true;
+            }
+            boxCount++;
+        }
+        ImGui::EndChild();
+
+        ImGui::SameLine();
+        ImGui::BeginChild("Boxes Options", ImVec2(125, 100),  ImGuiChildFlags_ResizeY);
+        if (ImGui::Button("Add Box")) {
+            std::string name = "Box" + std::to_string(s.boxes.size() + 1);
+
+            for (int i = 0; i < s.boxes.size(); i++) {
+                if (s.boxes[i].name == name) {
+                    name += "*";
+                    i = 0;
+                }
+            }
+
+            s.boxes.emplace_back(name, glm::vec3(0.0f, 0.0f, 0.0f));
+        }
+        ImGui::EndChild();
+    }
 
     if (ImGui::CollapsingHeader("Models")) {
         int modelCount = 0;
-        if (ImGui::BeginListBox(" ")) {
+        ImGui::BeginChild("Models", ImVec2(175, 100), ImGuiChildFlags_Border | ImGuiChildFlags_ResizeY);
             for (auto const &m : s.models) {
                 if (ImGui::Selectable(m.name.c_str())) {
                     openModels[modelCount] = true;
                 }
                 modelCount++;
             }
-            ImGui::EndListBox();
-        }
+        ImGui::EndChild();
+
         ImGui::SameLine();
-        if (ImGui::Button("Add Model")) {
-            openLoadModel = true;
-        }
+        ImGui::BeginChild("Model Options", ImVec2(125, 100), ImGuiChildFlags_ResizeY);
+            if (ImGui::Button("Add Model")) {
+                openLoadModel = true;
+            }
+        ImGui::EndChild();
     }
 
 
     if (ImGui::CollapsingHeader("Environment")) {
-        ImGui::Text("\nLight List");
-        if (ImGui::Button("Direction Light")) {
-            openDirLight = true;
-        }
-        for (int i = 0; i < s.pointLights.size(); i++) {
-            std::string n = s.pointLights[i].name;
-            if (ImGui::Button(n.c_str())) {
-                openLights[i] = true;
+        ImGui::BeginChild("Lights", ImVec2(175, 100), ImGuiChildFlags_Border | ImGuiChildFlags_ResizeY);
+            if (ImGui::Selectable("Direction Light")) {
+                openDirLight = true;
             }
-        }
-        if (ImGui::Button("Add Light")) {
-            std::string name = "Light" + std::to_string(s.pointLights.size() + 1);
-            s.pointLights.emplace_back(name);
-        }
-
-        ImGui::Text("\nSkybox");
-        if (ImGui::Button("Change Skybox")) {
-            openChangeSkybox = true;
-        }
-    }
-
-    if (ImGui::CollapsingHeader("Boxes")) {
-        int boxCount = 0;
-        if (ImGui::BeginListBox(" ")) {
-            for (auto const &b: s.boxes) {
-                if (ImGui::Selectable(b.name.c_str())) {
-                    openBox[boxCount] = true;
+            for (int i = 0; i < s.pointLights.size(); i++) {
+                std::string n = s.pointLights[i].name;
+                if (ImGui::Selectable(n.c_str())) {
+                    openLights[i] = true;
                 }
-                boxCount++;
             }
-            ImGui::EndListBox();
-        }
+        ImGui::EndChild();
+
+        ImGui::SameLine();
+        ImGui::BeginChild("Lights Options", ImVec2(125, 100), ImGuiChildFlags_ResizeY);
+            if (ImGui::Button("Add Light")) {
+                std::string name = "Light" + std::to_string(s.pointLights.size() + 1);
+                s.pointLights.emplace_back(name);
+            }
+            if (ImGui::Button("Change Skybox")) {
+                openChangeSkybox = true;
+            }
+        ImGui::EndChild();
     }
 
     if (ImGui::CollapsingHeader("Scene")) {
