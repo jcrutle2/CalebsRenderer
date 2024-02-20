@@ -26,6 +26,8 @@ class Model {
 public:
     Model(std::string n, std::string path, glm::vec3 pos= glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 scl = glm::vec3(1.0f, 1.0f, 1.0f));
     Model();
+    Model(const Model &m);
+    Model& operator= (const Model &m);
 
     std::string name;
 

@@ -29,6 +29,20 @@ Model::Model() {
 
 }
 
+Model::Model(const Model &m) {
+    src = m.src;
+    loadModel(src);
+    name = m.name;
+    position = m.position;
+    rotationAxis = m.rotationAxis;
+    rotation = m.rotation;
+    scale = m.scale;
+}
+
+Model& Model::operator=(const Model &m) {
+    return *this;
+}
+
 template <>
 void Model::Draw<Shader>(Shader shader)
 {
