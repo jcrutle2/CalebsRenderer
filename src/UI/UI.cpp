@@ -38,7 +38,7 @@ void UI::renderWindows(Scene &s, Camera &c, const std::string &frameRate) {
     }
 
     for (int boxCount = 0; boxCount < s.boxes.size(); boxCount++) {
-        if (openWindows[getKey("Box", s.boxes[boxCount].name)]) {
+        if (openWindows[getKey("Box", s.boxes[boxCount].getName())]) {
             boxWindow(s.boxes, boxCount);
         }
     }

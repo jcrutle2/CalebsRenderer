@@ -7,28 +7,28 @@
 
 
 void UI::boxWindow(std::vector<Box> &boxes, int num) {
-    ImGui::Begin(boxes[num].name.c_str(), &my_tool_active, ImGuiWindowFlags_MenuBar);
+    ImGui::Begin(boxes[num].getName().c_str(), &my_tool_active, ImGuiWindowFlags_MenuBar);
 
     auto &box = boxes[num];
 
-    std::string bufferKey = getKey("Box", box.name);
+    std::string bufferKey = getKey("Box", box.getName());
     if (ImGui::CollapsingHeader("Properties")) {
         ImGui::InputText(" ", charBuffers[bufferKey], 32);
         ImGui::SameLine();
         if (ImGui::Button("Save Name")) {
             bool safeToRename = true;
             for (const auto &b : boxes) {
-                if (b.name == charBuffers[bufferKey]) {
+                if (b.getName() == charBuffers[bufferKey]) {
                     safeToRename = false;
                     break;
                 }
             }
             if (safeToRename) {
                 std::string oldName = box.getName();
-                box.name = charBuffers[bufferKey];
+                box.setName(charBuffers[bufferKey]);
                 UI_MAP_CLEANUP("Box", oldName);
 
-                bufferKey = getKey("Box", box.name);
+                bufferKey = getKey("Box", box.getName());
                 openWindows[bufferKey] = true;
             }
         }

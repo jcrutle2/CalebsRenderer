@@ -57,6 +57,7 @@ public:
 
 
     // setter methods
+    void setName(const std::string &n);
     void setPosition(glm::vec3 pos);
     void setRotationAxis(glm::vec3 rot);
     void setRotation(float r);
@@ -92,7 +93,7 @@ public:
     std::vector<TileWrapper>& getTileList();
     void pushBack(enum TileWrapperType type);
 
-    std::string name;
+
 
 private:
     // serialize
@@ -101,6 +102,8 @@ private:
     void save(Archive &ar) const;
     template<class Archive>
     void load(Archive &ar);
+
+    std::string name;
 
     // model location
     glm::vec3 position;

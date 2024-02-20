@@ -15,8 +15,8 @@ void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
         int boxCount = 0;
         ImGui::BeginChild("Boxes", ImVec2(175, 100), ImGuiChildFlags_Border | ImGuiChildFlags_ResizeY);
         for (auto const &b: s.boxes) {
-            if (ImGui::Selectable(b.name.c_str())) {
-                openWindows[getKey("Box", b.name)] = true;
+            if (ImGui::Selectable(b.getName().c_str())) {
+                openWindows[getKey("Box", b.getName())] = true;
             }
             boxCount++;
         }
@@ -28,7 +28,7 @@ void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
             std::string name = "Box" + std::to_string(s.boxes.size() + 1);
 
             for (int i = 0; i < s.boxes.size(); i++) {
-                if (s.boxes[i].name == name) {
+                if (s.boxes[i].getName() == name) {
                     name += "*";
                     i = 0;
                 }

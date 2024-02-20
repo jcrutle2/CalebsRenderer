@@ -74,6 +74,9 @@ glm::vec2 Box::getTexturePosition(const unsigned int &n) const {
 
 
 
+void Box::setName(const std::string &n) {
+    name = n;
+}
 
 void Box::setPosition(glm::vec3 pos) {
     position = pos;
