@@ -4,12 +4,20 @@
 
 #include "Tile.h"
 
+Tile::Tile() {
+    name = "";
+    textureScale = TEXTURE_SCALE_DEFAULT;
+    textureRotation = TEXTURE_ROTATION_DEFAULT;
+    texturePosition = TEXTURE_POSITION_DEFAULT;
+    newTexture(texture, "Assets/Textures/brick/main.png", "png");
+}
+
 Tile::Tile(const std::string &n) {
     name = n;
     textureScale = TEXTURE_SCALE_DEFAULT;
     textureRotation = TEXTURE_ROTATION_DEFAULT;
     texturePosition = TEXTURE_POSITION_DEFAULT;
-    newTexture(texture, "Assets/Textures/brick.png", "png");
+    newTexture(texture, "Assets/Textures/brick/main.png", "png");
 }
 
 void Tile::setTexture(const std::string &path) {
@@ -93,3 +101,5 @@ void Tile::setTexturePosition(const glm::vec2 &v) {
     texturePosition = v;
     updateVertex();
 }
+
+

@@ -4,6 +4,15 @@
 
 #include "Box.h"
 
+Box::Box() {
+    name = "";
+    position = glm::vec3(0.0f);
+    rotationAxis = BOX_ROTATION_AXIS_DEFAULT;
+    rotation = BOX_ROTATION_DEFAULT;
+    scale = BOX_SCALE_DEFAULT;
+}
+
+
 Box::Box(const std::string &n, const glm::vec3 &pos) {
     name = n;
 

@@ -12,7 +12,7 @@
 #include "Model.h"
 #include <string>
 #include "AssimpGLMHelpers.h"
-#include "../../Scene/SceneLoader.h"
+#include "Shader.h"
 
 Model::Model(std::string n, std::string path, glm::vec3 pos, glm::vec3 scl) {
     src = path;
@@ -23,27 +23,6 @@ Model::Model(std::string n, std::string path, glm::vec3 pos, glm::vec3 scl) {
     rotationAxis = glm::vec3(0.0f, 1.0f, 0.0f);
     rotation = 0.0f;
     scale = scl;
-}
-
-Model::Model(const ModelInfo &m) {
-    src = m.path;
-    loadModel(src);
-
-    name = m.name;
-
-    position.x = m.position[0];
-    position.y = m.position[1];
-    position.z = m.position[2];
-
-    rotationAxis.x = m.rotationAxis[0];
-    rotationAxis.y = m.rotationAxis[1];
-    rotationAxis.z = m.rotationAxis[2];
-
-    rotation = m.rotation;
-
-    scale.x = m.scale[0];
-    scale.y = m.scale[1];
-    scale.z = m.scale[2];
 }
 
 Model::Model() {

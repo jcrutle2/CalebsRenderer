@@ -30,6 +30,28 @@ void TextureGlobals::loadAllTextures() {
         std::string entryPath = entry.path();
         std::string shortPath = shorten(entryPath);
 
-        newTexture(t, ("Assets/Textures" + shortPath).c_str(), fileExtension(shortPath).c_str());
+        if (std::filesystem::is_directory(entryPath)) {
+            std::string pngPath = "";
+            std::string jpgPath = "";
+            for (const auto &entryTex : std::filesystem::directory_iterator(entryPath)) {
+                if (shorten(entryTex.path()) == "/main.png") {
+                    pngPath = ("Assets/Textures" + shortPath + "/main.png");
+                }
+                if (shorten(entryTex.path()) == "/main.jpg") {
+                    jpgPath = ("Assets/Textures" + shortPath + "/main.jpg");
+                }
+            }
+            if (!pngPath.empty() && !jpgPath.empty()) {
+                throw std::invalid_argument("Error: found JPG and PNG path to texture");
+            }
+            else if (!pngPath.empty()) {
+                newTexture(t, pngPath.c_str(), "png");
+            }
+            else if (!jpgPath.empty()) {
+                newTexture(t, jpgPath.c_str(), "jpg");
+            }
+        }
+        else
+            newTexture(t, ("Assets/Textures" + shortPath).c_str(), fileExtension(shortPath).c_str());
     }
 }

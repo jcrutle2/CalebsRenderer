@@ -19,9 +19,10 @@ enum TileWrapperType {
 
 class TileWrapper {
 public:
+    TileWrapper();
     explicit TileWrapper(const std::string &n, enum TileWrapperType ty);
     TileWrapper(const TileWrapper &T);
-    ~TileWrapper();
+    ~TileWrapper() = default;
     TileWrapper operator= (const TileWrapper &T);
 
     void setTexture(std::string path);
@@ -52,8 +53,13 @@ public:
 
     bool active;
 
+
+
 protected:
-    Tile * t;
+    friend class cereal::access;
+    template<class Archive>
+    void serialize(Archive &ar);
+    std::unique_ptr<Tile> t;
 };
 
 

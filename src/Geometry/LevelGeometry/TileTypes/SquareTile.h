@@ -24,6 +24,10 @@ public:
     void setVert4(const glm::vec3 &v) override;
 
 private:
+    friend class cereal::access;
+    template<class Archive>
+    void serialize(Archive &ar);
+
     glm::vec3 vert1;
     glm::vec3 vert2;
     glm::vec3 vert3;

@@ -26,6 +26,7 @@
 
 class Box {
 public:
+    explicit Box();
     explicit Box(const std::string &n, const glm::vec3 &pos);
     ~Box() = default;
 
@@ -94,6 +95,13 @@ public:
     std::string name;
 
 private:
+    // serialize
+    friend class cereal::access;
+    template<class Archive>
+    void save(Archive &ar) const;
+    template<class Archive>
+    void load(Archive &ar);
+
     // model location
     glm::vec3 position;
     glm::vec3 rotationAxis;

@@ -196,3 +196,5 @@ void SquareTile::setVert4(const glm::vec3 &v) {
     vert4 = v;
     updateVertex();
 }
+
+

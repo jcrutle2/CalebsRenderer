@@ -19,6 +19,7 @@ namespace TileUtil {
 
 class Tile {
 public:
+    Tile();
     Tile(const std::string &n);
     ~Tile() = default;
 
@@ -48,14 +49,18 @@ public:
     void setTexture(const Texture &t);
 
 
+
 protected:
+    friend class cereal::access;
+    template<class Archive>
+    void serialize(Archive &ar);
+
     float textureScale;
     float textureRotation;
     glm::vec2 texturePosition;
 
     unsigned int VAO, VBO, EBO;
     Texture texture;
-
 };
 
 

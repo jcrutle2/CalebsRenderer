@@ -3,7 +3,14 @@
 //
 
 #include "TileWrapper.h"
+
+#include <memory>
 #include "TileTypes/SquareTile.h"
+
+TileWrapper::TileWrapper() {
+    t = std::make_unique<SquareTile>("", TILE_WRAPPER_V1_DEFAULT, TILE_WRAPPER_V2_DEFAULT, TILE_WRAPPER_V3_DEFAULT, TILE_WRAPPER_V4_DEFAULT);
+    active = false;
+}
 
 TileWrapper::TileWrapper(const std::string &n, enum TileWrapperType ty) {
     type = ty;
@@ -11,7 +18,7 @@ TileWrapper::TileWrapper(const std::string &n, enum TileWrapperType ty) {
 
     switch (type) {
         case TILE_SQUARE:
-            t = new SquareTile(n, TILE_WRAPPER_V1_DEFAULT, TILE_WRAPPER_V2_DEFAULT, TILE_WRAPPER_V3_DEFAULT, TILE_WRAPPER_V4_DEFAULT);
+            t = std::make_unique<SquareTile>(n, TILE_WRAPPER_V1_DEFAULT, TILE_WRAPPER_V2_DEFAULT, TILE_WRAPPER_V3_DEFAULT, TILE_WRAPPER_V4_DEFAULT);
             break;
         default:
             std::cout << "ERROR: Unable To Initialize Tile Type.";
@@ -25,7 +32,7 @@ TileWrapper::TileWrapper(const TileWrapper &T) {
 
     switch (type) {
         case TILE_SQUARE:
-            t = new SquareTile(T.getName(), T.t->getVert1(), T.t->getVert2(), T.t->getVert3(), T.t->getVert4());
+            t = std::make_unique<SquareTile>(T.getName(), T.t->getVert1(), T.t->getVert2(), T.t->getVert3(), T.t->getVert4());
             t->setTexturePosition(T.getTexturePosition());
             t->setTextureRotation(T.getTextureRotation());
             t->setTextureScale(T.getTextureScale());
@@ -50,10 +57,6 @@ TileWrapper TileWrapper::operator= (const TileWrapper &T){
     temp.setVert4(T.getVert4());
 
     return temp;
-}
-
-TileWrapper::~TileWrapper() {
-    delete t;
 }
 
 void TileWrapper::setTexture(std::string path) {

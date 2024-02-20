@@ -17,12 +17,6 @@
 #include "../Environment/Skybox/Skybox.h"
 #include "../Geometry/LevelGeometry/Box/Box.h"
 
-// Codes that the machine uses to identify type of data being read from device
-#define MODEL_LOAD_CODE '\xff'
-#define DIRLIGHT_LOAD_CODE '\xfe'
-#define POINTLIGHT_LOAD_CODE '\xfd'
-#define SKYBOX_LOAD_CODE '\xfc'
-
 // A Struct Holding All Information in a Scene
 struct Scene {
 public:
@@ -31,5 +25,15 @@ public:
     std::vector<PointLight> pointLights;
     Skybox skybox;
     std::vector<Box> boxes;
+
+    template<class Archive>
+    void serialize(Archive &ar);
 };
+
+namespace SceneLoader {
+    // Stores Scene to Disk
+    void storeScene(const Scene &s, const std::string &path);
+    // Load Scene from Disk
+    Scene getSceneFromDisk(const std::string &path);
+}
 #endif //CALEBSRENDERER_SCENE_H

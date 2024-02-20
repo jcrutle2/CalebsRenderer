@@ -10,7 +10,6 @@
 #include "Mesh.h"
 #include "postprocess.h"
 #include <map>
-#include "../../Scene/ModelInfo.h"
 #include "../../Environment/Light/Light.h"
 
 struct BoneInfo
@@ -26,7 +25,6 @@ unsigned int TextureFromFile(const char *path, const std::string &directory, boo
 class Model {
 public:
     Model(std::string n, std::string path, glm::vec3 pos= glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 scl = glm::vec3(1.0f, 1.0f, 1.0f));
-    Model(const ModelInfo &m);
     Model();
 
     std::string name;
@@ -50,7 +48,9 @@ private:
     // Serialization
     friend class cereal::access;
     template<class Archive>
-    void serialize(Archive &ar);
+    void save(Archive &ar) const;
+    template<class Archive>
+    void load(Archive &ar);
 
     // mesh info
     std::string directory;

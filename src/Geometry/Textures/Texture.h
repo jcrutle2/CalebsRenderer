@@ -9,12 +9,19 @@
 #include <string>
 #include <assimp/Importer.hpp>
 #include <filesystem>
+#include "cereal/cereal.hpp"
 
 struct Texture {
 public:
     unsigned int id;
     std::string type;
     aiString path;
+private:
+    friend class cereal::access;
+    template<class Archive>
+    void save(Archive &ar) const;
+    template<class Archive>
+    void load(Archive &ar);
 };
 
 namespace TextureGlobals {

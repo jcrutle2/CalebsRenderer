@@ -53,3 +53,4 @@ void newTexture(Texture &t, const char* path, const char* type) {
 void useTexture(const Texture &t) {
     glBindTexture(GL_TEXTURE_2D, t.id);
 }
+
