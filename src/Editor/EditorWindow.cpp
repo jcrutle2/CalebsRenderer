@@ -154,7 +154,7 @@ void EditorWindow::drawBuffered() {
     shader.setCamera(camera);
 
     // draw OpenGL
-    for (auto m : scene.models) {
+    for (auto &m : scene.models) {
         m.Draw(shader);
     }
 

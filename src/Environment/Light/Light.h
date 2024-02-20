@@ -43,6 +43,8 @@ class LimitedLight : public Light {
 class PointLight : public LimitedLight {
     public:
         explicit PointLight(const std::string &n = POINTLIGHT_NAME_DEFAULT, glm::vec3 pos = POSITION_DEFAULT, glm::vec3 amb = AMBIENT_DEFAULT, glm::vec3 spec = SPECULAR_DEFAULT, glm::vec3 dif = DIFFUSE_DEFAULT, float con = CONSTANT_DEFAULT, float lin = LINEAR_DEFAULT, float quad = QUADRATIC_DEFAULT);
+        PointLight& operator= (const PointLight &p);
+        PointLight(const PointLight &P);
         glm::vec3 position{};
         void setPosition(glm::vec3 pos);
         friend class cereal::access;
@@ -54,6 +56,8 @@ class PointLight : public LimitedLight {
 class DirectionLight : public Light {
     public:
         explicit DirectionLight(const std::string &n = DIRLIGHT_NAME_DEFAULT, glm::vec3 dir = DIRECTION_DEFAULT, glm::vec3 amb = AMBIENT_DEFAULT, glm::vec3 spec = SPECULAR_DEFAULT, glm::vec3 dif = DIFFUSE_DEFAULT);
+        DirectionLight& operator= (const DirectionLight &d);
+        DirectionLight(const DirectionLight &D);
         glm::vec3 direction{};
         friend class cereal::access;
         friend class cereal::BinaryInputArchive;
