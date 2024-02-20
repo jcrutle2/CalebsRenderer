@@ -52,9 +52,53 @@ void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
 
         ImGui::SameLine();
         ImGui::BeginChild("Model Options", ImVec2(125, 100), ImGuiChildFlags_ResizeY);
-            if (ImGui::Button("Add Model")) {
-                openLoadModel = true;
+            if (ImGui::Button("Add Model"))
+                ImGui::OpenPopup("add_model_popup");
+
+        if (ImGui::BeginPopup("add_model_popup"))
+        {
+            ImGui::Text("%s", (modelPath.substr(filePath.size(), modelPath.size() - filePath.size())).c_str());
+
+            ImGui::BeginChild("File Paths", ImVec2(175, 100), ImGuiChildFlags_ResizeY |ImGuiChildFlags_Border);
+            for (const auto& entry : fs::directory_iterator(modelPath)) {
+                std::string entryPath = entry.path();
+                std::string shortPath = UI::shorten(entryPath);
+
+                if (shortPath[1] != '.') {
+                    std::string f = fileExtension(shortPath);
+                    if (f != ".jpg" && f != ".png") {
+                        if (ImGui::Selectable(shortPath.c_str())) {
+                            if (fs::is_directory(entry))
+                                modelPath = entry.path();
+                            else {
+                                std::string newModelName = shortPath.substr(1, shortPath.length() - 1);
+                                for (int i = 0; i < s.models.size(); i++) {
+                                    if (s.models[i].name == newModelName) {
+                                        newModelName += "*";
+                                        i = 0;
+                                    }
+                                }
+
+                                s.models.emplace_back(Model(newModelName, static_cast<std::string>(entry.path())));
+                                modelPath = filePath + "/Assets/Models";
+                                ImGui::CloseCurrentPopup();
+                            }
+                        }
+                    }
+                }
             }
+            ImGui::EndChild();
+
+            if(ImGui::Button("Back")) {
+                UI::back(modelPath);
+            }
+
+            if(ImGui::MenuItem("Close")) {
+                modelPath = filePath + "/Assets/Models";
+            }
+
+            ImGui::EndPopup();
+        }
         ImGui::EndChild();
     }
 

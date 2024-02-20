@@ -4,10 +4,6 @@
 
 #include "UI.h"
 
-std::string UI::getKey(const std::string &type, const std::string &name) {
-    return type + "_" + name;
-}
-
 void UI::Initalize(SDL_Window * window, void * sdl_gl_context) {
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
@@ -47,12 +43,9 @@ void UI::renderWindows(Scene &s, Camera &c, const std::string &frameRate) {
         }
     }
 
-    if (openLoadModel) newModelWindow(s.models);
-    else modelPath = filePath + + "/Assets/Models";
-
     if (openLoadScene) loadSceneWindow(s);
 
     if (openChangeSkybox) changeSkyboxWindow(s.skybox);
 
- //   ImGui::ShowDemoWindow();
+    //ImGui::ShowDemoWindow();
 }

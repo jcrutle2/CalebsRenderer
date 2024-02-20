@@ -32,6 +32,7 @@ public:
     void draw(const Shader &s) const;
 
     // getter methods
+    std::string getName() const;
     glm::vec3 getPosition() const;
     glm::vec3 getRotationAxis() const;
     float getRotation() const;
@@ -68,6 +69,7 @@ public:
     void setV6(const glm::vec3 &v);
     void setV7(const glm::vec3 &v);
     void toggleActive(unsigned int side);
+    void setActive(unsigned int side, const bool &setter);
     void setBoxTextures(std::string path);
     void setAllTextures(std::string path);
     void setTexture(const unsigned int &n, const std::string &path);

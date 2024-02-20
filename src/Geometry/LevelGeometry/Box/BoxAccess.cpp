@@ -4,6 +4,10 @@
 
 #include "Box.h"
 
+std::string Box::getName() const {
+    return name;
+}
+
 glm::vec3 Box::getPosition() const {
     return position;
 }

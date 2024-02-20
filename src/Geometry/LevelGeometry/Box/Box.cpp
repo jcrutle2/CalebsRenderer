@@ -75,6 +75,12 @@ void Box::toggleActive(unsigned int side) {
     }
 }
 
+void Box::setActive(unsigned int side, const bool &setter) {
+    if (side < tiles.size()) {
+        tiles[side].active = setter;
+    }
+}
+
 bool Box::getActive(unsigned int side) {
     if (side < tiles.size()) {
         return tiles[side].active;

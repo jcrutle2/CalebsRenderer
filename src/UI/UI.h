@@ -27,7 +27,6 @@ namespace UI {
     void directionLightWindow(DirectionLight &l);
     void lightWindow(std::vector<PointLight> &lights, int num);
     void boxWindow(std::vector<Box> &boxes, int num);
-    void newModelWindow(std::vector<Model> &m);
     void loadSceneWindow(Scene &s);
     void changeSkyboxWindow(Skybox &s);
 
@@ -39,13 +38,15 @@ namespace UI {
     void back(std::string &s);
     std::string shorten(const std::string &s);
     std::string fileExtension(const std::string &s);
-    std::string getKey(const std::string &type, const std::string &name);
+    std::string getKey(const std::string &type, const std::string &name, const std::string &sub = "", const std::string &sub2 = "");
+    std::string getKeyType(const std::string &key);
+    std::string getKeyName(const std::string &key);
+    std::string getKeySubType(const std::string &key);
+    std::string getKeySubSubType(const std::string &key);
 
     // extern globals
-    extern std::unordered_map<int, bool> openModels;
     extern std::unordered_map<std::string, bool> openWindows;
     extern std::unordered_map<std::string, char[32]> charBuffers;
-    extern bool openLoadModel;
     extern bool openLoadScene;
     extern bool openChangeSkybox;
     extern std::string filePath;
