@@ -80,7 +80,7 @@ void Renderer::initSystems() {
     glEnable(GL_MULTISAMPLE);
 
     // trap mouse
-    SDL_SetRelativeMouseMode(SDL_TRUE);
+   // SDL_SetRelativeMouseMode(SDL_TRUE);
 
     // uncomment to test in wireframe mode
     _renderMode = GL_FILL;

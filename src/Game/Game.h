@@ -19,13 +19,12 @@ enum class GameState {
 };
 
 
-class Editor
+class Game
 {
 public:
-    Editor();
-    ~Editor();
+    Game();
+    ~Game();
 
-    // Runs Game
     void run();
 
 private:

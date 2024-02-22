@@ -3,7 +3,9 @@
 //
 
 #include <iostream>
+#include "Game.h"
 
 int main( int argc, char* args[] ) {
-    std::cout << "Hello World";
+    Game game;
+    game.run();
 }
