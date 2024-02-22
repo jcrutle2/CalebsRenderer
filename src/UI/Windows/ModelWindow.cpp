@@ -4,7 +4,7 @@
 
 #include "../UI.h"
 
-void UI::modelWindow(std::vector<Model> &m, int num) {
+void UI::modelWindow(std::vector<Entity> &m, int num) {
     Model &model = m[num];
     ImGui::Begin(model.name.c_str(), &my_tool_active, ImGuiWindowFlags_MenuBar);
 

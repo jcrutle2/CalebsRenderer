@@ -23,7 +23,7 @@ namespace UI {
     void Initalize(SDL_Window * window, void * sdl_gl_context);
 
     void mainWindow(Scene &s, Camera &c, const std::string &frameRate);
-    void modelWindow(std::vector<Model> &m, int num);
+    void modelWindow(std::vector<Entity> &m, int num);
     void directionLightWindow(DirectionLight &l);
     void lightWindow(std::vector<PointLight> &lights, int num);
     void boxWindow(std::vector<Box> &boxes, int num);

@@ -21,14 +21,14 @@ add_executable(
         Editor
         src/Editor/EditorMain.cpp
         src/Editor/Editor.cpp
+
         src/Rendering/Renderer.cpp
+        src/Rendering/Camera.cpp
 
         src/Geometry/Models/Shader.cpp
         src/Geometry/Models/Mesh.cpp
         src/Geometry/Models/Model.cpp
         src/Scene/Scene.cpp
-
-        src/Rendering/Camera.cpp
 
         src/Environment/Light/Light.cpp
         src/Environment/Skybox/Skybox.cpp
@@ -51,6 +51,9 @@ add_executable(
 
         src/Geometry/Textures/Texture.cpp
         src/Geometry/Textures/TextureUtil.cpp
+
+        src/Entities/Entity.cpp
+        src/Entities/Hitbox.cpp
 )
 
 add_executable(
@@ -62,6 +65,7 @@ add_executable(
         src/Geometry/Models/Model.cpp
         src/Scene/Scene.cpp
 
+        src/Rendering/Renderer.cpp
         src/Rendering/Camera.cpp
 
         src/Environment/Light/Light.cpp
@@ -85,6 +89,9 @@ add_executable(
 
         src/Geometry/Textures/Texture.cpp
         src/Geometry/Textures/TextureUtil.cpp
+
+        src/Entities/Entity.cpp
+        src/Entities/Hitbox.cpp
 )
 
 target_link_libraries(Editor "-framework QuartzCore -framework GameController -framework Cocoa -framework OpenGL" ${sdl} ${gl} ${as} imgui)

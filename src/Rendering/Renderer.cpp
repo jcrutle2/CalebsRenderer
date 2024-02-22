@@ -110,12 +110,10 @@ void Renderer::stopSystems() {
 
 void Renderer::update() {
     SDL_GL_SwapWindow(_window);
+    logFrames();
 }
 
 void Renderer::draw(Scene &scene, Camera &camera) {
-    // trigger IMGUI
-    UI::FrameStart();
-    UI::renderWindows(scene, camera, _frameRate);
 
     // clear depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -125,7 +123,7 @@ void Renderer::draw(Scene &scene, Camera &camera) {
     tileShader.use();
     tileShader.setMats(glm::mat4(1.0f), camera.getView(), camera.getPerspective());
     tileShader.setDirectionLight(scene.dirLight);
-    tileShader.setPointLights(scene.pointLights, scene.models);
+    tileShader.setPointLights(scene.pointLights, scene.entities);
     tileShader.setCamera(camera);
     for (const auto &b : scene.boxes)
         b.draw(tileShader);
@@ -135,9 +133,9 @@ void Renderer::draw(Scene &scene, Camera &camera) {
     glm::mat4 model = glm::mat4(1.0f);
     shader.setMats(model, camera.getView(), camera.getPerspective());
     shader.setDirectionLight(scene.dirLight);
-    shader.setPointLights(scene.pointLights, scene.models);
+    shader.setPointLights(scene.pointLights, scene.entities);
     shader.setCamera(camera);
-    for (auto &m : scene.models) {
+    for (auto &m : scene.entities) {
         m.Draw(shader);
     }
 
@@ -145,9 +143,6 @@ void Renderer::draw(Scene &scene, Camera &camera) {
     if (scene.skybox.active)
         scene.skybox.draw(camera.getView(), camera.getPerspective());
 
-    UI::FrameEnd();
-    update();
-    logFrames();
 }
 
 void Renderer::logFrames() {

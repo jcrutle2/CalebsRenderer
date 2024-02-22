@@ -42,7 +42,7 @@ void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
     if (ImGui::CollapsingHeader("Models")) {
         int modelCount = 0;
         ImGui::BeginChild("Models", ImVec2(175, 100), ImGuiChildFlags_Border | ImGuiChildFlags_ResizeY);
-            for (auto const &m : s.models) {
+            for (auto const &m : s.entities) {
                 if (ImGui::Selectable(m.name.c_str())) {
                     openWindows[getKey("Model", m.name)] = true;
                 }
@@ -72,14 +72,14 @@ void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
                                 modelPath = entry.path();
                             else {
                                 std::string newModelName = shortPath.substr(1, shortPath.length() - 1);
-                                for (int i = 0; i < s.models.size(); i++) {
-                                    if (s.models[i].name == newModelName) {
+                                for (int i = 0; i < s.entities.size(); i++) {
+                                    if (s.entities[i].name == newModelName) {
                                         newModelName += "*";
                                         i = 0;
                                     }
                                 }
 
-                                s.models.emplace_back(Model(newModelName, static_cast<std::string>(entry.path())));
+                                s.entities.emplace_back(Entity(newModelName, static_cast<std::string>(entry.path())));
                                 modelPath = filePath + "/Assets/Models";
                                 ImGui::CloseCurrentPopup();
                             }

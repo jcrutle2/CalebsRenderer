@@ -28,7 +28,6 @@ public:
     void run();
 
 private:
-    void gameLoop();
     void processInput();
     void processInputUnpaused(SDL_Event * e);
     void processInputPaused(SDL_Event * e);

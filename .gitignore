@@ -1,5 +1,5 @@
 # Project exclude paths
 /cmake-build-debug/
-/models/
+/entities/
 /Assets/Scenes/
 /imgui.ini/

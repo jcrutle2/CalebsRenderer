@@ -4,6 +4,7 @@
 
 #include "Scene.h"
 
+
 template<class Archive>
 void Model::save(Archive &ar) const{
     ar (name);
@@ -38,6 +39,72 @@ void Model::load(Archive &ar){
     ar (lights);
 
     loadModel(src);
+}
+
+template<class Archive>
+void Entity::save(Archive &ar) const{
+    ar (name);
+    ar (src);
+    ar (position.x);
+    ar (position.y);
+    ar (position.z);
+    ar (rotation);
+    ar (rotationAxis.x);
+    ar (rotationAxis.y);
+    ar (rotationAxis.z);
+    ar (scale.x);
+    ar (scale.y);
+    ar (scale.z);
+    ar (lights);
+    ar (hitbox);
+}
+
+template<class Archive>
+void Entity::load(Archive &ar){
+    ar (name);
+    ar (src);
+    ar (position.x);
+    ar (position.y);
+    ar (position.z);
+    ar (rotation);
+    ar (rotationAxis.x);
+    ar (rotationAxis.y);
+    ar (rotationAxis.z);
+    ar (scale.x);
+    ar (scale.y);
+    ar (scale.z);
+    ar (lights);
+    ar (hitbox);
+
+    loadModel(src);
+}
+
+template<class Archive>
+void Hitbox::serialize(Archive &ar) {
+    ar(verts[0].x);
+    ar(verts[0].y);
+    ar(verts[0].z);
+    ar(verts[1].x);
+    ar(verts[1].y);
+    ar(verts[1].z);
+    ar(verts[2].x);
+    ar(verts[2].y);
+    ar(verts[2].z);
+    ar(verts[3].x);
+    ar(verts[3].y);
+    ar(verts[3].z);
+    ar(verts[4].x);
+    ar(verts[4].y);
+    ar(verts[4].z);
+    ar(verts[5].x);
+    ar(verts[5].y);
+    ar(verts[5].z);
+    ar(verts[6].x);
+    ar(verts[6].y);
+    ar(verts[6].z);
+    ar(verts[7].x);
+    ar(verts[7].y);
+    ar(verts[7].z);
 }
 
 template<class Archive>
@@ -86,7 +153,7 @@ void Skybox::serialize(Archive &ar) {
 
 template<class Archive>
 void Scene::serialize(Archive &ar) {
-    ar(models);
+    ar(entities);
     ar(dirLight);
     ar(pointLights);
     ar(skybox);

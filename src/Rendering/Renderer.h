@@ -27,6 +27,8 @@ class Renderer {
         void update();
         void draw(Scene &scene, Camera &camera);
         void toggleRenderMode();
+        std::string getFrameRate() { return _frameRate; };
+
 
         [[nodiscard]] float getElapsedMS() const;
 

@@ -12,6 +12,7 @@
 #include "../../Environment/Light/Light.h"
 #include "../../Rendering/Camera.h"
 #include "Model.h"
+#include "../../Entities/Entity.h"
 
 class Shader
 {
@@ -35,7 +36,7 @@ class Shader
     // light functions
         void setDirectionLight(const DirectionLight &d) const;
         void setPointLight(const PointLight &p, const int &num) const;
-        void setPointLights(const std::vector<PointLight> &vec, const std::vector<Model> &m) const;
+        void setPointLights(const std::vector<PointLight> &vec, const std::vector<Entity> &m) const;
 
     // camera functions
         void setMats(const glm::mat4 &model, const glm::mat4 &view, const glm::mat4 &projection) const;

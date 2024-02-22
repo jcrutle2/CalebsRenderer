@@ -16,11 +16,12 @@
 #include "cereal/access.hpp"
 #include "../Environment/Skybox/Skybox.h"
 #include "../Geometry/LevelGeometry/Box/Box.h"
+#include "../Entities/Entity.h"
 
 // A Struct Holding All Information in a Scene
 struct Scene {
 public:
-    std::vector<Model> models;
+    std::vector<Entity> entities;
     DirectionLight dirLight;
     std::vector<PointLight> pointLights;
     Skybox skybox;

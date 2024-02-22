@@ -160,7 +160,7 @@ void Shader::setPointLight(const PointLight &p, const int &num) const {
 }
 
 
-void Shader::setPointLights(const std::vector<PointLight> &vec, const std::vector<Model> &m) const {
+void Shader::setPointLights(const std::vector<PointLight> &vec, const std::vector<Entity> &m) const {
     int size = 0;
     int i = 0;
 

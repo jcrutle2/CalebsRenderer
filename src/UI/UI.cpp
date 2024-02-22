@@ -22,10 +22,10 @@ void UI::renderWindows(Scene &s, Camera &c, const std::string &frameRate) {
     mainWindow(s, c, frameRate);
 
 
-    for (int modelCount = 0; modelCount < s.models.size(); modelCount++) {
-        if (openWindows[getKey("Model", s.models[modelCount].name)])
-            modelWindow(s.models, modelCount);
-        if (s.models[modelCount].lights.empty()) {
+    for (int modelCount = 0; modelCount < s.entities.size(); modelCount++) {
+        if (openWindows[getKey("Model", s.entities[modelCount].name)])
+            modelWindow(s.entities, modelCount);
+        if (s.entities[modelCount].lights.empty()) {
 
         }
     }

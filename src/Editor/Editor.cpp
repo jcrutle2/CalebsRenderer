@@ -19,15 +19,19 @@ Editor::Editor() {
 Editor::~Editor() = default;
 
 void Editor::run() {
-    gameLoop();
-    _renderer.stopSystems();
-}
-
-void Editor::gameLoop() {
     while (_gameState != GameState::EXIT) {
         processInput();
+
+        // Render Geometry and IMGUI
+        UI::FrameStart();
         _renderer.draw(_scene, _camera);
+        UI::renderWindows(_scene, _camera, _renderer.getFrameRate());
+        UI::FrameEnd();
+
+        // Flush to Screen
+        _renderer.update();
     }
+    _renderer.stopSystems();
 }
 
 void Editor::processInput() {
