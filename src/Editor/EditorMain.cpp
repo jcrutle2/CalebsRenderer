@@ -4,9 +4,9 @@
  */
 
 
-#include "EditorControls.h"
+#include "Editor.h"
 
 int main( int argc, char* args[] ) {
-    EditorControls mainGame;
+    Editor mainGame;
     mainGame.run();
 }

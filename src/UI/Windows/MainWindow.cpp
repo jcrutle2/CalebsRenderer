@@ -139,7 +139,32 @@ void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
         }
         ImGui::SameLine();
         if (ImGui::Button("Load Scene")) {
-            openLoadScene = true;
+            ImGui::OpenPopup("add_scene_popup");
+        }
+
+        if (ImGui::BeginPopup("add_scene_popup")) {
+            ImGui::Text("Load Scene: ");
+
+            ImGui::BeginChild("Load Scene", ImVec2(175, 100), ImGuiChildFlags_ResizeY | ImGuiChildFlags_Border);
+            for (const auto &entry: fs::directory_iterator(scenesPath)) {
+                std::string entryPath = entry.path();
+                std::string shortPath = UI::shorten(entryPath);
+
+                if (shortPath[1] != '.') {
+                    std::string f = fileExtension(shortPath);
+                    if (f != ".jpg" && f != ".png") {
+                        if (ImGui::Selectable(shortPath.c_str())) {
+                            std::string getScenePath = "Assets/Scenes";
+                            getScenePath += shortPath;
+                            s = SceneLoader::getSceneFromDisk(getScenePath);
+                            ImGui::CloseCurrentPopup();
+                        }
+                    }
+                }
+            }
+            ImGui::EndChild();
+
+            ImGui::EndPopup();
         }
     }
 }

@@ -2,7 +2,7 @@
 // Created by Caleb Rutledge on 1/4/24.
 //
 
-#include "EditorWindow.h"
+#include "Renderer.h"
 
 void sdlFatalError(const std::string &errorString) {
     std::cout << errorString << std::endl;
@@ -12,19 +12,18 @@ void sdlFatalError(const std::string &errorString) {
     SDL_Quit();
 }
 
-EditorWindow::EditorWindow(int screenWidth, int screenHeight) {
+Renderer::Renderer(int screenWidth, int screenHeight) {
     _window = nullptr;
     _context = nullptr;
     _screenWidth = screenWidth;
     _screenHeight = screenHeight;
-    camera = Camera();
 
     initSystems();
 }
 
-EditorWindow::~EditorWindow() = default;
+Renderer::~Renderer() = default;
 
-void EditorWindow::initSystems() {
+void Renderer::initSystems() {
     // Initialize SDL
     SDL_Init(SDL_INIT_EVERYTHING);
 
@@ -83,15 +82,9 @@ void EditorWindow::initSystems() {
     // trap mouse
     SDL_SetRelativeMouseMode(SDL_TRUE);
 
-    // load lights
-    scene.dirLight = DirectionLight("Direction Light", glm::vec3(0.2f, -0.2f, -0.1f));
-
     // uncomment to test in wireframe mode
     _renderMode = GL_FILL;
     glPolygonMode( GL_FRONT_AND_BACK, _renderMode );
-
-    // Test Tiles
-    scene.boxes.emplace_back("Box1", glm::vec3(0.0f,0.0f,0.0f));
 
     // Load Textures
     TextureGlobals::loadAllTextures();
@@ -100,12 +93,12 @@ void EditorWindow::initSystems() {
     UI::Initalize(_window, _context);
 }
 
-void EditorWindow::toggleRenderMode() {
+void Renderer::toggleRenderMode() {
     _renderMode = (_renderMode == GL_FILL) ? GL_LINE : GL_FILL;
     glPolygonMode( GL_FRONT_AND_BACK, _renderMode );
 }
 
-void EditorWindow::stopSystems() {
+void Renderer::stopSystems() {
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
@@ -115,11 +108,11 @@ void EditorWindow::stopSystems() {
     SDL_Quit();
 }
 
-void EditorWindow::update() {
+void Renderer::update() {
     SDL_GL_SwapWindow(_window);
 }
 
-void EditorWindow::drawBuffered() {
+void Renderer::draw(Scene &scene, Camera &camera) {
     // trigger IMGUI
     UI::FrameStart();
     UI::renderWindows(scene, camera, _frameRate);
@@ -128,7 +121,7 @@ void EditorWindow::drawBuffered() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
-    // use shader
+    // draw boxes
     tileShader.use();
     tileShader.setMats(glm::mat4(1.0f), camera.getView(), camera.getPerspective());
     tileShader.setDirectionLight(scene.dirLight);
@@ -137,23 +130,13 @@ void EditorWindow::drawBuffered() {
     for (const auto &b : scene.boxes)
         b.draw(tileShader);
 
-    // use shader
+    // draw models
     shader.use();
-
-    // set matrices
     glm::mat4 model = glm::mat4(1.0f);
     shader.setMats(model, camera.getView(), camera.getPerspective());
-
-    // set directional light
     shader.setDirectionLight(scene.dirLight);
-
-    // set point lights
     shader.setPointLights(scene.pointLights, scene.models);
-
-    // send camera position
     shader.setCamera(camera);
-
-    // draw OpenGL
     for (auto &m : scene.models) {
         m.Draw(shader);
     }
@@ -167,7 +150,7 @@ void EditorWindow::drawBuffered() {
     logFrames();
 }
 
-void EditorWindow::logFrames() {
+void Renderer::logFrames() {
     _currentFrame = SDL_GetPerformanceCounter();
     _deltaTime = (float) (_currentFrame - _lastFrame) / (float) SDL_GetPerformanceFrequency();
     _elapsedMS = _deltaTime * 1000;
@@ -181,6 +164,6 @@ void EditorWindow::logFrames() {
     _lastFrame = SDL_GetPerformanceCounter();
 }
 
-float EditorWindow::getElapsedMS() const {
+float Renderer::getElapsedMS() const {
     return _elapsedMS;
 }

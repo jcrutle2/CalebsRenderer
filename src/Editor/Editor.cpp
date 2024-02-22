@@ -2,41 +2,39 @@
 // Created by Caleb Rutledge on 12/31/23.
 //
 
-#include "EditorControls.h"
+#include "Editor.h"
 #include "imgui_impl_sdl2.h"
 #define SPEED 1.5
 
-void fatalError(std::string errorString) {
-    std::cout << errorString << std::endl;
-    std::cout << "Press any key to quit...";
-    int tmp;
-    std::cin >> tmp;
-    SDL_Quit();
-}
-
-EditorControls::EditorControls() {
+Editor::Editor() {
     _gameState = GameState::PLAY;
+
+    _scene = Scene();
+    // load lights
+    _scene.dirLight = DirectionLight("Direction Light", glm::vec3(0.2f, -0.2f, -0.1f));
+    // Test Tiles
+    _scene.boxes.emplace_back("Box1", glm::vec3(0.0f,0.0f,0.0f));
 }
 
-EditorControls::~EditorControls() = default;
+Editor::~Editor() = default;
 
-void EditorControls::run() {
+void Editor::run() {
     gameLoop();
-    _window.stopSystems();
+    _renderer.stopSystems();
 }
 
-void EditorControls::gameLoop() {
+void Editor::gameLoop() {
     while (_gameState != GameState::EXIT) {
         processInput();
-        _window.drawBuffered();
+        _renderer.draw(_scene, _camera);
     }
 }
 
-void EditorControls::processInput() {
+void Editor::processInput() {
     SDL_Event e;
-    const float speed = 0.025f * _window.getElapsedMS();
+    const float speed = 0.025f * _renderer.getElapsedMS();
     while (SDL_PollEvent(&e)){
-        switch (_window.camera.state) {
+        switch (_camera.state) {
             case CAMERA_STATE_UNPAUSED:
                 processInputUnpaused(&e);
             break;
@@ -48,7 +46,7 @@ void EditorControls::processInput() {
     }
 }
 
-void EditorControls::processInputUnpaused(SDL_Event * e) {
+void Editor::processInputUnpaused(SDL_Event * e) {
     switch (e->type) {
         case SDL_QUIT:
             _gameState = GameState::EXIT;
@@ -56,28 +54,28 @@ void EditorControls::processInputUnpaused(SDL_Event * e) {
         case SDL_KEYDOWN:
             switch( e->key.keysym.sym ) {
                 case SDLK_w:
-                    _window.camera.moveForward(SPEED);
+                    _camera.moveForward(SPEED);
                     break;
                 case SDLK_s:
-                    _window.camera.moveBackward(SPEED);
+                    _camera.moveBackward(SPEED);
                     break;
                 case SDLK_a:
-                    _window.camera.moveLeft(SPEED);
+                    _camera.moveLeft(SPEED);
                     break;
                 case SDLK_d:
-                    _window.camera.moveRight(SPEED);
+                    _camera.moveRight(SPEED);
                     break;
                 case SDLK_SPACE:
-                    _window.camera.moveUp(SPEED);
+                    _camera.moveUp(SPEED);
                     break;
                 case SDLK_LSHIFT:
-                    _window.camera.moveDown(SPEED);
+                    _camera.moveDown(SPEED);
                     break;
                 case SDLK_v:
-                    _window.toggleRenderMode();
+                    _renderer.toggleRenderMode();
                     break;
                 case SDLK_ESCAPE:
-                    _window.camera.toggleCameraState();
+                    _camera.toggleCameraState();
                     break;
                 case SDLK_q:
                     _gameState = GameState::EXIT;
@@ -87,17 +85,17 @@ void EditorControls::processInputUnpaused(SDL_Event * e) {
             }
             break;
         case SDL_MOUSEMOTION:
-            _window.camera.updateDirection(e->motion.xrel, e->motion.yrel);
+            _camera.updateDirection(e->motion.xrel, e->motion.yrel);
             break;
         case SDL_MOUSEWHEEL:
-            _window.camera.updateZoom(e->wheel.y);
+            _camera.updateZoom(e->wheel.y);
             break;
         default:
             break;
     }
 }
 
-void EditorControls::processInputPaused(SDL_Event * e) {
+void Editor::processInputPaused(SDL_Event * e) {
     switch (e->type) {
         case SDL_QUIT:
             _gameState = GameState::EXIT;
@@ -107,13 +105,13 @@ void EditorControls::processInputPaused(SDL_Event * e) {
                 ImGui_ImplSDL2_ProcessEvent(e);
             }
             else {
-                _window.camera.toggleCameraState();
+                _camera.toggleCameraState();
             }
             break;
         case SDL_KEYDOWN:
             switch( e->key.keysym.sym ) {
                 case SDLK_ESCAPE:
-                    _window.camera.toggleCameraState();
+                    _camera.toggleCameraState();
                     break;
 
                 case SDLK_q:

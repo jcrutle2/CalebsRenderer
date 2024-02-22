@@ -8,33 +8,30 @@
 #include "SDL.h"
 #include "glew.h"
 #include <iostream>
-#include <glm.hpp>
-#include <matrix_transform.hpp>
-#include <type_ptr.hpp>
-#include "../Rendering/Camera.h"
+#include "glm.hpp"
+#include "gtc/matrix_transform.hpp"
+#include "gtc/type_ptr.hpp"
+#include "Camera.h"
 #include "../Scene/Scene.h"
 #include "../UI/UI.h"
 #include "../Environment/Skybox/Skybox.h"
 #include "../Geometry/Models/Shader.h"
 
 
-class EditorWindow {
+class Renderer {
     public:
-        explicit EditorWindow(int screenWidth = 1024, int screenHeight = 768);
-        ~EditorWindow();
+        explicit Renderer(int screenWidth = 1024, int screenHeight = 768);
+        ~Renderer();
         void initSystems();
         void stopSystems();
         void update();
-        void drawBuffered();
+        void draw(Scene &scene, Camera &camera);
         void toggleRenderMode();
 
         [[nodiscard]] float getElapsedMS() const;
 
-        Camera camera;
         Shader shader;
         Shader tileShader;
-
-        Scene scene;
 
 private:
         void logFrames();

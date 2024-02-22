@@ -18,36 +18,77 @@ file(GLOB IMGUI_FILES include/imgui/*.cpp include/imgui/imgui_impl_osx.mm)
 add_library(imgui ${IMGUI_FILES})
 
 add_executable(
-        CalebsRenderer
+        Editor
         src/Editor/EditorMain.cpp
-        src/Editor/EditorControls.cpp
+        src/Editor/Editor.cpp
+        src/Rendering/Renderer.cpp
+
         src/Geometry/Models/Shader.cpp
-        src/Rendering/Camera.cpp
-        src/Editor/EditorWindow.cpp
         src/Geometry/Models/Mesh.cpp
         src/Geometry/Models/Model.cpp
-        src/Environment/Light/Light.cpp
-        src/UI/UI.cpp
         src/Scene/Scene.cpp
+
+        src/Rendering/Camera.cpp
+
+        src/Environment/Light/Light.cpp
+        src/Environment/Skybox/Skybox.cpp
+
+        src/UI/UI.cpp
         src/UI/UIGlobals.cpp
         src/UI/UIUtil.cpp
-        src/Environment/Skybox/Skybox.cpp
-        src/Geometry/LevelGeometry/TileTypes/Tile.cpp
-        src/Geometry/LevelGeometry/TileTypes/SquareTile.cpp
-        src/Geometry/LevelGeometry/TileWrapper.cpp
-        src/Geometry/LevelGeometry/Box/Box.cpp
-        src/Geometry/LevelGeometry/Box/BoxAccess.cpp
-        src/Geometry/Textures/Texture.cpp
         src/UI/Windows/MainWindow.cpp
         src/UI/Windows/ModelWindow.cpp
         src/UI/Windows/BoxWindow.cpp
         src/UI/Windows/LightWindow.cpp
         src/UI/Windows/SkyboxWindow.cpp
         src/UI/Windows/SceneWindow.cpp
+
+        src/Geometry/LevelGeometry/TileTypes/Tile.cpp
+        src/Geometry/LevelGeometry/TileTypes/SquareTile.cpp
+        src/Geometry/LevelGeometry/TileWrapper.cpp
+        src/Geometry/LevelGeometry/Box/Box.cpp
+        src/Geometry/LevelGeometry/Box/BoxAccess.cpp
+
+        src/Geometry/Textures/Texture.cpp
         src/Geometry/Textures/TextureUtil.cpp
 )
 
-target_link_libraries(CalebsRenderer "-framework QuartzCore -framework GameController -framework Cocoa -framework OpenGL" ${sdl} ${gl} ${as} imgui)
+add_executable(
+        Game
+        src/Game/GameMain.cpp
+
+        src/Geometry/Models/Shader.cpp
+        src/Geometry/Models/Mesh.cpp
+        src/Geometry/Models/Model.cpp
+        src/Scene/Scene.cpp
+
+        src/Rendering/Camera.cpp
+
+        src/Environment/Light/Light.cpp
+        src/Environment/Skybox/Skybox.cpp
+
+        src/UI/UI.cpp
+        src/UI/UIGlobals.cpp
+        src/UI/UIUtil.cpp
+        src/UI/Windows/MainWindow.cpp
+        src/UI/Windows/ModelWindow.cpp
+        src/UI/Windows/BoxWindow.cpp
+        src/UI/Windows/LightWindow.cpp
+        src/UI/Windows/SkyboxWindow.cpp
+        src/UI/Windows/SceneWindow.cpp
+
+        src/Geometry/LevelGeometry/TileTypes/Tile.cpp
+        src/Geometry/LevelGeometry/TileTypes/SquareTile.cpp
+        src/Geometry/LevelGeometry/TileWrapper.cpp
+        src/Geometry/LevelGeometry/Box/Box.cpp
+        src/Geometry/LevelGeometry/Box/BoxAccess.cpp
+
+        src/Geometry/Textures/Texture.cpp
+        src/Geometry/Textures/TextureUtil.cpp
+)
+
+target_link_libraries(Editor "-framework QuartzCore -framework GameController -framework Cocoa -framework OpenGL" ${sdl} ${gl} ${as} imgui)
+target_link_libraries(Game "-framework QuartzCore -framework GameController -framework Cocoa -framework OpenGL" ${sdl} ${gl} ${as} imgui)
 
 
 
