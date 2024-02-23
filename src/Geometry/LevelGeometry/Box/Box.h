@@ -24,6 +24,12 @@
 #define NEW_GEOMETRY_2_DEFAULT (glm::vec3(-1.0f, -1.0f, 0.0f))
 #define NEW_GEOMETRY_3_DEFAULT (glm::vec3(1.0f, -1.0f, 0.0f))
 
+struct Triangle {
+    glm::vec3 v0;
+    glm::vec3 v1;
+    glm::vec3 v2;
+};
+
 class Box {
 public:
     explicit Box();
@@ -54,6 +60,7 @@ public:
     float getTextureRotation(const unsigned int &n) const;
     float getTextureScale(const unsigned int &n) const;
     glm::vec2 getTexturePosition(const unsigned int &n) const;
+    Triangle getTriangle(const unsigned int &n) const;
 
 
     // setter methods

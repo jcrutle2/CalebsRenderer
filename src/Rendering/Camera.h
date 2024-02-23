@@ -28,7 +28,7 @@ class Camera {
     void moveLeft(const float &speed);
     void moveUp(const float &speed);
     void moveDown(const float &speed);
-    void updateDirection(int32_t xMovement, int32_t yMovement);
+    glm::vec3 updateDirection(int32_t xMovement, int32_t yMovement);
     void updateZoom(int32_t zoom);
     void updateView();
     glm::mat4 getView();

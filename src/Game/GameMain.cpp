@@ -6,6 +6,9 @@
 #include "Game.h"
 
 int main( int argc, char* args[] ) {
-    Game game;
+    std::cout << args[1];
+    std::string scenePath = "Assets/Scenes/";
+    scenePath += args[1];
+    Game game{scenePath};
     game.run();
 }

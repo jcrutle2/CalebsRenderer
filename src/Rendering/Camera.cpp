@@ -48,7 +48,7 @@ void Camera::moveDown(const float &speed) {
     cameraPos -= speed * cameraUp;
 }
 
-void Camera::updateDirection(int32_t xMovement, int32_t yMovement) {
+glm::vec3 Camera::updateDirection(int32_t xMovement, int32_t yMovement) {
     _yaw += xMovement * _sensitivity;
     _pitch -= yMovement * _sensitivity;
 
@@ -63,6 +63,7 @@ void Camera::updateDirection(int32_t xMovement, int32_t yMovement) {
     direction.y = sin(glm::radians(_pitch));
     direction.z = sin(glm::radians(_yaw)) * cos(glm::radians(_pitch));
     cameraFront = glm::normalize(direction);
+    return cameraFront;
 }
 
 void Camera::updateZoom(int32_t zoom) {

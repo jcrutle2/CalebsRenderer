@@ -4,7 +4,7 @@
 
 #include "Editor.h"
 #include "imgui_impl_sdl2.h"
-#define SPEED 1.5
+#define PLAYER_SPEED 1.5
 
 Editor::Editor() {
     _gameState = GameState::PLAY;
@@ -58,22 +58,22 @@ void Editor::processInputUnpaused(SDL_Event * e) {
         case SDL_KEYDOWN:
             switch( e->key.keysym.sym ) {
                 case SDLK_w:
-                    _camera.moveForward(SPEED);
+                    _camera.moveForward(PLAYER_SPEED);
                     break;
                 case SDLK_s:
-                    _camera.moveBackward(SPEED);
+                    _camera.moveBackward(PLAYER_SPEED);
                     break;
                 case SDLK_a:
-                    _camera.moveLeft(SPEED);
+                    _camera.moveLeft(PLAYER_SPEED);
                     break;
                 case SDLK_d:
-                    _camera.moveRight(SPEED);
+                    _camera.moveRight(PLAYER_SPEED);
                     break;
                 case SDLK_SPACE:
-                    _camera.moveUp(SPEED);
+                    _camera.moveUp(PLAYER_SPEED);
                     break;
                 case SDLK_LSHIFT:
-                    _camera.moveDown(SPEED);
+                    _camera.moveDown(PLAYER_SPEED);
                     break;
                 case SDLK_v:
                     _renderer.toggleRenderMode();

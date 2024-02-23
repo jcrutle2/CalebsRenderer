@@ -11,6 +11,7 @@
 #include <type_ptr.hpp>
 #include "../Rendering/Camera.h"
 #include "../Rendering/Renderer.h"
+#include "../Entities/Player.h"
 
 
 enum class GameState {
@@ -23,6 +24,7 @@ class Game
 {
 public:
     Game();
+    Game(const std::string &scenePath);
     ~Game();
 
     void run();

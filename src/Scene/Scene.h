@@ -17,10 +17,12 @@
 #include "../Environment/Skybox/Skybox.h"
 #include "../Geometry/LevelGeometry/Box/Box.h"
 #include "../Entities/Entity.h"
+#include "../Entities/Player.h"
 
 // A Struct Holding All Information in a Scene
 struct Scene {
 public:
+    Player player;
     std::vector<Entity> entities;
     DirectionLight dirLight;
     std::vector<PointLight> pointLights;

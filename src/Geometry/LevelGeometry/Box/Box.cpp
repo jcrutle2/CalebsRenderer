@@ -101,3 +101,11 @@ void Box::pushBack(enum TileWrapperType type) {
     std::string tileName = "Side " + std::to_string(tiles.size() + 1);
     tiles.emplace_back(tileName, type);
 }
+
+Triangle Box::getTriangle(const unsigned int &n) const {
+    const auto &tile = tiles[n / 2];
+    if (n % 2) {
+        return Triangle{tile.getVert1(),tile.getVert3(), tile.getVert4()};
+    }
+    return Triangle{tile.getVert1(), tile.getVert2(), tile.getVert3()};
+}

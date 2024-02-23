@@ -4,7 +4,8 @@
 
 #include "Game.h"
 #include "imgui_impl_sdl2.h"
-#define SPEED 1.5
+#include "../Physics/Physics.h"
+#define PLAYER_SPEED (0.075f)
 
 Game::Game() {
     _gameState = GameState::PLAY;
@@ -16,14 +17,26 @@ Game::Game() {
     _scene.boxes.emplace_back("Box1", glm::vec3(0.0f,0.0f,0.0f));
 }
 
+Game::Game(const std::string &scenePath) {
+    _gameState = GameState::PLAY;
+
+    _scene = SceneLoader::getSceneFromDisk(scenePath);
+
+}
+
 Game::~Game() = default;
 
 void Game::run() {
     while (_gameState != GameState::EXIT) {
-        processInput();
+        for (int i = 0; i < 4; i++) {
+            processInput();
+            Physics::calculatePhysics(_scene);
+            _scene.player.updatePosition();
+        }
+
 
         // Render Geometry and IMGUI
-        _renderer.draw(_scene, _camera);
+        _renderer.draw(_scene, _scene.player.getCamera());
 
         // Flush to Screen
         _renderer.update();
@@ -55,22 +68,23 @@ void Game::processInputUnpaused(SDL_Event * e) {
         case SDL_KEYDOWN:
             switch( e->key.keysym.sym ) {
                 case SDLK_w:
-                    _camera.moveForward(SPEED);
+                    _scene.player.setZSpeed(-PLAYER_SPEED);
                     break;
                 case SDLK_s:
-                    _camera.moveBackward(SPEED);
+                    _scene.player.setZSpeed(PLAYER_SPEED);
                     break;
                 case SDLK_a:
-                    _camera.moveLeft(SPEED);
+                    _scene.player.setXSpeed(-PLAYER_SPEED);
                     break;
                 case SDLK_d:
-                    _camera.moveRight(SPEED);
+                    _scene.player.setXSpeed(PLAYER_SPEED);
                     break;
                 case SDLK_SPACE:
-                    _camera.moveUp(SPEED);
+                    if (_scene.player.isOnGround())
+                        _scene.player.setYSpeed(1.5 * PLAYER_SPEED);
                     break;
                 case SDLK_LSHIFT:
-                    _camera.moveDown(SPEED);
+                    _camera.moveDown(PLAYER_SPEED);
                     break;
                 case SDLK_v:
                     _renderer.toggleRenderMode();
@@ -85,8 +99,28 @@ void Game::processInputUnpaused(SDL_Event * e) {
                     break;
             }
             break;
+        case SDL_KEYUP:
+            switch( e->key.keysym.sym ) {
+                case SDLK_w:
+                case SDLK_s:
+                    _scene.player.setZSpeed(0);
+                    break;
+                case SDLK_a:
+                case SDLK_d:
+                    _scene.player.setXSpeed(0);
+                    break;
+                case SDLK_ESCAPE:
+                    _camera.toggleCameraState();
+                    break;
+                case SDLK_q:
+                    _gameState = GameState::EXIT;
+                    break;
+                default:
+                    break;
+            }
+            break;
         case SDL_MOUSEMOTION:
-            _camera.updateDirection(e->motion.xrel, e->motion.yrel);
+            _scene.player.updateDirection(e->motion.xrel, e->motion.yrel);
             break;
         case SDL_MOUSEWHEEL:
             _camera.updateZoom(e->wheel.y);

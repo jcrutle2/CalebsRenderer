@@ -54,6 +54,11 @@ add_executable(
 
         src/Entities/Entity.cpp
         src/Entities/Hitbox.cpp
+        src/Game/Game.cpp
+        src/Entities/Player.cpp
+        src/Physics/CollisionDetector.cpp
+        src/Physics/Physics.h
+        src/Physics/Physics.cpp
 )
 
 add_executable(
@@ -93,6 +98,10 @@ add_executable(
         src/Entities/Entity.cpp
         src/Entities/Hitbox.cpp
         src/Game/Game.cpp
+        src/Entities/Player.cpp
+        src/Physics/CollisionDetector.cpp
+        src/Physics/Physics.h
+        src/Physics/Physics.cpp
 )
 
 target_link_libraries(Editor "-framework QuartzCore -framework GameController -framework Cocoa -framework OpenGL" ${sdl} ${gl} ${as} imgui)
