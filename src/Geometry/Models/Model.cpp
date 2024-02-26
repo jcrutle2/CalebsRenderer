@@ -40,6 +40,13 @@ Model::Model(const Model &m) {
 }
 
 Model& Model::operator=(const Model &m) {
+    src = m.src;
+    loadModel(src);
+    name = m.name;
+    position = m.position;
+    rotationAxis = m.rotationAxis;
+    rotation = m.rotation;
+    scale = m.scale;
     return *this;
 }
 

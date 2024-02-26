@@ -14,13 +14,38 @@ Camera::Camera(glm::vec3 camP, glm::vec3 camF, glm::vec3 camU) {
     cameraUp = camU;
     _pitch = 0.0f;
     _yaw = -90.0f;
-    _sensitivity = 0.1f;
+    _sensitivity = 0.08f;
     _zoomSensitivity = 1.0f;
 
     state = CAMERA_STATE_UNPAUSED;
 }
 
 Camera::~Camera() = default;
+
+Camera::Camera(Camera &c) {
+    _view = c._view;
+    _zoom = c._zoom;
+    cameraPos = c.cameraPos;
+    cameraFront = c.cameraFront;
+    _pitch = c._pitch;
+    _yaw = c._yaw;
+    _sensitivity = c._sensitivity;
+    _zoomSensitivity = c._zoomSensitivity;
+    state = c.state;
+}
+
+Camera& Camera::operator=(const Camera &c) {
+    _view = c._view;
+    _zoom = c._zoom;
+    cameraPos = c.cameraPos;
+    cameraFront = c.cameraFront;
+    _pitch = c._pitch;
+    _yaw = c._yaw;
+    _sensitivity = c._sensitivity;
+    _zoomSensitivity = c._zoomSensitivity;
+    state = c.state;
+    return *this;
+}
 
 void Camera::moveForward(const float &speed) {
     cameraPos += speed * cameraFront;

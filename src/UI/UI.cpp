@@ -33,7 +33,7 @@ void UI::renderWindows(Scene &s, Camera &c, const std::string &frameRate) {
     if (openWindows[getKey("Light", "Direction Light")]) directionLightWindow(s.dirLight);
 
     for (int lightCount = 0; lightCount < s.pointLights.size(); lightCount++) {
-        if (openWindows[getKey("Light", s.pointLights[lightCount].name)])
+        if (openWindows[getKey("Light", s.pointLights[lightCount].getName())])
             lightWindow(s.pointLights, lightCount);
     }
 

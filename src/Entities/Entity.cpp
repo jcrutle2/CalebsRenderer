@@ -17,6 +17,18 @@ Entity::Entity(const Entity &e) : Model(e) {
 }
 
 Entity& Entity::operator=(const Entity &e) {
+    src = e.src;
+    loadModel(src);
+    name = e.name;
+    position = e.position;
+    rotationAxis = e.rotationAxis;
+    rotation = e.rotation;
+    scale = e.scale;
+    onGround = e.onGround;
+    hitbox = e.hitbox;
+    velocity = e.velocity;
+    direction = e.direction;
+
     return *this;
 }
 

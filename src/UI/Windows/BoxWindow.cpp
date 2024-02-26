@@ -13,25 +13,7 @@ void UI::boxWindow(std::vector<Box> &boxes, int num) {
 
     std::string bufferKey = getKey("Box", box.getName());
     if (ImGui::CollapsingHeader("Properties")) {
-        ImGui::InputText(" ", charBuffers[bufferKey], 32);
-        ImGui::SameLine();
-        if (ImGui::Button("Save Name")) {
-            bool safeToRename = true;
-            for (const auto &b : boxes) {
-                if (b.getName() == charBuffers[bufferKey]) {
-                    safeToRename = false;
-                    break;
-                }
-            }
-            if (safeToRename) {
-                std::string oldName = box.getName();
-                box.setName(charBuffers[bufferKey]);
-                UI_MAP_CLEANUP("Box", oldName);
-
-                bufferKey = getKey("Box", box.getName());
-                openWindows[bufferKey] = true;
-            }
-        }
+        UI_SAFE_RENAME(box, boxes, "Box");
     }
 
     if (ImGui::CollapsingHeader("Location")) {

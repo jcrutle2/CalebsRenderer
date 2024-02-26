@@ -17,7 +17,8 @@ public:
     static void detectCollision(Scene &s);
 
 private:
-    static bool collision(Triangle &t, Entity &e);
+    static bool detectTriangleCollision(Triangle &t, Entity &e);
+    static bool detectHitboxCollision(Entity &e, Entity &p);
 };
 
 

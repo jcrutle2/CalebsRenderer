@@ -23,17 +23,17 @@ std::string TextureGlobals::shorten(const std::string &s) {
 }
 
 void TextureGlobals::loadAllTextures() {
-    std::string texturePath = static_cast<std::string>(std::filesystem::current_path()) + "/Assets/Textures";
+    std::string texturePath = static_cast<std::string>(std::__fs::filesystem::current_path()) + "/Assets/Textures";
 
     Texture t;
-    for (const auto& entry : std::filesystem::directory_iterator(texturePath)) {
+    for (const auto& entry : std::__fs::filesystem::directory_iterator(texturePath)) {
         std::string entryPath = entry.path();
         std::string shortPath = shorten(entryPath);
 
-        if (std::filesystem::is_directory(entryPath)) {
+        if (std::__fs::filesystem::is_directory(entryPath)) {
             std::string pngPath = "";
             std::string jpgPath = "";
-            for (const auto &entryTex : std::filesystem::directory_iterator(entryPath)) {
+            for (const auto &entryTex : std::__fs::filesystem::directory_iterator(entryPath)) {
                 if (shorten(entryTex.path()) == "/main.png") {
                     pngPath = ("Assets/Textures" + shortPath + "/main.png");
                 }

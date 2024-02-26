@@ -59,6 +59,7 @@ add_executable(
         src/Physics/CollisionDetector.cpp
         src/Physics/Physics.h
         src/Physics/Physics.cpp
+        "src/UI/Windows/LightMacros.h"
 )
 
 add_executable(

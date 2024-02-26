@@ -15,6 +15,8 @@ class Player : public Entity {
 public:
     Player();
     ~Player() = default;
+    Player(Player &p);
+    Player& operator=(const Player &p);
 
     void updatePosition() override;
     Camera& getCamera();
@@ -29,6 +31,12 @@ private:
     glm::vec3 relativeSpeed;
     glm::vec3 cameraOffset;
     Camera camera;
+
+    friend class cereal::access;
+    template<class Archive>
+    void save(Archive &ar) const;
+    template<class Archive>
+    void load(Archive &ar);
 };
 
 

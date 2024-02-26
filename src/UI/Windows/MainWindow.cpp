@@ -109,7 +109,7 @@ void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
                 openWindows[getKey("Light", "Direction Light")] = true;
             }
             for (int i = 0; i < s.pointLights.size(); i++) {
-                std::string n = s.pointLights[i].name;
+                std::string n = s.pointLights[i].getName();
                 if (ImGui::Selectable(n.c_str())) {
                     openWindows[getKey("Light", n)] = true;
                 }

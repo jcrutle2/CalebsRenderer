@@ -12,13 +12,17 @@
 class Skybox {
 public:
     Skybox();
+    Skybox(Skybox &s);
+    Skybox& operator= (const Skybox &s);
     void loadSkybox(const std::string &dir);
     void draw(glm::mat4 view, glm::mat4 projection);
     void deactivate();
     bool active;
 
     template<class Archive>
-    void serialize(Archive &ar);
+    void save(Archive &ar) const;
+    template<class Archive>
+    void load(Archive &ar);
     char directory[128];
 
 private:

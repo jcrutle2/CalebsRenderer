@@ -64,7 +64,7 @@ Have a #define which makes function declarations and
 function definitions static. This makes the implementation
 private to the source file that creates it. This allows
 people to use your library multiple times in their project
-without collision. (This is only necessary if your library
+without detectTriangleCollision. (This is only necessary if your library
 has configuration macros or global state, or if your
 library has multiple versions that are not backwards
 compatible. I've run into both of those cases.)

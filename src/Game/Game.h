@@ -19,6 +19,15 @@ enum class GameState {
     EXIT
 };
 
+enum KeysPressed {
+    KEY_PRESSED_W,
+    KEY_PRESSED_A,
+    KEY_PRESSED_S,
+    KEY_PRESSED_D,
+    KEY_PRESSED_SPACE,
+    KEY_PRESSED_ESC
+};
+
 
 class Game
 {
@@ -33,6 +42,8 @@ private:
     void processInput();
     void processInputUnpaused(SDL_Event * e);
     void processInputPaused(SDL_Event * e);
+
+    bool keysPressed[sizeof(enum KeysPressed)];
 
     Renderer _renderer;
     Camera _camera;

@@ -8,6 +8,15 @@ Hitbox::Hitbox() {
     extents = glm::vec3 (1.5f, 1.5f, 1.5f);
 }
 
+Hitbox::Hitbox(Hitbox &h) {
+    extents = h.extents;
+}
+
+Hitbox& Hitbox::operator=(const Hitbox &h) {
+    extents = h.extents;
+    return *this;
+}
+
 void Hitbox::setExtents(const glm::vec3 &v) {
     extents = v;
 }

@@ -13,6 +13,8 @@
 class Hitbox {
 public:
     Hitbox();
+    Hitbox(Hitbox &h);
+    Hitbox& operator=(const Hitbox &h);
     void setExtents(const glm::vec3 &v);
     glm::vec3 getExtents() const;
 

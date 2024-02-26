@@ -32,7 +32,7 @@ void UI::modelWindow(std::vector<Entity> &m, int num) {
 
     ImGui::Text("\nLight List");
     for (int i = 0; i < model.lights.size(); i++) {
-        std::string n = model.lights[i].name;
+        std::string n = model.lights[i].getName();
         if (ImGui::Button(n.c_str())) {
             std::cout << "Error: Not yet Implemented";
         }

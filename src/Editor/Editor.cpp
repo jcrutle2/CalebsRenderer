@@ -8,8 +8,6 @@
 
 Editor::Editor() {
     _gameState = GameState::PLAY;
-
-    _scene = Scene();
     // load lights
     _scene.dirLight = DirectionLight("Direction Light", glm::vec3(0.2f, -0.2f, -0.1f));
     // Test Tiles
@@ -32,6 +30,10 @@ void Editor::run() {
         _renderer.update();
     }
     _renderer.stopSystems();
+}
+
+void Editor::loadScene(const std::string &path) {
+    _scene = SceneLoader::getSceneFromDisk("Assets/Scenes/" + path);
 }
 
 void Editor::processInput() {

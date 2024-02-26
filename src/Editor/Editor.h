@@ -28,6 +28,9 @@ public:
     // Runs Game
     void run();
 
+    // loads scene
+    void loadScene(const std::string &path);
+
 private:
     void processInput();
     void processInputUnpaused(SDL_Event * e);

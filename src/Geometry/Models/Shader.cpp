@@ -142,21 +142,21 @@ void Shader::setModel(const glm::mat4 &model) const {
 }
 
 void Shader::setDirectionLight(const DirectionLight &d) const {
-    setVec3("dirLight.direction", d.direction);
-    setVec3("dirLight.ambient",  d.ambient);
-    setVec3("dirLight.diffuse",  d.diffuse);
-    setVec3("dirLight.specular", d.specular);
+    setVec3("dirLight.direction", d.getDirection());
+    setVec3("dirLight.ambient",  d.getAmbient());
+    setVec3("dirLight.diffuse",  d.getDiffuse());
+    setVec3("dirLight.specular", d.getSpecular());
 }
 
-void Shader::setPointLight(const PointLight &p, const int &num) const {
+void Shader::setPointLight(const PointLight &p, const int &num, const glm::vec3 &offset) const {
     std::string path = "pointLights[" + std::to_string(num) + "].";
-    setVec3(path + "position", p.position);
-    setVec3(path + "ambient",  p.ambient);
-    setVec3(path + "diffuse",  p.diffuse);
-    setVec3(path + "specular", p.specular);
-    setFloat(path + "constant", p.constant);
-    setFloat(path + "linear",  p.linear);
-    setFloat(path + "quadratic",  p.quadratic);
+    setVec3(path + "position", p.getPosition() + offset);
+    setVec3(path + "ambient",  p.getAmbient());
+    setVec3(path + "diffuse",  p.getDiffuse());
+    setVec3(path + "specular", p.getSpecular());
+    setFloat(path + "constant", p.getConstant());
+    setFloat(path + "linear",  p.getLinear());
+    setFloat(path + "quadratic",  p.getQuadratic());
 }
 
 
@@ -171,7 +171,7 @@ void Shader::setPointLights(const std::vector<PointLight> &vec, const std::vecto
 
     for (const auto &model : m) {
         for (const auto &l : model.lights) {
-            setPointLight(l, i);
+            setPointLight(l, i, model.getPosition());
             i++;
             size++;
         }

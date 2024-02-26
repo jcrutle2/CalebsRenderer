@@ -5,7 +5,7 @@
 #include "Box.h"
 
 Box::Box() {
-    name = "";
+    name = "ERROR";
     position = glm::vec3(0.0f);
     rotationAxis = BOX_ROTATION_AXIS_DEFAULT;
     rotation = BOX_ROTATION_DEFAULT;

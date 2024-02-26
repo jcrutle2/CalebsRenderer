@@ -13,6 +13,30 @@ Player::Player() : Entity() {
     relativeSpeed = glm::vec3(0.0,0.0,0.0);
 }
 
+Player::Player(Player &p) : Entity(p) {
+    relativeSpeed = p.relativeSpeed;
+    cameraOffset = p.cameraOffset;
+    camera = p.camera;
+}
+
+Player& Player::operator=(const Player &p) {
+    src = p.src;
+    loadModel(src);
+    name = p.name;
+    position = p.position;
+    rotationAxis = p.rotationAxis;
+    rotation = p.rotation;
+    scale = p.scale;
+    onGround = p.onGround;
+    hitbox = p.hitbox;
+    velocity = p.velocity;
+    direction = p.direction;
+    relativeSpeed = p.relativeSpeed;
+    cameraOffset = p.cameraOffset;
+    camera = p.camera;
+    return *this;
+}
+
 void Player::updatePosition() {
     /*
     if (position.y < 0) {

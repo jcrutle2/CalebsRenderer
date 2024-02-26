@@ -96,3 +96,25 @@ if (ImGui::BeginListBox(type, s))  {                                            
         charBuffers.erase(k);                                                                       \
     }                                                                                               \
 }
+
+#define UI_SAFE_RENAME(obj, vec, type) {                                                            \
+    ImGui::InputText(" ", charBuffers[bufferKey], 32);                                              \
+    ImGui::SameLine();                                                                              \
+    if (ImGui::Button("Save Name")) {                                                               \
+        bool safeToRename = true;                                                                   \
+        for (const auto &b : vec) {                                                                 \
+            if (b.getName() == charBuffers[bufferKey]) {                                            \
+            safeToRename = false;                                                                   \
+            break;                                                                                  \
+            }                                                                                       \
+        }                                                                                           \
+        if (safeToRename) {                                                                         \
+            std::string oldName = obj.getName();                                                    \
+            obj.setName(charBuffers[bufferKey]);                                                    \
+            UI_MAP_CLEANUP(type, oldName);                                                          \
+                                                                                                    \
+            bufferKey = getKey(type, obj.getName());                                                \
+            openWindows[bufferKey] = true;                                                          \
+        }                                                                                           \
+    }                                                                                               \
+}

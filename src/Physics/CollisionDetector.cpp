@@ -16,7 +16,7 @@ if (std::max(-std::max(p0, std::max(p1, p2)), std::min(p0, std::min(p1, p2))) > 
 }                                                                                           \
 }                                                                                           \
 
-bool Physics::collision(Triangle &t, Entity &e) {
+bool Physics::detectTriangleCollision(Triangle &t, Entity &e) {
     // get triangle vertices to center
     glm::vec3 v0 = t.v0 - e.getPosition();
     glm::vec3 v1 = t.v1 - e.getPosition();
@@ -66,13 +66,31 @@ bool Physics::collision(Triangle &t, Entity &e) {
     return true;
 }
 
+bool Physics::detectHitboxCollision(Entity &e, Entity &p) {
+    glm::vec3 e1Mins = e.position - e.getHitboxExtents();
+    glm::vec3 e1Maxes = e.position + e.getHitboxExtents();
+    glm::vec3 e2Mins = p.position - e.getHitboxExtents();
+    glm::vec3 e2Maxes = p.position + e.getHitboxExtents();
+
+    return (
+            e1Mins.x <= e2Maxes.x &&
+            e1Maxes.x >= e2Mins.x &&
+            e1Mins.y <= e2Maxes.y &&
+            e1Maxes.y >= e2Mins.y &&
+            e1Mins.z <= e2Maxes.z &&
+            e1Maxes.z >= e2Mins.z
+    );
+}
+
 void Physics::detectCollision(Scene &s) {
     s.player.onGround = false;
+
+    // Check Box Collisions
     for (auto &b : s.boxes) {
         for (int i = 0; i < (2 * b.getTileList().size()); i++) {
             auto tri = b.getTriangle(i);
             if (b.getActive(i / 2)) {
-                if (collision(tri, s.player)) {
+                if (detectTriangleCollision(tri, s.player)) {
                     // std::cout << "COLLISION DETECTED" << std::endl;
                     glm::vec3 nHat = glm::normalize(glm::cross(tri.v0 - tri.v1, tri.v1 - tri.v2));
                     float dot = glm::dot(s.player.getVelocity(), nHat);
@@ -85,6 +103,32 @@ void Physics::detectCollision(Scene &s) {
                     }
                 }
             }
+        }
+    }
+
+    // Check Hitbox Collisions
+    for (auto &e : s.entities) {
+        if (detectHitboxCollision(e, s.player)) {
+            // std::cout << "COLLISION DETECTED" << std::endl;
+            glm::vec3 nHat = glm::normalize(s.player.getPosition() - e.getPosition());
+            if (abs(nHat.y) >= abs(nHat.x) && abs(nHat.y) >= abs(nHat.z)) {
+                if (s.player.velocity.y < 0) s.player.velocity.y = 0;
+                s.player.onGround = true;
+            }
+            else if (abs(nHat.x) >= abs(nHat.z)) {
+                if ((nHat.x >= 0 && s.player.velocity.x <= 0)) {
+                    s.player.velocity.x = 0;
+                }
+                else if ((nHat.x <= 0 && s.player.velocity.x >= 0)) {
+                    s.player.velocity.x = 0;
+                }
+            }
+            else {
+                if ((nHat.z >= 0 && s.player.velocity.z <= 0) || (nHat.z <= 0 && s.player.velocity.z >= 0)) {
+                    s.player.velocity.z = 0;
+                }
+            }
+
         }
     }
 }

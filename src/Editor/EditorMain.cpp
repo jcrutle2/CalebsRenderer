@@ -8,5 +8,10 @@
 
 int main( int argc, char* args[] ) {
     Editor mainGame;
+
+ //   if(!strcmp(args[1], " ")) {
+   //     mainGame.loadScene(args[1]);
+   // }
+
     mainGame.run();
 }

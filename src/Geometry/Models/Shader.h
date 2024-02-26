@@ -35,7 +35,7 @@ class Shader
 
     // light functions
         void setDirectionLight(const DirectionLight &d) const;
-        void setPointLight(const PointLight &p, const int &num) const;
+        void setPointLight(const PointLight &p, const int &num, const glm::vec3 &offset = (glm::vec3(0.0f))) const;
         void setPointLights(const std::vector<PointLight> &vec, const std::vector<Entity> &m) const;
 
     // camera functions

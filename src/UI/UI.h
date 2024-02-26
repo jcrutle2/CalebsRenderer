@@ -15,7 +15,7 @@
 #include "imgui/imgui.h"
 #include "../Scene/Scene.h"
 #include <filesystem>
-namespace fs = std::filesystem;
+namespace fs = std::__fs::filesystem;
 
 extern bool my_tool_active;
 

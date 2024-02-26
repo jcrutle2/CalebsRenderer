@@ -80,6 +80,68 @@ void Entity::load(Archive &ar){
 }
 
 template<class Archive>
+void Player::save(Archive &ar) const {
+    ar (name);
+    ar (src);
+    ar (position.x);
+    ar (position.y);
+    ar (position.z);
+    ar (rotation);
+    ar (rotationAxis.x);
+    ar (rotationAxis.y);
+    ar (rotationAxis.z);
+    ar (scale.x);
+    ar (scale.y);
+    ar (scale.z);
+    ar (lights);
+    ar (hitbox);
+    ar (relativeSpeed.x);
+    ar (relativeSpeed.y);
+    ar (relativeSpeed.z);
+    ar (cameraOffset.x);
+    ar (cameraOffset.y);
+    ar (cameraOffset.z);
+    ar (camera);
+}
+
+template<class Archive>
+void Player::load(Archive &ar) {
+    ar (name);
+    ar (src);
+    ar (position.x);
+    ar (position.y);
+    ar (position.z);
+    ar (rotation);
+    ar (rotationAxis.x);
+    ar (rotationAxis.y);
+    ar (rotationAxis.z);
+    ar (scale.x);
+    ar (scale.y);
+    ar (scale.z);
+    ar (lights);
+    ar (hitbox);
+    ar (relativeSpeed.x);
+    ar (relativeSpeed.y);
+    ar (relativeSpeed.z);
+    ar (cameraOffset.x);
+    ar (cameraOffset.y);
+    ar (cameraOffset.z);
+    ar (camera);
+
+    if (src != "")
+    loadModel(src);
+}
+
+template<class Archive>
+void Camera::serialize(Archive &ar) {
+    ar(cameraPos.x, cameraPos.y, cameraPos.z);
+    ar(cameraFront.x, cameraFront.y, cameraFront.z);
+    ar(cameraUp.x, cameraUp.y, cameraUp.z);
+    _view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+    ar(_zoom, _yaw, _pitch, _sensitivity, _zoomSensitivity, state);
+}
+
+template<class Archive>
 void Hitbox::serialize(Archive &ar) {
     ar(extents.x);
     ar(extents.y);
@@ -125,13 +187,30 @@ void DirectionLight::serialize(Archive &ar) {
 }
 
 template<class Archive>
-void Skybox::serialize(Archive &ar) {
+void Skybox::save(Archive &ar) const {
     ar(directory);
-    ar(active);
 }
 
 template<class Archive>
-void Scene::serialize(Archive &ar) {
+void Skybox::load(Archive &ar) {
+    ar(directory);
+    active = false;
+    loadSkybox(directory);
+}
+
+template<class Archive>
+void Scene::save(Archive &ar) const{
+    ar(player);
+    ar(entities);
+    ar(dirLight);
+    ar(pointLights);
+    ar(skybox);
+    ar(boxes);
+}
+
+template<class Archive>
+void Scene::load(Archive &ar){
+    ar(player);
     ar(entities);
     ar(dirLight);
     ar(pointLights);

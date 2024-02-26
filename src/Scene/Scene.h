@@ -29,8 +29,12 @@ public:
     Skybox skybox;
     std::vector<Box> boxes;
 
+private:
+    friend class cereal::access;
     template<class Archive>
-    void serialize(Archive &ar);
+    void save(Archive &ar) const;
+    template<class Archive>
+    void load(Archive &ar);
 };
 
 namespace SceneLoader {

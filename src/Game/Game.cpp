@@ -15,6 +15,10 @@ Game::Game() {
     _scene.dirLight = DirectionLight("Direction Light", glm::vec3(0.2f, -0.2f, -0.1f));
     // Test Tiles
     _scene.boxes.emplace_back("Box1", glm::vec3(0.0f,0.0f,0.0f));
+
+    for (auto &press : keysPressed) {
+        press = false;
+    }
 }
 
 Game::Game(const std::string &scenePath) {
@@ -22,6 +26,9 @@ Game::Game(const std::string &scenePath) {
 
     _scene = SceneLoader::getSceneFromDisk(scenePath);
 
+    for (auto &press : keysPressed) {
+        press = false;
+    }
 }
 
 Game::~Game() = default;
@@ -58,6 +65,17 @@ void Game::processInput() {
                 break;
         }
     }
+
+    if (keysPressed[KEY_PRESSED_W] && keysPressed[KEY_PRESSED_S]) {_scene.player.setZSpeed(0);}
+    else if (keysPressed[KEY_PRESSED_W]) { _scene.player.setZSpeed(-PLAYER_SPEED); }
+    else if (keysPressed[KEY_PRESSED_S]) { _scene.player.setZSpeed(PLAYER_SPEED); }
+    else { _scene.player.setZSpeed(0); }
+
+    if (keysPressed[KEY_PRESSED_A] && keysPressed[KEY_PRESSED_D]) {_scene.player.setXSpeed(0);}
+    else if (keysPressed[KEY_PRESSED_A]) { _scene.player.setXSpeed(-PLAYER_SPEED); }
+    else if (keysPressed[KEY_PRESSED_D]) { _scene.player.setXSpeed(PLAYER_SPEED); }
+    else { _scene.player.setXSpeed(0); }
+
 }
 
 void Game::processInputUnpaused(SDL_Event * e) {
@@ -68,15 +86,18 @@ void Game::processInputUnpaused(SDL_Event * e) {
         case SDL_KEYDOWN:
             switch( e->key.keysym.sym ) {
                 case SDLK_w:
-                    _scene.player.setZSpeed(-PLAYER_SPEED);
+                    keysPressed[KEY_PRESSED_W] = true;
                     break;
                 case SDLK_s:
+                    keysPressed[KEY_PRESSED_S] = true;
                     _scene.player.setZSpeed(PLAYER_SPEED);
                     break;
                 case SDLK_a:
+                    keysPressed[KEY_PRESSED_A] = true;
                     _scene.player.setXSpeed(-PLAYER_SPEED);
                     break;
                 case SDLK_d:
+                    keysPressed[KEY_PRESSED_D] = true;
                     _scene.player.setXSpeed(PLAYER_SPEED);
                     break;
                 case SDLK_SPACE:
@@ -102,12 +123,16 @@ void Game::processInputUnpaused(SDL_Event * e) {
         case SDL_KEYUP:
             switch( e->key.keysym.sym ) {
                 case SDLK_w:
+                    keysPressed[KEY_PRESSED_W] = false;
+                    break;
                 case SDLK_s:
-                    _scene.player.setZSpeed(0);
+                    keysPressed[KEY_PRESSED_S] = false;
                     break;
                 case SDLK_a:
+                    keysPressed[KEY_PRESSED_A] = false;
+                    break;
                 case SDLK_d:
-                    _scene.player.setXSpeed(0);
+                    keysPressed[KEY_PRESSED_D] = false;
                     break;
                 case SDLK_ESCAPE:
                     _camera.toggleCameraState();

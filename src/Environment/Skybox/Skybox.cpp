@@ -56,7 +56,23 @@ Skybox::Skybox() {
     strcpy(directory, "");
 }
 
+Skybox::Skybox(Skybox &s) {
+    active = false;
+    initialized = false;
+    strcpy(directory, s.directory);
+    loadSkybox(directory);
+}
+
+Skybox& Skybox::operator=(const Skybox &s) {
+    active = false;
+    initialized = false;
+    strcpy(directory, s.directory);
+    loadSkybox(directory);
+    return *this;
+}
+
 void Skybox::loadSkybox(const std::string &dir) {
+    if (strcmp(dir.c_str(), "") == 0) return;
     strcpy(directory, dir.c_str());
     std::vector<std::string> faces = {
             dir + "/right.jpg",
