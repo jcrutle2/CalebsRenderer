@@ -202,3 +202,21 @@ unsigned int TextureFromFile(const char *path, const std::string &directory, boo
 
     return textureID;
 }
+
+// getters
+std::string Model::getName() const { return name; }
+glm::vec3 Model::getPosition() const { return position; }
+glm::vec3 Model::getRotationAxis() const { return rotationAxis; }
+float Model::getRotation() const { return rotation; }
+glm::vec3 Model::getScale() const { return scale; }
+std::string Model::getSrc() const { return src; }
+std::vector<PointLight>& Model::getLightsList() { return lights; }
+std::vector<PointLight> Model::getLightsListConst() const { return lights; }
+
+// setters
+void Model::setName(const std::string &n) { name = n; }
+void Model::setPosition(const glm::vec3 &v) { position = v; }
+void Model::setRotationAxis(const glm::vec3 &v) { rotationAxis = v; }
+void Model::setRotation(const float &v) { rotation = v; }
+void Model::setScale(const glm::vec3 &v) { scale = v; }
+void Model::pushBackLight(std::string name) { lights.emplace_back(name); }

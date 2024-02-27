@@ -67,10 +67,10 @@ bool Physics::detectTriangleCollision(Triangle &t, Entity &e) {
 }
 
 bool Physics::detectHitboxCollision(Entity &e, Entity &p) {
-    glm::vec3 e1Mins = e.position - e.getHitboxExtents();
-    glm::vec3 e1Maxes = e.position + e.getHitboxExtents();
-    glm::vec3 e2Mins = p.position - e.getHitboxExtents();
-    glm::vec3 e2Maxes = p.position + e.getHitboxExtents();
+    glm::vec3 e1Mins = e.getPosition() - e.getHitboxExtents();
+    glm::vec3 e1Maxes = e.getPosition() + e.getHitboxExtents();
+    glm::vec3 e2Mins = p.getPosition() - e.getHitboxExtents();
+    glm::vec3 e2Maxes = p.getPosition() + e.getHitboxExtents();
 
     return (
             e1Mins.x <= e2Maxes.x &&

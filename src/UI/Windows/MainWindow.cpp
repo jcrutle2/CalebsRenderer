@@ -39,23 +39,23 @@ void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
         ImGui::EndChild();
     }
 
-    if (ImGui::CollapsingHeader("Models")) {
+    if (ImGui::CollapsingHeader("Entities")) {
         int modelCount = 0;
-        ImGui::BeginChild("Models", ImVec2(175, 100), ImGuiChildFlags_Border | ImGuiChildFlags_ResizeY);
+        ImGui::BeginChild("Entities", ImVec2(175, 100), ImGuiChildFlags_Border | ImGuiChildFlags_ResizeY);
             for (auto const &m : s.entities) {
-                if (ImGui::Selectable(m.name.c_str())) {
-                    openWindows[getKey("Model", m.name)] = true;
+                if (ImGui::Selectable(m.getName().c_str())) {
+                    openWindows[getKey("Entity", m.getName())] = true;
                 }
                 modelCount++;
             }
         ImGui::EndChild();
 
         ImGui::SameLine();
-        ImGui::BeginChild("Model Options", ImVec2(125, 100), ImGuiChildFlags_ResizeY);
-            if (ImGui::Button("Add Model"))
-                ImGui::OpenPopup("add_model_popup");
+        ImGui::BeginChild("Entity Options", ImVec2(125, 100), ImGuiChildFlags_ResizeY);
+            if (ImGui::Button("Add Entity"))
+                ImGui::OpenPopup("add_entity_popup");
 
-        if (ImGui::BeginPopup("add_model_popup"))
+        if (ImGui::BeginPopup("add_entity_popup"))
         {
             ImGui::Text("%s", (modelPath.substr(filePath.size(), modelPath.size() - filePath.size())).c_str());
 
@@ -73,7 +73,7 @@ void UI::mainWindow(Scene &s, Camera &c, const std::string &frameRate) {
                             else {
                                 std::string newModelName = shortPath.substr(1, shortPath.length() - 1);
                                 for (int i = 0; i < s.entities.size(); i++) {
-                                    if (s.entities[i].name == newModelName) {
+                                    if (s.entities[i].getName() == newModelName) {
                                         newModelName += "*";
                                         i = 0;
                                     }

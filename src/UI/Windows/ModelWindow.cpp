@@ -3,47 +3,29 @@
 //
 
 #include "../UI.h"
+#include "../UIMacros.h"
+#include "LightMacros.h"
+#include "ModelMacros.h"
 
-void UI::modelWindow(std::vector<Entity> &m, int num) {
-    Model &model = m[num];
-    ImGui::Begin(model.name.c_str(), &my_tool_active, ImGuiWindowFlags_MenuBar);
+void UI::entityWindow(std::vector<Entity> &e, int num) {
+    Entity &entity = e[num];
+    ImGui::Begin(entity.getName().c_str(), &my_tool_active, ImGuiWindowFlags_MenuBar);
 
-    std::string bufferKey = getKey("Model", model.name);
-    ImGui::InputText("Name", charBuffers[bufferKey], 32);
-    if (ImGui::Button("Save Name")) {
-        bool safeToRename = true;
-        for (const auto &oM : m) {
-            if (oM.name == charBuffers[bufferKey]) {
-                safeToRename = false;
-                break;
-            }
-        }
-        if (safeToRename) {
-            model.name = charBuffers[bufferKey];
-            openWindows.erase(bufferKey);
-            charBuffers.erase(bufferKey);
-        }
-    }
+    std::string bufferKey = getKey("Entity", entity.getName());
+    if (ImGui::CollapsingHeader("Properties"))
+        UI_SAFE_RENAME(entity, e, "Entity");
 
-    ImGui::InputFloat3("Position", &model.position.x);
-    ImGui::InputFloat("Rotation", &model.rotation);
-    ImGui::InputFloat3("Axis", &model.rotationAxis.x);
-    ImGui::InputFloat3("Scale", &m[num].scale.x);
+    if (ImGui::CollapsingHeader("Location"))
+        UI_LOCATION_MENU(entity);
 
-    ImGui::Text("\nLight List");
-    for (int i = 0; i < model.lights.size(); i++) {
-        std::string n = model.lights[i].getName();
-        if (ImGui::Button(n.c_str())) {
-            std::cout << "Error: Not yet Implemented";
-        }
-    }
-    if (ImGui::Button("Add Light")) {
-        std::string name = "Light" + std::to_string(model.lights.size() + 1);
-        model.lights.emplace_back(name);
+    if (ImGui::CollapsingHeader("Lights")) {
+        std::vector<std::string> boolKeys;
+        MODEL_LIGHT_SELECTABLE_LIST(entity);
+        MODEL_LIGHT_WINDOW_MULTIPLE(entity, boolKeys);
     }
 
     if(ImGui::MenuItem("Delete")) {
-        m.erase(m.begin() + num);
+        e.erase(e.begin() + num);
         openWindows.erase(bufferKey);
         charBuffers.erase(bufferKey);
     }

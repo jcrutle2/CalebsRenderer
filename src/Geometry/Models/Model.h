@@ -29,22 +29,38 @@ public:
     Model(const Model &m);
     Model& operator= (const Model &m);
 
-    std::string name;
+    // Getters
+    std::string getName() const;
+    glm::vec3 getPosition() const;
+    glm::vec3 getRotationAxis() const;
+    float getRotation() const;
+    glm::vec3 getScale() const;
+    std::string getSrc() const;
+    std::vector<PointLight>& getLightsList();
+    std::vector<PointLight> getLightsListConst() const;
+
+    // Setters
+    void setName(const std::string &n);
+    void setPosition(const glm::vec3 &v);
+    void setRotationAxis(const glm::vec3 &v);
+    void setRotation(const float &v);
+    void setScale(const glm::vec3 &v);
+    void pushBackLight(std::string name);
+
 
     template<class S>
     void Draw(S shader);
 
-    // model location
+    void loadModel(std::string path);
+
+protected:
+    std::string name;
     glm::vec3 position;
     glm::vec3 rotationAxis;
     float rotation;
     glm::vec3 scale;
-
-    // associated lights
-    std::vector<PointLight> lights;
-
     std::string src;
-    void loadModel(std::string path);
+    std::vector<PointLight> lights;
 
 private:
     // Serialization

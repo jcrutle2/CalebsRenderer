@@ -38,15 +38,6 @@ Player& Player::operator=(const Player &p) {
 }
 
 void Player::updatePosition() {
-    /*
-    if (position.y < 0) {
-        position.y = 0;
-        velocity.y = 0;
-    }
-    else if (position.y > 0) {
-        velocity.y -= 0.01f;
-    }*/
-
     position += velocity;
     camera.cameraPos = position + cameraOffset;
 }

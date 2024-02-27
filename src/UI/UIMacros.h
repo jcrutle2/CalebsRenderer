@@ -8,7 +8,7 @@
 #endif //CALEBSRENDERER_UIMACROS_H
 
 #define UI_LOCATION_MENU(item)    {                                                     \
-glm::vec3 position = (item).getPosition();                                              \
+    glm::vec3 position = (item).getPosition();                                          \
     glm::vec3 axis = (item).getRotationAxis();                                          \
     float rotation = (item).getRotation();                                              \
     glm::vec3 scale = (item).getScale();                                                \
@@ -26,8 +26,8 @@ glm::vec3 position = (item).getPosition();                                      
     }                                                                                   \
 };
 
-#define UI_SELECTABLE_LIST(inVec, outVec, getter, setter, type, subtype, subsubtype, s) {           \
-if (ImGui::BeginListBox(type, s))  {                                                                \
+#define UI_SELECTABLE_LIST(inVec, outVec, getter, setter, type, subtype, subsubtype, s, adOp) {     \
+if (ImGui::BeginListBox(" ", s))  {                                                                 \
     for (int counter = 0; counter < (inVec).size(); counter++){                                     \
         std::string boolKey = getKey((type), (subtype), (subsubtype), (inVec)[counter].getName());  \
                                                                                                     \
@@ -39,7 +39,7 @@ if (ImGui::BeginListBox(type, s))  {                                            
             ImGui::PushStyleColor(ImGuiCol_Text, (ImVec4)ImColor(0.4f, 0.4f, 0.4f));                \
         }                                                                                           \
                                                                                                     \
-        if (ImGui::Selectable(box.getTileList()[counter].getName().c_str())) {                      \
+        if (ImGui::Selectable(inVec[counter].getName().c_str())) {                                  \
             openWindows[boolKey] = !(openWindows[boolKey]);                                         \
             setter;                                                                                 \
         }                                                                                           \
@@ -55,6 +55,7 @@ if (ImGui::BeginListBox(type, s))  {                                            
     ImGui::SameLine();                                                                              \
                                                                                                     \
     ImGui::BeginChild("Select List Options", ImVec2(100,136));                                      \
+        adOp;                                                                                       \
         if (ImGui::Button("Select All")) {                                                          \
             for (const auto & str : boolKeys) {                                                     \
                 openWindows[str] = true;                                                            \
@@ -97,7 +98,9 @@ if (ImGui::BeginListBox(type, s))  {                                            
     }                                                                                               \
 }
 
-#define UI_SAFE_RENAME(obj, vec, type) {                                                            \
+#define UI_SAFE_RENAME(obj, vec, type) { \
+    if (*charBuffers[bufferKey] == '\0')                                                            \
+        strcpy(charBuffers[bufferKey], obj.getName().c_str());                                      \
     ImGui::InputText(" ", charBuffers[bufferKey], 32);                                              \
     ImGui::SameLine();                                                                              \
     if (ImGui::Button("Save Name")) {                                                               \

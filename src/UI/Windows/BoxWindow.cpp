@@ -3,7 +3,7 @@
 //
 
 #include "../UI.h"
-#include "boxMacros.h"
+#include "BoxMacros.h"
 
 
 void UI::boxWindow(std::vector<Box> &boxes, int num) {

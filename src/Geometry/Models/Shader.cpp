@@ -170,7 +170,7 @@ void Shader::setPointLights(const std::vector<PointLight> &vec, const std::vecto
     size += static_cast<int>(vec.size());
 
     for (const auto &model : m) {
-        for (const auto &l : model.lights) {
+        for (const auto &l : model.getLightsListConst() ) {
             setPointLight(l, i, model.getPosition());
             i++;
             size++;

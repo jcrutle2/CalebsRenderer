@@ -19,6 +19,71 @@
     if (ImGui::InputFloat3("Diffuse", &diffuse.x)) li.setDiffuse(diffuse);              \
 }
 
+#define POINT_LIGHT_WINDOW_MULTIPLE(vec, check, loop, condition) {                          \
+    glm::vec3 position = vec[check].getPosition();                                          \
+    if (ImGui::InputFloat3("Position", &position.x)) {                                      \
+        loop {                                                                              \
+            condition {                                                                     \
+                vec[n].setPosition(position);                                               \
+            }                                                                               \
+        }                                                                                   \
+    }                                                                                       \
+                                                                                            \
+    glm::vec3 ambient = vec[check].getAmbient();                                            \
+    if (ImGui::InputFloat3("Ambient", &ambient.x)) {                                        \
+        loop {                                                                              \
+            condition {                                                                     \
+                vec[n].setAmbient(ambient);                                                 \
+            }                                                                               \
+        }                                                                                   \
+    }                                                                                       \
+                                                                                            \
+    glm::vec3 specular = vec[check].getSpecular();                                          \
+    if (ImGui::InputFloat3("Specular", &specular.x)) {                                      \
+        loop {                                                                              \
+            condition {                                                                     \
+                vec[n].setSpecular(specular);                                               \
+            }                                                                               \
+        }                                                                                   \
+    }                                                                                       \
+                                                                                            \
+    glm::vec3 diffuse = vec[check].getDiffuse();                                            \
+    if (ImGui::InputFloat3("Diffuse", &diffuse.x)) {                                        \
+        loop {                                                                              \
+            condition {                                                                     \
+                vec[n].setDiffuse(diffuse);                                                 \
+            }                                                                               \
+        }                                                                                   \
+    }                                                                                       \
+                                                                                            \
+    float constant = vec[check].getConstant();                                              \
+    if (ImGui::InputFloat("Constant Falloff", &constant)) {                                 \
+        loop {                                                                              \
+            condition {                                                                     \
+                vec[n].setConstant(constant);                                               \
+            }                                                                               \
+        }                                                                                   \
+    }                                                                                       \
+                                                                                            \
+    float linear = vec[check].getLinear();                                                  \
+    if (ImGui::InputFloat("Linear Falloff", &linear)) {                                     \
+        loop {                                                                              \
+            condition {                                                                     \
+                vec[n].setLinear(linear);                                                   \
+            }                                                                               \
+        }                                                                                   \
+    }                                                                                       \
+                                                                                            \
+    float quadratic = vec[check].getQuadratic();                                            \
+    if (ImGui::InputFloat("Quadratic Falloff", &quadratic)) {                               \
+        loop {                                                                              \
+            condition {                                                                     \
+                vec[n].setQuadratic(quadratic);                                             \
+            }                                                                               \
+        }                                                                                   \
+    }                                                                                       \
+}
+
 #define POINT_LIGHT_WINDOW(li) {                                                            \
     glm::vec3 position = li.getPosition();                                                  \
     glm::vec3 ambient = li.getAmbient();                                                    \

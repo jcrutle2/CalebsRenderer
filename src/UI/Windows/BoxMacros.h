@@ -87,8 +87,8 @@
                                   setTexturePosition(texPosition))                                                          \
 
 
-#define BOX_SELECTABLE_LIST_NO_SET(box, outVec) UI_SELECTABLE_LIST(box.getTileList(), outVec, openWindows[boolKey], , "Box", box.getName(), "IndTex", ImVec2(136,150))
-#define BOX_SELECTABLE_LIST_SET(box, outVec, getter, setter) UI_SELECTABLE_LIST(box.getTileList(), outVec, getter, setter, "Box", box.getName(), "IndTex", ImVec2(136,150))
+#define BOX_SELECTABLE_LIST_NO_SET(box, outVec) UI_SELECTABLE_LIST(box.getTileList(), outVec, openWindows[boolKey], , "Box", box.getName(), "IndTex", ImVec2(136,150), )
+#define BOX_SELECTABLE_LIST_SET(box, outVec, getter, setter) UI_SELECTABLE_LIST(box.getTileList(), outVec, getter, setter, "Box", box.getName(), "IndTex", ImVec2(136,150), )
 
 
 #endif //CALEBSRENDERER_BOXMACROS_H
