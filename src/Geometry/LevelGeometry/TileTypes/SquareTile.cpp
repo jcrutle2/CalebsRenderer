@@ -56,7 +56,7 @@ void SquareTile::updateVertex() {
     );
     glm::vec4 coordsFour = glm::vec4(
             1.0f,
-            vertex[31] = 1.0f - (rMag / textureScale),
+            1.0f - (rMag / textureScale),
             0.0f,
             0.0f
     );

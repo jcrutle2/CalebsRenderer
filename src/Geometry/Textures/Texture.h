@@ -16,6 +16,7 @@ public:
     unsigned int id;
     std::string type;
     aiString path;
+    unsigned int normalId;
 private:
     friend class cereal::access;
     template<class Archive>
